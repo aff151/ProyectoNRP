@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.management.Notification;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
 import org.orm.PersistentException;
@@ -35,6 +37,7 @@ public class CrearProyecto extends JFrame {
 	private JTextArea tAreaDesc;
 	private JList listClientes;
 	private List<Cliente> listCli;
+	private DefaultListModel modelo;
 	
 	BD_Proyectos bdProy = new BD_Proyectos();
 	BD_Clientes bdCli = new BD_Clientes();
@@ -71,14 +74,17 @@ public class CrearProyecto extends JFrame {
 		JButton btnAtras = new JButton("Atrás");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Menu menu = new Menu();
+				/*Menu menu = new Menu();
 				menu.setVisible(true);
-				dispose();
+				dispose();*/
+				System.out.println(listClientes.getSelectedValuesList().get(1).toString());
 			}
 		});
 		
 		tAreaDesc = new JTextArea();
 		tAreaDesc.setBounds(312, 58, 252, 74);
+		tAreaDesc.setLineWrap(true);
+		tAreaDesc.setWrapStyleWord(true);
 		contentPane.add(tAreaDesc);
 		
 		JLabel lblDescripcion = new JLabel("Descripción");
@@ -108,7 +114,10 @@ public class CrearProyecto extends JFrame {
 		listClientes = new JList();
 		listClientes.setBackground(Color.WHITE);
 		listClientes.setBounds(35, 173, 189, 226);
+		listClientes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		contentPane.add(listClientes);
+		
+		modelo = new DefaultListModel();
 		
 		JLabel lblIntrodImport = new JLabel("Introduce la importancia del cliente para el proyecto");
 		lblIntrodImport.setBounds(294, 160, 306, 16);
@@ -146,7 +155,8 @@ public class CrearProyecto extends JFrame {
 			e.printStackTrace();
 		}
 		for(Cliente c : listCli) {
-			//listClientes.add
+			modelo.addElement(c.getNombre());
+			listClientes.setModel(modelo);
 		}
 	}
 }
