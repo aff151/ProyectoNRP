@@ -44,7 +44,7 @@ public class ModificarProyecto extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblConsultaDelProyecto = new JLabel("Modificación del proyecto...");
-		lblConsultaDelProyecto.setBounds(31, 43, 184, 16);
+		lblConsultaDelProyecto.setBounds(31, 40, 184, 16);
 		contentPane.add(lblConsultaDelProyecto);
 		
 		JList list = new JList();
