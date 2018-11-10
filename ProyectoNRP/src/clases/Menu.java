@@ -55,14 +55,41 @@ public class Menu extends JFrame {
 			}
 		});
 		btnSalir.setBackground(new Color(204, 0, 0));
-		btnSalir.setForeground(new Color(255, 255, 255));
+		btnSalir.setForeground(Color.BLACK);
 		btnSalir.setBounds(501, 466, 89, 23);
 		contentPane.add(btnSalir);
 		
+		JButton crearCliente = new JButton("Crear Cliente");
+		crearCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		crearCliente.setBounds(175, 129, 220, 29);
+		contentPane.add(crearCliente);
+		
+		JButton consultarClientes = new JButton("Consultar Clientes");
+		consultarClientes.setBounds(175, 181, 220, 29);
+		contentPane.add(consultarClientes);
+		
+		JButton crearProyecto = new JButton("Crear Proyecto");
+		crearProyecto.setBounds(175, 236, 220, 29);
+		contentPane.add(crearProyecto);
+		
+		JButton consultarProyectos = new JButton("Consultar Proyectos");
+		consultarProyectos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		consultarProyectos.setBounds(175, 290, 220, 29);
+		contentPane.add(consultarProyectos);
+		
+		JLabel lblInicioDeLa = new JLabel("Inicio de la Aplicación");
+		lblInicioDeLa.setBounds(221, 71, 139, 16);
+		contentPane.add(lblInicioDeLa);
+		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(Interfaz.class.getResource("/imagenes/fondo.png")));
+		lblNewLabel.setIcon(new ImageIcon(Menu.class.getResource("/imagenes/fondo.png")));
 		lblNewLabel.setBounds(0, 0, 600, 500);
 		contentPane.add(lblNewLabel);
 	}
-
 }
