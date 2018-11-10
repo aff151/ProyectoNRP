@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 public class ConsultarProyecto extends JFrame {
 
 	private JPanel contentPane;
+	public static String procedencia = "";
 
 	/**
 	 * Launch the application.
@@ -36,34 +37,35 @@ public class ConsultarProyecto extends JFrame {
 	 * Create the frame.
 	 */
 	public ConsultarProyecto() {
-		setUndecorated(true);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 500);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblConsultaDelProyecto = new JLabel("Consulta del proyecto...");
 		lblConsultaDelProyecto.setBounds(31, 43, 174, 16);
 		contentPane.add(lblConsultaDelProyecto);
-		
+
 		JList list = new JList();
 		list.setBounds(68, 154, 124, 199);
 		contentPane.add(list);
-		
+
 		JList list_1 = new JList();
 		list_1.setBounds(353, 154, 124, 199);
 		contentPane.add(list_1);
-		
+
 		JLabel lblListaDeClientes = new JLabel("Lista de clientes del proyecto");
 		lblListaDeClientes.setBounds(31, 126, 217, 16);
 		contentPane.add(lblListaDeClientes);
-		
+
 		JLabel lblListaDeRequisitos = new JLabel("Lista de requisitos del proyecto");
 		lblListaDeRequisitos.setBounds(313, 126, 217, 16);
 		contentPane.add(lblListaDeRequisitos);
-		
+
 		JButton btnAadirMsClientes = new JButton("Añadir más Clientes");
 		btnAadirMsClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -74,7 +76,7 @@ public class ConsultarProyecto extends JFrame {
 		});
 		btnAadirMsClientes.setBounds(45, 365, 170, 29);
 		contentPane.add(btnAadirMsClientes);
-		
+
 		JButton btnAadirMsRequisitos = new JButton("Añadir más Requisitos");
 		btnAadirMsRequisitos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -85,8 +87,21 @@ public class ConsultarProyecto extends JFrame {
 		});
 		btnAadirMsRequisitos.setBounds(333, 365, 170, 29);
 		contentPane.add(btnAadirMsRequisitos);
-		
+
 		JButton btnAtrs = new JButton("Atrás");
+		btnAtrs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (procedencia == "menu") {
+					Menu menu = new Menu();
+					menu.setVisible(true);
+				} else if (procedencia == "ConsultarProyectos") {
+					ConsultarProyectos consultarProyectos = new ConsultarProyectos();
+					consultarProyectos.setVisible(true);
+				}
+
+				dispose();
+			}
+		});
 		btnAtrs.setBounds(482, 429, 77, 29);
 		contentPane.add(btnAtrs);
 	}

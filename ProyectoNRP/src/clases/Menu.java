@@ -42,22 +42,11 @@ public class Menu extends JFrame {
 		setResizable(false);
 		setBounds(100, 100, 600, 500);
 		setLocationRelativeTo(null);
-		setUndecorated(true);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JButton btnSalir = new JButton("Salir");
-		btnSalir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		btnSalir.setBackground(new Color(204, 0, 0));
-		btnSalir.setForeground(Color.BLACK);
-		btnSalir.setBounds(501, 466, 89, 23);
-		contentPane.add(btnSalir);
 		
 		JButton crearCliente = new JButton("Crear Cliente");
 		crearCliente.addActionListener(new ActionListener() {
@@ -75,7 +64,7 @@ public class Menu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ConsultarClientes consultarclientes = new ConsultarClientes();
 				consultarclientes.setVisible(true);
-				//dispose();
+				dispose();
 			}
 		});
 		consultarClientes.setBounds(175, 181, 220, 29);
@@ -98,7 +87,8 @@ public class Menu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ConsultarProyectos consultarproyectos = new ConsultarProyectos();
 				consultarproyectos.setVisible(true);
-				//dispose();
+				consultarproyectos.procedencia="menu";
+				dispose();
 			}
 		});
 		consultarProyectos.setBounds(175, 290, 220, 29);

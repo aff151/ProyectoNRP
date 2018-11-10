@@ -44,7 +44,7 @@ public class ModificarProyecto extends JFrame {
 		setResizable(false);
 		setBounds(100, 100, 600, 500);
 		setLocationRelativeTo(null);
-		setUndecorated(true);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 public class ConsultarProyectos extends JFrame {
 
 	private JPanel contentPane;
-
+	public static String procedencia="";
 	/**
 	 * Launch the application.
 	 */
@@ -36,9 +36,10 @@ public class ConsultarProyectos extends JFrame {
 	 * Create the frame.
 	 */
 	public ConsultarProyectos() {
-		setUndecorated(true);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 192, 316);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -57,6 +58,7 @@ public class ConsultarProyectos extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ConsultarProyecto consultarproyecto = new ConsultarProyecto();
 				consultarproyecto.setVisible(true);
+				ConsultarProyecto.procedencia="ConsultarProyectos";
 				dispose();
 			}
 		});
@@ -77,8 +79,13 @@ public class ConsultarProyectos extends JFrame {
 		JButton btnAtrs = new JButton("Atrás");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(procedencia=="menu") {
 				Menu menu = new Menu();
 				menu.setVisible(true);
+				}else if(procedencia=="ConsultarProyecto"){
+					ConsultarProyecto consultarProyecto = new ConsultarProyecto();
+					consultarProyecto.setVisible(true);
+				}
 				dispose();
 			}
 		});
