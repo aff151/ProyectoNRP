@@ -24,7 +24,7 @@ public class CrearRequisito extends JFrame {
 	private JTextField txtNombreDelRequisito;
 	private JTextField txtPeso;
 	private JTextArea descripcion;
-	
+	public static String procedencia="";
 	BD_Requisitos req = new BD_Requisitos();
 
 	/**
@@ -96,6 +96,23 @@ public class CrearRequisito extends JFrame {
 		
 		btnCrearRequisitos.setBounds(52, 269, 190, 29);
 		contentPane.add(btnCrearRequisitos);
+		
+		JButton button = new JButton("Atrás");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(procedencia=="ConsultarProyecto") {
+					ConsultarProyecto consultarProyecto = new ConsultarProyecto();
+					consultarProyecto.setVisible(true);
+				} else if (procedencia == "ModificarProyecto") {
+					ModificarProyecto modificarProyecto = new ModificarProyecto();
+					modificarProyecto.setVisible(true);
+				}
+				dispose();
+				}
+			
+		});
+		button.setBounds(218, 310, 190, 29);
+		contentPane.add(button);
 		
 	}
 	public void crearRequisito() {

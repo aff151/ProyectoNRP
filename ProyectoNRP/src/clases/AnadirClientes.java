@@ -10,12 +10,15 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AnadirClientes extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-public static String procedencia="";
+	private JTextField txtImportancia;
+	public static String procedencia = "";
+
 	/**
 	 * Launch the application.
 	 */
@@ -36,39 +39,48 @@ public static String procedencia="";
 	 * Create the frame.
 	 */
 	public AnadirClientes() {
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 739, 522);
+		setBounds(100, 100, 236, 398);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblSeleccionarProyecto = new JLabel("Seleccionar Cliente");
-		lblSeleccionarProyecto.setBounds(30, 95, 141, 16);
+		lblSeleccionarProyecto.setBounds(52, 37, 141, 16);
 		contentPane.add(lblSeleccionarProyecto);
-		
+
 		JList list = new JList();
-		list.setBounds(18, 123, 176, 226);
+		list.setBounds(52, 65, 141, 226);
 		contentPane.add(list);
-		
+
 		JButton btnAgregar = new JButton("Agregar ");
-		btnAgregar.setBounds(601, 445, 117, 29);
+		btnAgregar.setBounds(119, 303, 86, 29);
 		contentPane.add(btnAgregar);
-		
+
 		JButton btnAtrs = new JButton("Atrás");
-		btnAtrs.setBounds(26, 445, 117, 29);
+		btnAtrs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (procedencia == "ConsultarProyecto") {
+					ConsultarProyecto consultarProyecto = new ConsultarProyecto();
+					consultarProyecto.setVisible(true);
+				} else if (procedencia == "ModificarProyecto") {
+					ModificarProyecto modificarProyecto = new ModificarProyecto();
+					modificarProyecto.setVisible(true);
+				}
+				dispose();
+			}
+		});
+		btnAtrs.setBounds(137, 340, 62, 29);
 		contentPane.add(btnAtrs);
-		
-		JLabel lblInroduceLaImportancia = new JLabel("Inroduce la importancia para el proyecto");
-		lblInroduceLaImportancia.setBounds(362, 143, 263, 16);
-		contentPane.add(lblInroduceLaImportancia);
-		
-		textField = new JTextField();
-		textField.setBounds(424, 183, 130, 26);
-		contentPane.add(textField);
-		textField.setColumns(10);
+
+		txtImportancia = new JTextField();
+		txtImportancia.setText("Importancia");
+		txtImportancia.setBounds(33, 303, 86, 26);
+		contentPane.add(txtImportancia);
+		txtImportancia.setColumns(10);
 	}
 
 }

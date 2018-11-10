@@ -63,6 +63,7 @@ public class ConsultarClientes extends JFrame {
 				
 				ConsultarCliente consultarCliente = new ConsultarCliente();
 				consultarCliente.setVisible(true);
+				consultarCliente.procedencia="ConsultarClientes";
 				dispose();
 			}
 		});
