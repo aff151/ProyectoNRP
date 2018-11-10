@@ -97,6 +97,7 @@ public class ModificarProyecto extends JFrame {
 		btnAtrs.setBounds(389, 447, 77, 29);
 		contentPane.add(btnAtrs);
 		
+		
 		JButton btnAadirMsClientes_1 = new JButton("Añadir más Clientes");
 		btnAadirMsClientes_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
