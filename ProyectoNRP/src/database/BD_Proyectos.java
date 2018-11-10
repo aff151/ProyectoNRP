@@ -1,5 +1,7 @@
 package database;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import org.orm.PersistentException;
@@ -21,5 +23,19 @@ public class BD_Proyectos {
 			// TODO Auto-generated catch block
 			t.rollback();
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Cliente> cargarProyectos() throws PersistentException {
+		PersistentTransaction t = database.BasededatosPersistentManager.instance().getSession().beginTransaction();
+		List<Cliente> listProyectos = new ArrayList<Cliente>();
+		try {
+			listProyectos = ProyectoDAO.queryProyecto(null, null);
+			t.commit();
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			t.rollback();
+		}
+		return listProyectos;
 	}
 }

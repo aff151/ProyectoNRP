@@ -57,6 +57,7 @@ public class CrearProyecto extends JFrame {
 		});
 	}
 
+	
 	/**
 	 * Create the frame.
 	 */
