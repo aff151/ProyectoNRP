@@ -6,16 +6,34 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.orm.PersistentException;
+
+import database.BD_Proyectos;
+import database.Cliente;
+import database.Proyecto;
+
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class ConsultarProyectos extends JFrame {
 
 	private JPanel contentPane;
 	public static String procedencia="";
+	private List<Proyecto> listPro;
+	private DefaultListModel<String> modelo;
+	private JList listProyectos;
+
+	BD_Proyectos bdProy = new BD_Proyectos();
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -49,9 +67,12 @@ public class ConsultarProyectos extends JFrame {
 		lblNewLabel.setBounds(30, 10, 150, 14);
 		contentPane.add(lblNewLabel);
 		
-		JList list = new JList();
-		list.setBounds(30, 36, 125, 147);
-		contentPane.add(list);
+		modelo = new DefaultListModel<String>();
+		
+		listProyectos = new JList();
+		listProyectos.setBounds(30, 36, 125, 147);
+		
+		contentPane.add(listProyectos);
 		
 		JButton btnConsultarProyecto = new JButton("Consultar Proyecto");
 		btnConsultarProyecto.addActionListener(new ActionListener() {
@@ -92,5 +113,18 @@ public class ConsultarProyectos extends JFrame {
 		});
 		btnAtrs.setBounds(56, 255, 71, 29);
 		contentPane.add(btnAtrs);
+		cargarProyectos();
+	}
+	public void cargarProyectos() {
+		try {
+			listPro = bdProy.cargarProyectos();
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(Proyecto c : listPro) {
+			modelo.addElement(c.getNombre());
+			listProyectos.setModel(modelo);
+		}
 	}
 }

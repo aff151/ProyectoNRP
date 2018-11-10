@@ -26,9 +26,9 @@ public class BD_Proyectos {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Cliente> cargarProyectos() throws PersistentException {
+	public List<Proyecto> cargarProyectos() throws PersistentException {
 		PersistentTransaction t = database.BasededatosPersistentManager.instance().getSession().beginTransaction();
-		List<Cliente> listProyectos = new ArrayList<Cliente>();
+		List<Proyecto> listProyectos = new ArrayList<Proyecto>();
 		try {
 			listProyectos = ProyectoDAO.queryProyecto(null, null);
 			t.commit();
