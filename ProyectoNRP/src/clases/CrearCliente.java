@@ -48,39 +48,7 @@ public class CrearCliente extends JFrame {
 	 */
 	public CrearCliente() {
 		
-		 setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz.class.getResource("/imagenes/icono.PNG")));
-		setResizable(false);
-		setBounds(100, 100, 600, 500);
-		setLocationRelativeTo(null);
-		setUndecorated(true);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		JButton btnIrAMenu = new JButton("Ir a menu ");
-		btnIrAMenu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Menu menu = new Menu();
-				menu.setVisible(true);
-				dispose();
-			}
-		});
-		btnIrAMenu.setBounds(204, 254, 107, 23);
-		contentPane.add(btnIrAMenu);
-		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(Interfaz.class.getResource("/imagenes/fondo.png")));
-		lblNewLabel.setBounds(0, 0, 600, 500);
-		contentPane.add(lblNewLabel);
-
-	//--------------------------------------------------------------------------------------------------------------------
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 767, 544);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		inicializar();		
 		
 		JList list = new JList();
 		list.setBackground(Color.WHITE);
@@ -91,17 +59,17 @@ public class CrearCliente extends JFrame {
 		lblNewLabel1.setBounds(52, 93, 160, 16);
 		contentPane.add(lblNewLabel1);
 		
-		JLabel lblIntroduceElPeso = new JLabel("Introduce la importancia  al cliente para el proyecto");
-		lblIntroduceElPeso.setBounds(353, 131, 334, 67);
+		JLabel lblIntroduceElPeso = new JLabel("Introduce el peso del cliente en el proyecto");
+		lblIntroduceElPeso.setBounds(262, 149, 267, 49);
 		contentPane.add(lblIntroduceElPeso);
 		
 		importanciaCliente = new JTextField();
-		importanciaCliente.setBounds(438, 198, 130, 26);
+		importanciaCliente.setBounds(310, 220, 130, 26);
 		contentPane.add(importanciaCliente);
 		importanciaCliente.setColumns(10);
 		
 		JButton crearClienteBoton = new JButton("Crear Cliente");
-		crearClienteBoton.setBounds(633, 469, 117, 29);
+		crearClienteBoton.setBounds(400, 373, 117, 29);
 		contentPane.add(crearClienteBoton);
 
 		/////////////////////////////////////
@@ -119,7 +87,7 @@ public class CrearCliente extends JFrame {
 		
 		
 		JButton volverInicio = new JButton("Atrás");
-		volverInicio.setBounds(6, 469, 117, 29);
+		volverInicio.setBounds(35, 373, 117, 29);
 		contentPane.add(volverInicio);
 		
 		volverInicio.addActionListener(new ActionListener() {
@@ -132,16 +100,29 @@ public class CrearCliente extends JFrame {
 		});
 		
 		JLabel lblIntroduceElNombre = new JLabel("Introduce el nombre del nuevo cliente");
-		lblIntroduceElNombre.setBounds(35, 23, 246, 16);
+		lblIntroduceElNombre.setBounds(35, 23, 245, 16);
 		contentPane.add(lblIntroduceElNombre);
 		
 		nombreTexttField = new JTextField();
-		nombreTexttField.setBounds(332, 18, 320, 26);
+		nombreTexttField.setBounds(285, 18, 232, 26);
 		contentPane.add(nombreTexttField);
 		nombreTexttField.setColumns(10);
 	}
+	
+	public void inicializar() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
+		setResizable(false);
+		setBounds(100, 100, 558, 454);
+		setLocationRelativeTo(null);
+		setTitle("Crear nuevo cliente");
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+	}
 
-	private static void addPopup(Component component, final JPopupMenu popup) {
+	/*private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				if (e.isPopupTrigger()) {
@@ -156,8 +137,8 @@ public class CrearCliente extends JFrame {
 			private void showMenu(MouseEvent e) {
 				popup.show(e.getComponent(), e.getX(), e.getY());
 			}
-		});
-	}
+		});*/
+	//}
 	
 
 }

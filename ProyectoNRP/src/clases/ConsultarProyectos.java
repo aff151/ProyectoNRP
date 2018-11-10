@@ -2,6 +2,7 @@ package clases;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -55,13 +56,7 @@ public class ConsultarProyectos extends JFrame {
 	 */
 	public ConsultarProyectos() {
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 192, 316);
-		setLocationRelativeTo(null);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		inicializar();
 		
 		JLabel lblNewLabel = new JLabel("Seleccionar Proyecto");
 		lblNewLabel.setBounds(30, 10, 150, 14);
@@ -115,6 +110,20 @@ public class ConsultarProyectos extends JFrame {
 		contentPane.add(btnAtrs);
 		cargarProyectos();
 	}
+	
+	public void inicializar() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
+		setResizable(false);
+		setBounds(100, 100, 192, 316);
+		setLocationRelativeTo(null);
+		//setTitle("Programa para gestión de requisitos");
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+	}
+	
 	public void cargarProyectos() {
 		try {
 			listPro = bdProy.cargarProyectos();

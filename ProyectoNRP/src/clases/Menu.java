@@ -1,6 +1,5 @@
 package clases;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.ImageIcon;
@@ -9,10 +8,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
-import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
+import java.awt.Color;
 
 public class Menu extends JFrame {
 
@@ -38,16 +37,28 @@ public class Menu extends JFrame {
 	 * Create the frame.
 	 */
 	public Menu() {
+		
+		inicializar();
+		
+		crearComponentes();
+		
+	}
+	
+	public void inicializar() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 600, 500);
+		setBounds(100, 100, 368, 323);
 		setLocationRelativeTo(null);
-		
+		setTitle("Programa para gestión de requisitos");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+	}
+	
+	public void crearComponentes() {
 		JButton crearCliente = new JButton("Crear Cliente");
 		crearCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -56,7 +67,7 @@ public class Menu extends JFrame {
 				dispose();
 			}
 		});
-		crearCliente.setBounds(175, 129, 220, 29);
+		crearCliente.setBounds(79, 60, 220, 29);
 		contentPane.add(crearCliente);
 		
 		JButton consultarClientes = new JButton("Consultar Clientes");
@@ -67,7 +78,7 @@ public class Menu extends JFrame {
 				dispose();
 			}
 		});
-		consultarClientes.setBounds(175, 181, 220, 29);
+		consultarClientes.setBounds(79, 115, 220, 29);
 		contentPane.add(consultarClientes);
 		
 		JButton crearProyecto = new JButton("Crear Proyecto");
@@ -79,7 +90,7 @@ public class Menu extends JFrame {
 			}
 		});
 		
-		crearProyecto.setBounds(175, 236, 220, 29);
+		crearProyecto.setBounds(79, 169, 220, 29);
 		contentPane.add(crearProyecto);
 		
 		JButton consultarProyectos = new JButton("Consultar Proyectos");
@@ -91,16 +102,12 @@ public class Menu extends JFrame {
 				dispose();
 			}
 		});
-		consultarProyectos.setBounds(175, 290, 220, 29);
+		consultarProyectos.setBounds(79, 226, 220, 29);
 		contentPane.add(consultarProyectos);
 		
 		JLabel lblInicioDeLa = new JLabel("Inicio de la Aplicación");
-		lblInicioDeLa.setBounds(221, 71, 139, 16);
+		lblInicioDeLa.setBackground(Color.RED);
+		lblInicioDeLa.setBounds(128, 22, 139, 16);
 		contentPane.add(lblInicioDeLa);
-		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(Menu.class.getResource("/imagenes/fondo.png")));
-		lblNewLabel.setBounds(0, 0, 600, 500);
-		contentPane.add(lblNewLabel);
 	}
 }

@@ -1,6 +1,5 @@
 package clases;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
@@ -8,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.management.Notification;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,7 +21,6 @@ import javax.swing.border.EmptyBorder;
 import org.orm.PersistentException;
 
 import database.BD_Clientes;
-import database.BD_Principal;
 import database.BD_Proyectos;
 import database.Cliente;
 
@@ -62,28 +59,20 @@ public class CrearProyecto extends JFrame {
 	 * Create the frame.
 	 */
 	public CrearProyecto() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz.class.getResource("/imagenes/icono.PNG")));
-		setResizable(false);
-		setBounds(100, 100, 600, 500);
-		setLocationRelativeTo(null);
-		setUndecorated(true);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		inicializar();
+		
 		
 		JButton btnAtras = new JButton("Atrás");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*Menu menu = new Menu();
+				Menu menu = new Menu();
 				menu.setVisible(true);
-				dispose();*/
-				System.out.println(listClientes.getSelectedValuesList().get(1).toString());
+				dispose();
 			}
 		});
 		
 		tAreaDesc = new JTextArea();
-		tAreaDesc.setBounds(312, 58, 252, 74);
+		tAreaDesc.setBounds(268, 58, 252, 74);
 		tAreaDesc.setLineWrap(true);
 		tAreaDesc.setWrapStyleWord(true);
 		contentPane.add(tAreaDesc);
@@ -91,7 +80,7 @@ public class CrearProyecto extends JFrame {
 		JLabel lblDescripcion = new JLabel("Descripción");
 		lblDescripcion.setBounds(173, 63, 99, 14);
 		contentPane.add(lblDescripcion);
-		btnAtras.setBounds(473, 460, 117, 29);
+		btnAtras.setBounds(35, 431, 117, 29);
 		contentPane.add(btnAtras);
 		
 		JButton btnCrearProyecto = new JButton("Crear Proyecto");
@@ -100,11 +89,11 @@ public class CrearProyecto extends JFrame {
 				crearProyecto();
 			}
 		});
-		btnCrearProyecto.setBounds(256, 370, 133, 29);
+		btnCrearProyecto.setBounds(388, 431, 133, 29);
 		contentPane.add(btnCrearProyecto);
 		
 		textFNombre = new JTextField();
-		textFNombre.setBounds(312, 18, 252, 26);
+		textFNombre.setBounds(268, 18, 252, 26);
 		contentPane.add(textFNombre);
 		textFNombre.setColumns(10);
 		
@@ -120,12 +109,12 @@ public class CrearProyecto extends JFrame {
 		
 		modelo = new DefaultListModel();
 		
-		JLabel lblIntrodImport = new JLabel("Introduce la importancia del cliente para el proyecto");
-		lblIntrodImport.setBounds(294, 160, 306, 16);
+		JLabel lblIntrodImport = new JLabel("Introduce el peso del cliente en el proyecto");
+		lblIntrodImport.setBounds(275, 189, 297, 16);
 		contentPane.add(lblIntrodImport);
 		
 		textFImport = new JTextField();
-		textFImport.setBounds(393, 186, 80, 26);
+		textFImport.setBounds(343, 228, 80, 26);
 		contentPane.add(textFImport);
 		textFImport.setColumns(10);
 		
@@ -140,6 +129,20 @@ public class CrearProyecto extends JFrame {
 		
 		cargarClientes();
 	}
+	
+	public void inicializar() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
+		setResizable(false);
+		setBounds(100, 100, 549, 500);
+		setLocationRelativeTo(null);
+		//setTitle("Programa para gestión de requisitos");
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+	}
+	
 	public void crearProyecto() {
 		try {
 			bdProy.crearProyecto(textFNombre.getText(), tAreaDesc.getText());

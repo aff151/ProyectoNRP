@@ -13,6 +13,7 @@ import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JTextField;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -41,20 +42,14 @@ public class ConsultarClientes extends JFrame {
 	 */
 	public ConsultarClientes() {
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 187, 300);
-		setLocationRelativeTo(null);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		inicializar();
 		
 		JLabel seleccionarClientes = new JLabel("Seleccionar Clientes");
-		seleccionarClientes.setBounds(32, 6, 440, 16);
+		seleccionarClientes.setBounds(49, 30, 127, 16);
 		contentPane.add(seleccionarClientes);
 		
 		JList list = new JList();
-		list.setBounds(32, 35, 124, 146);
+		list.setBounds(34, 60, 143, 146);
 		contentPane.add(list);
 		
 		JButton btnConsultar = new JButton("Consultar");
@@ -67,8 +62,8 @@ public class ConsultarClientes extends JFrame {
 				dispose();
 			}
 		});
-		btnConsultar.setBackground(SystemColor.textHighlight);
-		btnConsultar.setBounds(32, 193, 117, 29);
+		btnConsultar.setBackground(new Color(50, 205, 50));
+		btnConsultar.setBounds(46, 217, 117, 29);
 		contentPane.add(btnConsultar);
 		
 		JButton btnAtrs = new JButton("Atrás");
@@ -79,7 +74,20 @@ public class ConsultarClientes extends JFrame {
 				dispose();
 			}
 		});
-		btnAtrs.setBounds(32, 228, 117, 29);
+		btnAtrs.setBounds(46, 257, 117, 29);
 		contentPane.add(btnAtrs);
+	}
+	
+	public void inicializar() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
+		setResizable(false);
+		setBounds(100, 100, 219, 326);
+		setLocationRelativeTo(null);
+		//setTitle("Programa para gestión de requisitos");
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 	}
 }
