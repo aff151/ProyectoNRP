@@ -121,5 +121,6 @@ public class CrearProyecto extends JFrame {
 	}
 	public void crearProyecto() {
 		bdProy.crearProyecto(textFNombre.getText(), tAreaDesc.getText());
+		//
 	}
 }
