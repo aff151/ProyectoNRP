@@ -36,9 +36,10 @@ public class ConsultarCliente extends JFrame {
 	 * Create the frame.
 	 */
 	public ConsultarCliente() {
-		setUndecorated(true);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 500);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -67,8 +68,10 @@ public class ConsultarCliente extends JFrame {
 		JButton btnAadirMsClientes = new JButton("Consultar Proyecto");
 		btnAadirMsClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				ConsultarProyecto consultarProyecto = new ConsultarProyecto();
 				consultarProyecto.setVisible(true);
+				consultarProyecto.procedencia="ConsultarCliente";
 				dispose();
 			}
 		});
@@ -87,6 +90,13 @@ public class ConsultarCliente extends JFrame {
 		contentPane.add(btnAadirMsRequisitos);
 		
 		JButton btnAtrs = new JButton("Atrás");
+		btnAtrs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultarRequisito consultarRequisito = new ConsultarRequisito();
+				consultarRequisito.setVisible(true);
+				dispose();
+			}
+		});
 		btnAtrs.setBounds(482, 429, 77, 29);
 		contentPane.add(btnAtrs);
 		

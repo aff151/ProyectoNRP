@@ -36,9 +36,10 @@ public class ConsultarRequisito extends JFrame {
 	 * Create the frame.
 	 */
 	public ConsultarRequisito() {
-		setUndecorated(true);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 500);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
