@@ -15,7 +15,8 @@ import java.awt.event.ActionEvent;
 public class ConsultarRequisito extends JFrame {
 
 	private JPanel contentPane;
-	public static String procedencia="";
+	public static String procedencia = "";
+
 	/**
 	 * Launch the application.
 	 */
@@ -36,7 +37,7 @@ public class ConsultarRequisito extends JFrame {
 	 * Create the frame.
 	 */
 	public ConsultarRequisito() {
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 500);
 		setLocationRelativeTo(null);
@@ -44,42 +45,63 @@ public class ConsultarRequisito extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblConsultaDelRequisito = new JLabel("Consulta del requisito");
-		lblConsultaDelRequisito.setBounds(233, 11, 110, 14);
+		lblConsultaDelRequisito.setBounds(214, 17, 170, 14);
 		contentPane.add(lblConsultaDelRequisito);
-		
+
 		JList list = new JList();
 		list.setBounds(51, 84, 183, 282);
 		contentPane.add(list);
-		
+
 		JList list_1 = new JList();
 		list_1.setBounds(358, 84, 183, 282);
 		contentPane.add(list_1);
-		
+
 		JButton btnConsultarProyecto = new JButton("Consultar Proyecto");
-		btnConsultarProyecto.setBounds(78, 377, 133, 23);
+		btnConsultarProyecto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultarProyecto consultarProyecto = new ConsultarProyecto();
+				consultarProyecto.setVisible(true);
+				consultarProyecto.procedencia = "ConsultarRequisito";
+				dispose();
+			}
+		});
+		btnConsultarProyecto.setBounds(61, 377, 156, 23);
 		contentPane.add(btnConsultarProyecto);
-		
+
 		JButton btnConsultarCliente = new JButton("Consultar Cliente");
 		btnConsultarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConsultarCliente consultarCliente = new ConsultarCliente();
 				consultarCliente.setVisible(true);
-				consultarCliente.procedencia="ConsultarRequisito";
+				consultarCliente.procedencia = "ConsultarRequisito";
 				dispose();
 			}
 		});
 		btnConsultarCliente.setBounds(383, 377, 133, 23);
 		contentPane.add(btnConsultarCliente);
-		
+
 		JLabel lblListaDeProyectos = new JLabel("Lista de Proyectos Asociados");
-		lblListaDeProyectos.setBounds(65, 59, 156, 14);
+		lblListaDeProyectos.setBounds(37, 59, 196, 14);
 		contentPane.add(lblListaDeProyectos);
-		
+
 		JLabel lblListaDeClientes = new JLabel("Lista de Clientes Asociados");
-		lblListaDeClientes.setBounds(369, 59, 156, 14);
+		lblListaDeClientes.setBounds(352, 59, 189, 14);
 		contentPane.add(lblListaDeClientes);
+
+		JButton btnAtrs = new JButton("Atrás");
+		btnAtrs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (procedencia == "ConsultarCliente") {
+					ConsultarCliente consultarCliente = new ConsultarCliente();
+					consultarCliente.setVisible(true);
+				}
+				dispose();
+			}
+		});
+		btnAtrs.setBounds(491, 434, 83, 23);
+		contentPane.add(btnAtrs);
 	}
 
 }

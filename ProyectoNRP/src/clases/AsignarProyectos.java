@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AsignarProyectos extends JFrame {
 
@@ -37,7 +39,7 @@ public class AsignarProyectos extends JFrame {
 	public AsignarProyectos() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 223, 310);
+		setBounds(100, 100, 223, 336);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -63,8 +65,19 @@ public class AsignarProyectos extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		JButton btnAsignarProyectos = new JButton("Asignar Proyectos");
-		btnAsignarProyectos.setBounds(39, 243, 155, 29);
+		btnAsignarProyectos.setBounds(34, 245, 155, 29);
 		contentPane.add(btnAsignarProyectos);
+		
+		JButton button = new JButton("Atrás");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultarCliente consultarCliente = new ConsultarCliente();
+				consultarCliente.setVisible(true);				
+				dispose();
+			}
+		});
+		button.setBounds(130, 279, 69, 29);
+		contentPane.add(button);
 	}
 
 }

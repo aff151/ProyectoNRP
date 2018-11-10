@@ -71,6 +71,7 @@ public class ConsultarProyecto extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				AnadirClientes anadirClientes = new AnadirClientes();
 				anadirClientes.setVisible(true);
+				anadirClientes.procedencia="ConsultarProyecto";
 				dispose();
 			}
 		});
@@ -80,8 +81,9 @@ public class ConsultarProyecto extends JFrame {
 		JButton btnAadirMsRequisitos = new JButton("Añadir más Requisitos");
 		btnAadirMsRequisitos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AnadirClientes anadirClientes = new AnadirClientes();
-				anadirClientes.setVisible(true);
+				CrearRequisito crearRequisito = new CrearRequisito();
+				crearRequisito.setVisible(true);
+				crearRequisito.procedencia="ConsultarProyectos";
 				dispose();
 			}
 		});

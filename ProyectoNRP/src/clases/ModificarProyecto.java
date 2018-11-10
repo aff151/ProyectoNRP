@@ -77,10 +77,7 @@ public class ModificarProyecto extends JFrame {
 		JButton btnAadirMsRequisitos = new JButton("Eliminar Requisitos");
 		btnAadirMsRequisitos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CrearRequisito crearRequisito = new CrearRequisito();
-				crearRequisito.setVisible(true);
-				//crearRequisito.procedencia="ModificarProyecto";
-				dispose();
+				
 			}
 		});
 		btnAadirMsRequisitos.setBounds(333, 365, 170, 29);
@@ -92,7 +89,6 @@ public class ModificarProyecto extends JFrame {
 				if(procedencia=="ConsultarProyectos") {
 				ConsultarProyectos consultarProyectos = new ConsultarProyectos();
 				consultarProyectos.setVisible(true);
-				
 				}
 				dispose();
 			}
@@ -115,9 +111,9 @@ public class ModificarProyecto extends JFrame {
 		JButton btnAadirMsRequisitos_1 = new JButton("Añadir más Requisitos");
 		btnAadirMsRequisitos_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AnadirClientes anadirClientes = new AnadirClientes();
-				anadirClientes.setVisible(true);
-				anadirClientes.procedencia="ModificarProyecto";
+				CrearRequisito crearRequisito = new CrearRequisito();
+				crearRequisito.setVisible(true);				
+				crearRequisito.procedencia="ModificarProyecto";
 				dispose();
 			}
 		});
