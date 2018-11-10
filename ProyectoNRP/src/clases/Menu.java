@@ -62,22 +62,43 @@ public class Menu extends JFrame {
 		JButton crearCliente = new JButton("Crear Cliente");
 		crearCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				CrearCliente crearcliente = new CrearCliente();
+				crearcliente.setVisible(true);
+				dispose();
 			}
 		});
 		crearCliente.setBounds(175, 129, 220, 29);
 		contentPane.add(crearCliente);
 		
 		JButton consultarClientes = new JButton("Consultar Clientes");
+		consultarClientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultarClientes consultarclientes = new ConsultarClientes();
+				consultarclientes.setVisible(true);
+				dispose();
+			}
+		});
 		consultarClientes.setBounds(175, 181, 220, 29);
 		contentPane.add(consultarClientes);
 		
 		JButton crearProyecto = new JButton("Crear Proyecto");
+		crearProyecto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CrearProyecto crearproyecto = new CrearProyecto();
+				crearproyecto.setVisible(true);				
+				dispose();
+			}
+		});
+		
 		crearProyecto.setBounds(175, 236, 220, 29);
 		contentPane.add(crearProyecto);
 		
 		JButton consultarProyectos = new JButton("Consultar Proyectos");
 		consultarProyectos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ConsultarProyectos consultarproyectos = new ConsultarProyectos();
+				consultarproyectos.setVisible(true);
+				//dispose();
 			}
 		});
 		consultarProyectos.setBounds(175, 290, 220, 29);

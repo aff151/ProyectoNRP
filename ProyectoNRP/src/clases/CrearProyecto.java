@@ -52,6 +52,13 @@ public class CrearProyecto extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnAtras = new JButton("Atrás");
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Menu menu = new Menu();
+				menu.setVisible(true);
+				dispose();
+			}
+		});
 		btnAtras.setBounds(473, 460, 117, 29);
 		contentPane.add(btnAtras);
 		
