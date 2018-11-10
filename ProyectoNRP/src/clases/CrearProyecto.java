@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.management.Notification;
 import javax.swing.ImageIcon;
@@ -19,8 +20,11 @@ import javax.swing.border.EmptyBorder;
 
 import org.orm.PersistentException;
 
+import database.BD_Clientes;
 import database.BD_Principal;
 import database.BD_Proyectos;
+import database.Cliente;
+
 import javax.swing.JTextArea;
 
 public class CrearProyecto extends JFrame {
@@ -29,8 +33,11 @@ public class CrearProyecto extends JFrame {
 	private JTextField textFImport;
 	private JTextField textFNombre;
 	private JTextArea tAreaDesc;
+	private JList listClientes;
+	private List<Cliente> listCli;
 	
 	BD_Proyectos bdProy = new BD_Proyectos();
+	BD_Clientes bdCli = new BD_Clientes();
 	/**
 	 * Launch the application.
 	 */
@@ -98,10 +105,10 @@ public class CrearProyecto extends JFrame {
 		lblIntrodProyecto.setBounds(35, 23, 237, 16);
 		contentPane.add(lblIntrodProyecto);
 		
-		JList list = new JList();
-		list.setBackground(Color.WHITE);
-		list.setBounds(35, 173, 189, 226);
-		contentPane.add(list);
+		listClientes = new JList();
+		listClientes.setBackground(Color.WHITE);
+		listClientes.setBounds(35, 173, 189, 226);
+		contentPane.add(listClientes);
 		
 		JLabel lblIntrodImport = new JLabel("Introduce la importancia del cliente para el proyecto");
 		lblIntrodImport.setBounds(294, 160, 306, 16);
@@ -120,6 +127,8 @@ public class CrearProyecto extends JFrame {
 		lblFondo.setIcon(new ImageIcon(CrearProyecto.class.getResource("/imagenes/fondo.png")));
 		lblFondo.setBounds(0, 0, 600, 500);
 		contentPane.add(lblFondo);
+		
+		cargarClientes();
 	}
 	public void crearProyecto() {
 		try {
@@ -127,6 +136,17 @@ public class CrearProyecto extends JFrame {
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	public void cargarClientes() {
+		try {
+			listCli = bdCli.cargarClientes();
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(Cliente c : listCli) {
+			//listClientes.add
 		}
 	}
 }
