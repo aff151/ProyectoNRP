@@ -36,6 +36,7 @@ public class AnadirClientes extends JFrame {
 	 * Create the frame.
 	 */
 	public AnadirClientes() {
+		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 739, 522);
 		contentPane = new JPanel();

@@ -13,6 +13,8 @@ import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JTextField;
 import java.awt.SystemColor;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ConsultarClientes extends JFrame {
 
@@ -38,6 +40,7 @@ public class ConsultarClientes extends JFrame {
 	 * Create the frame.
 	 */
 	public ConsultarClientes() {
+		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 187, 300);
 		contentPane = new JPanel();
@@ -54,11 +57,25 @@ public class ConsultarClientes extends JFrame {
 		contentPane.add(list);
 		
 		JButton btnConsultar = new JButton("Consultar");
+		btnConsultar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultarCliente consultarCliente = new ConsultarCliente();
+				consultarCliente.setVisible(true);
+				dispose();
+			}
+		});
 		btnConsultar.setBackground(SystemColor.textHighlight);
 		btnConsultar.setBounds(32, 193, 117, 29);
 		contentPane.add(btnConsultar);
 		
 		JButton btnAtrs = new JButton("Atrás");
+		btnAtrs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Menu menu = new Menu();
+				menu.setVisible(true);
+				dispose();
+			}
+		});
 		btnAtrs.setBounds(32, 228, 117, 29);
 		contentPane.add(btnAtrs);
 	}

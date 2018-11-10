@@ -75,7 +75,7 @@ public class Menu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ConsultarClientes consultarclientes = new ConsultarClientes();
 				consultarclientes.setVisible(true);
-				dispose();
+				//dispose();
 			}
 		});
 		consultarClientes.setBounds(175, 181, 220, 29);

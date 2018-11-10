@@ -36,6 +36,7 @@ public class ConsultarProyecto extends JFrame {
 	 * Create the frame.
 	 */
 	public ConsultarProyecto() {
+		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 500);
 		contentPane = new JPanel();
@@ -64,12 +65,22 @@ public class ConsultarProyecto extends JFrame {
 		contentPane.add(lblListaDeRequisitos);
 		
 		JButton btnAadirMsClientes = new JButton("Añadir más Clientes");
+		btnAadirMsClientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AnadirClientes anadirClientes = new AnadirClientes();
+				anadirClientes.setVisible(true);
+				dispose();
+			}
+		});
 		btnAadirMsClientes.setBounds(45, 365, 170, 29);
 		contentPane.add(btnAadirMsClientes);
 		
 		JButton btnAadirMsRequisitos = new JButton("Añadir más Requisitos");
 		btnAadirMsRequisitos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AnadirClientes anadirClientes = new AnadirClientes();
+				anadirClientes.setVisible(true);
+				dispose();
 			}
 		});
 		btnAadirMsRequisitos.setBounds(333, 365, 170, 29);

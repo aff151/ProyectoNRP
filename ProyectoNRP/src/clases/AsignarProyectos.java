@@ -35,6 +35,7 @@ public class AsignarProyectos extends JFrame {
 	 * Create the frame.
 	 */
 	public AsignarProyectos() {
+		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 223, 310);
 		contentPane = new JPanel();

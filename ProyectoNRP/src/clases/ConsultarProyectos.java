@@ -36,6 +36,7 @@ public class ConsultarProyectos extends JFrame {
 	 * Create the frame.
 	 */
 	public ConsultarProyectos() {
+		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 192, 316);
 		contentPane = new JPanel();
