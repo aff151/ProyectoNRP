@@ -15,7 +15,7 @@ public class AnadirClientes extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-
+public static String procedencia="";
 	/**
 	 * Launch the application.
 	 */

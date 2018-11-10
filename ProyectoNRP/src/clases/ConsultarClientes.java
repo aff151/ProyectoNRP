@@ -17,7 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class ConsultarClientes extends JFrame {
-
+	public static String procedencia="";
 	private JPanel contentPane;
 
 	/**
@@ -60,6 +60,7 @@ public class ConsultarClientes extends JFrame {
 		JButton btnConsultar = new JButton("Consultar");
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				ConsultarCliente consultarCliente = new ConsultarCliente();
 				consultarCliente.setVisible(true);
 				dispose();

@@ -70,6 +70,7 @@ public class ConsultarProyectos extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ModificarProyecto modificarProyecto = new ModificarProyecto();
 				modificarProyecto.setVisible(true);
+				modificarProyecto.procedencia="ConsultarProyectos";
 				dispose();
 			}
 		});

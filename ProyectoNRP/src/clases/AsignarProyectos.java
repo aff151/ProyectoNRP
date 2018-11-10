@@ -14,7 +14,7 @@ public class AsignarProyectos extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtPeso;
-
+	public static String procedencia="";
 	/**
 	 * Launch the application.
 	 */

@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 public class ConsultarRequisito extends JFrame {
 
 	private JPanel contentPane;
-
+	public static String procedencia="";
 	/**
 	 * Launch the application.
 	 */
@@ -64,6 +64,10 @@ public class ConsultarRequisito extends JFrame {
 		JButton btnConsultarCliente = new JButton("Consultar Cliente");
 		btnConsultarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				ConsultarCliente consultarCliente = new ConsultarCliente();
+				consultarCliente.setVisible(true);
+				consultarCliente.procedencia="ConsultarRequisito";
+				dispose();
 			}
 		});
 		btnConsultarCliente.setBounds(383, 377, 133, 23);

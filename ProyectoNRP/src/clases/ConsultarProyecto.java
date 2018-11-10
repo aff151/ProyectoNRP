@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 public class ConsultarProyecto extends JFrame {
 
 	private JPanel contentPane;
-	public static String procedencia = "";
+	public static String procedencia="";
 
 	/**
 	 * Launch the application.
@@ -91,9 +91,9 @@ public class ConsultarProyecto extends JFrame {
 		JButton btnAtrs = new JButton("Atrás");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (procedencia == "menu") {
-					Menu menu = new Menu();
-					menu.setVisible(true);
+				if (procedencia == "ConsultarCliente") {
+					ConsultarCliente consultarCliente = new ConsultarCliente();
+					consultarCliente.setVisible(true);
 				} else if (procedencia == "ConsultarProyectos") {
 					ConsultarProyectos consultarProyectos = new ConsultarProyectos();
 					consultarProyectos.setVisible(true);

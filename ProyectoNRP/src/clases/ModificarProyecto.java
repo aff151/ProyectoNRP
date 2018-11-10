@@ -18,7 +18,7 @@ import java.awt.event.ActionEvent;
 public class ModificarProyecto extends JFrame {
 
 	private JPanel contentPane;
-
+	public static String procedencia="";
 	/**
 	 * Launch the application.
 	 */
@@ -49,17 +49,6 @@ public class ModificarProyecto extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-		JButton btnSalir = new JButton("Salir");
-		btnSalir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		btnSalir.setBackground(new Color(204, 0, 0));
-		btnSalir.setForeground(Color.BLACK);
-		btnSalir.setBounds(487, 450, 89, 23);
-		contentPane.add(btnSalir);
 		
 		JLabel lblConsultaDelProyecto = new JLabel("Modificación del proyecto...");
 		lblConsultaDelProyecto.setBounds(31, 40, 184, 16);
@@ -88,24 +77,50 @@ public class ModificarProyecto extends JFrame {
 		JButton btnAadirMsRequisitos = new JButton("Eliminar Requisitos");
 		btnAadirMsRequisitos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				CrearRequisito crearRequisito = new CrearRequisito();
+				crearRequisito.setVisible(true);
+				//crearRequisito.procedencia="ModificarProyecto";
+				dispose();
 			}
 		});
 		btnAadirMsRequisitos.setBounds(333, 365, 170, 29);
 		contentPane.add(btnAadirMsRequisitos);
 
 		JButton btnAtrs = new JButton("Atrás");
-		btnAtrs.setBounds(389, 447, 77, 29);
+		btnAtrs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(procedencia=="ConsultarProyectos") {
+				ConsultarProyectos consultarProyectos = new ConsultarProyectos();
+				consultarProyectos.setVisible(true);
+				
+				}
+				dispose();
+			}
+		});
+		btnAtrs.setBounds(491, 443, 77, 29);
 		contentPane.add(btnAtrs);
 
 		JButton btnAadirMsClientes_1 = new JButton("Añadir más Clientes");
 		btnAadirMsClientes_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AnadirClientes anadirClientes = new AnadirClientes();
+				anadirClientes.setVisible(true);
+				anadirClientes.procedencia="ModificarProyecto";
+				dispose();
 			}
 		});
 		btnAadirMsClientes_1.setBounds(45, 391, 170, 29);
 		contentPane.add(btnAadirMsClientes_1);
 
 		JButton btnAadirMsRequisitos_1 = new JButton("Añadir más Requisitos");
+		btnAadirMsRequisitos_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AnadirClientes anadirClientes = new AnadirClientes();
+				anadirClientes.setVisible(true);
+				anadirClientes.procedencia="ModificarProyecto";
+				dispose();
+			}
+		});
 		btnAadirMsRequisitos_1.setBounds(333, 391, 170, 29);
 		contentPane.add(btnAadirMsRequisitos_1);
 		

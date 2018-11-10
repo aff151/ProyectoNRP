@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 public class ConsultarCliente extends JFrame {
 
 	private JPanel contentPane;
-
+	public static String procedencia="";
 	/**
 	 * Launch the application.
 	 */
@@ -92,8 +92,9 @@ public class ConsultarCliente extends JFrame {
 		JButton btnAtrs = new JButton("Atrás");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(procedencia=="ConsultarRequisito") {
 				ConsultarRequisito consultarRequisito = new ConsultarRequisito();
-				consultarRequisito.setVisible(true);
+				consultarRequisito.setVisible(true);}
 				dispose();
 			}
 		});
