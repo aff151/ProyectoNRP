@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import org.orm.PersistentException;
+
 import database.BD_Principal;
 import database.BD_Proyectos;
 import javax.swing.JTextArea;
@@ -120,7 +122,11 @@ public class CrearProyecto extends JFrame {
 		contentPane.add(lblFondo);
 	}
 	public void crearProyecto() {
-		bdProy.crearProyecto(textFNombre.getText(), tAreaDesc.getText());
-		//
+		try {
+			bdProy.crearProyecto(textFNombre.getText(), tAreaDesc.getText());
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
