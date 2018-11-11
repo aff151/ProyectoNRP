@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -50,9 +51,10 @@ public class ModificarProyecto extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblConsultaDelProyecto = new JLabel("Modificación del proyecto...");
-		lblConsultaDelProyecto.setBounds(31, 40, 184, 16);
-		contentPane.add(lblConsultaDelProyecto);
+		JLabel lblNombreProyecto = new JLabel(ConsultarProyectos.proySeleccionado);
+		lblNombreProyecto.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNombreProyecto.setBounds(171, 43, 174, 16);
+		contentPane.add(lblNombreProyecto);
 
 		JList list = new JList();
 		list.setBounds(68, 154, 124, 199);

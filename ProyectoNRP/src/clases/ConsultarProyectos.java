@@ -28,6 +28,7 @@ public class ConsultarProyectos extends JFrame {
 
 	private JPanel contentPane;
 	public static String procedencia="";
+	public static String proySeleccionado = "";
 	private List<Proyecto> listPro;
 	private DefaultListModel<String> modelo;
 	private JList listProyectos;
@@ -72,6 +73,7 @@ public class ConsultarProyectos extends JFrame {
 		JButton btnConsultarProyecto = new JButton("Consultar Proyecto");
 		btnConsultarProyecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				proySeleccionado = listProyectos.getSelectedValue().toString();
 				ConsultarProyecto consultarproyecto = new ConsultarProyecto();
 				consultarproyecto.setVisible(true);
 				ConsultarProyecto.procedencia="ConsultarProyectos";
@@ -84,6 +86,7 @@ public class ConsultarProyectos extends JFrame {
 		JButton btnModificarProyecto = new JButton("Modificar Proyecto");
 		btnModificarProyecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				proySeleccionado = listProyectos.getSelectedValue().toString();
 				ModificarProyecto modificarProyecto = new ModificarProyecto();
 				modificarProyecto.setVisible(true);
 				modificarProyecto.procedencia="ConsultarProyectos";

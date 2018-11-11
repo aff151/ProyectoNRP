@@ -11,6 +11,7 @@ import javax.swing.JList;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class ConsultarProyecto extends JFrame {
 
@@ -46,9 +47,10 @@ public class ConsultarProyecto extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblConsultaDelProyecto = new JLabel("Consulta del proyecto...");
-		lblConsultaDelProyecto.setBounds(31, 43, 174, 16);
-		contentPane.add(lblConsultaDelProyecto);
+		JLabel lblNombreProyecto = new JLabel(ConsultarProyectos.proySeleccionado);
+		lblNombreProyecto.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNombreProyecto.setBounds(171, 43, 174, 16);
+		contentPane.add(lblNombreProyecto);
 
 		JList list = new JList();
 		list.setBounds(68, 154, 124, 199);
