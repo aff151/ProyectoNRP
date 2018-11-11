@@ -7,12 +7,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.management.Notification;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -29,12 +31,12 @@ import javax.swing.JTextArea;
 public class CrearProyecto extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textFImport;
+	//private JTextField textFImport;
 	private JTextField textFNombre;
 	private JTextArea tAreaDesc;
-	private JList listClientes;
+	/*private JList listClientes;
 	private List<Cliente> listCli;
-	private DefaultListModel modelo;
+	private DefaultListModel modelo;*/
 	
 	BD_Proyectos bdProy = new BD_Proyectos();
 	BD_Clientes bdCli = new BD_Clientes();
@@ -72,13 +74,13 @@ public class CrearProyecto extends JFrame {
 		});
 		
 		tAreaDesc = new JTextArea();
-		tAreaDesc.setBounds(268, 58, 252, 74);
+		tAreaDesc.setBounds(269, 191, 252, 74);
 		tAreaDesc.setLineWrap(true);
 		tAreaDesc.setWrapStyleWord(true);
 		contentPane.add(tAreaDesc);
 		
 		JLabel lblDescripcion = new JLabel("Descripción");
-		lblDescripcion.setBounds(173, 63, 99, 14);
+		lblDescripcion.setBounds(160, 196, 99, 14);
 		contentPane.add(lblDescripcion);
 		btnAtras.setBounds(35, 431, 117, 29);
 		contentPane.add(btnAtras);
@@ -93,15 +95,15 @@ public class CrearProyecto extends JFrame {
 		contentPane.add(btnCrearProyecto);
 		
 		textFNombre = new JTextField();
-		textFNombre.setBounds(268, 18, 252, 26);
+		textFNombre.setBounds(269, 100, 252, 26);
 		contentPane.add(textFNombre);
 		textFNombre.setColumns(10);
 		
 		JLabel lblIntrodProyecto = new JLabel("Introduce el nombre del nuevo proyecto");
-		lblIntrodProyecto.setBounds(35, 23, 237, 16);
+		lblIntrodProyecto.setBounds(22, 105, 237, 16);
 		contentPane.add(lblIntrodProyecto);
 		
-		listClientes = new JList();
+		/*listClientes = new JList();
 		listClientes.setBackground(Color.WHITE);
 		listClientes.setBounds(35, 173, 189, 226);
 		listClientes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -120,14 +122,14 @@ public class CrearProyecto extends JFrame {
 		
 		JLabel lblSelecCliente = new JLabel("Seleccionar Cliente");
 		lblSelecCliente.setBounds(82, 146, 122, 16);
-		contentPane.add(lblSelecCliente);
+		contentPane.add(lblSelecCliente);*/
 		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setIcon(new ImageIcon(CrearProyecto.class.getResource("/imagenes/fondo.png")));
 		lblFondo.setBounds(0, 0, 600, 500);
 		contentPane.add(lblFondo);
 		
-		cargarClientes();
+		//cargarClientes();
 	}
 	
 	public void inicializar() {
@@ -145,13 +147,19 @@ public class CrearProyecto extends JFrame {
 	
 	public void crearProyecto() {
 		try {
-			bdProy.crearProyecto(textFNombre.getText(), tAreaDesc.getText());
+			if(textFNombre.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "Debe introducir el nombre del proyecto", "MENSAJE", JOptionPane.WARNING_MESSAGE);
+			} else {
+				bdProy.crearProyecto(textFNombre.getText(), tAreaDesc.getText());
+				textFNombre.setText("");
+				tAreaDesc.setText("");
+			}
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	public void cargarClientes() {
+	/*public void cargarClientes() {
 		try {
 			listCli = bdCli.cargarClientes();
 		} catch (PersistentException e) {
@@ -162,5 +170,5 @@ public class CrearProyecto extends JFrame {
 			modelo.addElement(c.getNombre());
 			listClientes.setModel(modelo);
 		}
-	}
+	}*/
 }
