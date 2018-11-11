@@ -7,17 +7,30 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.orm.PersistentException;
+
+import database.BD_Clientes;
+import database.BD_Proyectos;
+import database.Cliente;
+import database.Proyecto;
+
 import javax.swing.JPopupMenu;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JMenuItem;
 import javax.swing.JList;
 import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -26,6 +39,11 @@ public class CrearCliente extends JFrame {
 	private JPanel contentPane;
 	private JTextField importanciaCliente;
 	private JTextField nombreTexttField;
+	private BD_Clientes bd_Clientes = new BD_Clientes();
+	private BD_Proyectos bd_Proyectos = new BD_Proyectos();
+	private DefaultListModel modelo;
+	private JList listProyectos;
+	private List<Proyecto> listaProyecto;
 
 	/**
 	 * Launch the application.
@@ -50,11 +68,18 @@ public class CrearCliente extends JFrame {
 		
 		inicializar();		
 		
-		JList list = new JList();
-		list.setBackground(Color.WHITE);
-		list.setBounds(35, 121, 189, 226);
-		contentPane.add(list);
+		listProyectos = new JList();
+		listProyectos.setBackground(Color.WHITE);
+		listProyectos.setBounds(35, 121, 189, 226);
+		listProyectos.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		contentPane.add(listProyectos);
 		
+		modelo = new DefaultListModel();
+		//meter aqui todos los proyectos que hay creados
+		
+		
+		
+		//////////////////////////////////////////////////////////////////////////////////
 		JLabel lblNewLabel1 = new JLabel("Seleccionar Proyecto");
 		lblNewLabel1.setBounds(52, 93, 160, 16);
 		contentPane.add(lblNewLabel1);
@@ -77,8 +102,8 @@ public class CrearCliente extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//IR A LA BBDD PARA METER AL CLIENTE
 				String nombreCliente = nombreTexttField.getText();
-				
-				
+				String importancia = importanciaCliente.getText();
+				//listProyectos.
 			}
 		});
 		
@@ -86,7 +111,7 @@ public class CrearCliente extends JFrame {
 
 		
 		
-		JButton volverInicio = new JButton("Atr√°s");
+		JButton volverInicio = new JButton("Atr·s");
 		volverInicio.setBounds(35, 373, 117, 29);
 		contentPane.add(volverInicio);
 		
@@ -121,6 +146,23 @@ public class CrearCliente extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 	}
+	
+	public void cargarProyectos() {
+	
+		try {
+			listaProyecto = bd_Proyectos.cargarProyectos();
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for(Proyecto p : listaProyecto)
+		{
+			modelo.addElement(p.getNombre());
+			listProyectos.setModel(modelo);
+		}
+	}
+	
 
 	/*private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {

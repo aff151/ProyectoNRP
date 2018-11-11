@@ -11,7 +11,7 @@ public class BD_Clientes {
 	public BD_Principal _c_bd_clien;
 	public Vector<Cliente> _cont_clientes = new Vector<Cliente>();
 	
-	public void crearCliente (String nombreCliente, String nombreProyecto) throws PersistentException
+	public void crearCliente (String nombreCliente, List proyectos, String importanciaPoryecto) throws PersistentException
 	{
 		PersistentTransaction t = database.BasededatosPersistentManager.instance().getSession().beginTransaction();
 		
