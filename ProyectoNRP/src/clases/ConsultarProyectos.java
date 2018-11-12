@@ -6,6 +6,8 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.ListSelectionModel;
+import javax.swing.SingleSelectionModel;
 import javax.swing.border.EmptyBorder;
 
 import org.orm.PersistentException;
@@ -16,6 +18,7 @@ import database.Proyecto;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonModel;
 import javax.swing.DefaultListModel;
@@ -27,14 +30,13 @@ import java.awt.event.ActionEvent;
 public class ConsultarProyectos extends JFrame {
 
 	private JPanel contentPane;
-	public static String procedencia="";
+	public static String procedencia = "";
 	public static String proySeleccionado = "";
 	private List<Proyecto> listPro;
 	private DefaultListModel<String> modelo;
 	private JList listProyectos;
 
 	BD_Proyectos bdProy = new BD_Proyectos();
-
 
 	/**
 	 * Launch the application.
@@ -56,53 +58,66 @@ public class ConsultarProyectos extends JFrame {
 	 * Create the frame.
 	 */
 	public ConsultarProyectos() {
-		
+
 		inicializar();
-		
+
 		JLabel lblNewLabel = new JLabel("Seleccionar Proyecto");
 		lblNewLabel.setBounds(30, 10, 150, 14);
 		contentPane.add(lblNewLabel);
-		
+
 		modelo = new DefaultListModel<String>();
-		
+
 		listProyectos = new JList();
 		listProyectos.setBounds(30, 36, 125, 147);
-		
+		listProyectos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
 		contentPane.add(listProyectos);
-		
+
 		JButton btnConsultarProyecto = new JButton("Consultar Proyecto");
 		btnConsultarProyecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				proySeleccionado = listProyectos.getSelectedValue().toString();
-				ConsultarProyecto consultarproyecto = new ConsultarProyecto();
-				consultarproyecto.setVisible(true);
-				ConsultarProyecto.procedencia="ConsultarProyectos";
-				dispose();
+
+				if (listProyectos.isSelectionEmpty()) {
+					JOptionPane.showMessageDialog(null, "Debe seleccionar un proyecto", "MENSAJE",
+							JOptionPane.WARNING_MESSAGE);
+				} else {
+					btnConsultarProyecto.setEnabled(true);
+					ConsultarProyecto consultarproyecto = new ConsultarProyecto();
+					consultarproyecto.setVisible(true);
+					ConsultarProyecto.procedencia = "ConsultarProyectos";
+					dispose();
+				}
+
 			}
 		});
 		btnConsultarProyecto.setBounds(19, 195, 150, 23);
 		contentPane.add(btnConsultarProyecto);
-		
+
 		JButton btnModificarProyecto = new JButton("Modificar Proyecto");
 		btnModificarProyecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				proySeleccionado = listProyectos.getSelectedValue().toString();
-				ModificarProyecto modificarProyecto = new ModificarProyecto();
-				modificarProyecto.setVisible(true);
-				modificarProyecto.procedencia="ConsultarProyectos";
-				dispose();
+				if (listProyectos.isSelectionEmpty()) {
+					JOptionPane.showMessageDialog(null, "Debe seleccionar un proyecto", "MENSAJE",
+							JOptionPane.WARNING_MESSAGE);
+				} else {
+					proySeleccionado = listProyectos.getSelectedValue().toString();
+					ModificarProyecto modificarProyecto = new ModificarProyecto();
+					modificarProyecto.setVisible(true);
+					modificarProyecto.procedencia = "ConsultarProyectos";
+					dispose();
+				}
 			}
 		});
 		btnModificarProyecto.setBounds(19, 220, 147, 23);
 		contentPane.add(btnModificarProyecto);
-		
+
 		JButton btnAtrs = new JButton("Atrás");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(procedencia=="menu") {
-				Menu menu = new Menu();
-				menu.setVisible(true);
-				}else if(procedencia=="ConsultarProyecto"){
+				if (procedencia == "menu") {
+					Menu menu = new Menu();
+					menu.setVisible(true);
+				} else if (procedencia == "ConsultarProyecto") {
 					ConsultarProyecto consultarProyecto = new ConsultarProyecto();
 					consultarProyecto.setVisible(true);
 				}
@@ -113,20 +128,20 @@ public class ConsultarProyectos extends JFrame {
 		contentPane.add(btnAtrs);
 		cargarProyectos();
 	}
-	
+
 	public void inicializar() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
 		setBounds(100, 100, 192, 316);
 		setLocationRelativeTo(null);
-		//setTitle("Programa para gestión de requisitos");
+		// setTitle("Programa para gestión de requisitos");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 	}
-	
+
 	public void cargarProyectos() {
 		try {
 			listPro = bdProy.cargarProyectos();
@@ -134,7 +149,7 @@ public class ConsultarProyectos extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for(Proyecto c : listPro) {
+		for (Proyecto c : listPro) {
 			modelo.addElement(c.getNombre());
 			listProyectos.setModel(modelo);
 		}
