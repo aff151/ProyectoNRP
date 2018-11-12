@@ -1,5 +1,3 @@
-package database;
-
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -13,6 +11,8 @@ package database;
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 import java.io.Serializable;
 import javax.persistence.*;
 @Entity
@@ -22,10 +22,26 @@ public class Requisito implements Serializable {
 	public Requisito() {
 	}
 	
+	private java.util.Set this_getSet (int key) {
+		if (key == ORMConstants.KEY_REQUISITO_PESOS) {
+			return ORM_pesos;
+		}
+		
+		return null;
+	}
+	
+	@Transient	
+	org.orm.util.ORMAdapter _ormAdapter = new org.orm.util.AbstractORMAdapter() {
+		public java.util.Set getSet(int key) {
+			return this_getSet(key);
+		}
+		
+	};
+	
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
-	@GeneratedValue(generator="REQUISITO_ID_GENERATOR")	
-	@org.hibernate.annotations.GenericGenerator(name="REQUISITO_ID_GENERATOR", strategy="native")	
+	@GeneratedValue(generator="DATABASE_REQUISITO_ID_GENERATOR")	
+	@org.hibernate.annotations.GenericGenerator(name="DATABASE_REQUISITO_ID_GENERATOR", strategy="native")	
 	private int ID;
 	
 	@Column(name="Nombre", nullable=true, length=255)	
@@ -34,9 +50,10 @@ public class Requisito implements Serializable {
 	@Column(name="Descripcion", nullable=true, length=255)	
 	private String descripcion;
 	
-	@OneToOne(mappedBy="requisito", targetEntity=Peso.class, fetch=FetchType.LAZY)	
+	@OneToMany(mappedBy="requisito", targetEntity=database.Peso.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	private Peso peso;
+	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
+	private java.util.Set ORM_pesos = new java.util.HashSet();
 	
 	private void setID(int value) {
 		this.ID = value;
@@ -66,22 +83,16 @@ public class Requisito implements Serializable {
 		return descripcion;
 	}
 	
-	public void setPeso(Peso value) {
-		if (this.peso != value) {
-			Peso lpeso = this.peso;
-			this.peso = value;
-			if (value != null) {
-				peso.setRequisito(this);
-			}
-			if (lpeso != null && lpeso.getRequisito() == this) {
-				lpeso.setRequisito(null);
-			}
-		}
+	private void setORM_Pesos(java.util.Set value) {
+		this.ORM_pesos = value;
 	}
 	
-	public Peso getPeso() {
-		return peso;
+	private java.util.Set getORM_Pesos() {
+		return ORM_pesos;
 	}
+	
+	@Transient	
+	public final database.PesoSetCollection pesos = new database.PesoSetCollection(this, _ormAdapter, ORMConstants.KEY_REQUISITO_PESOS, ORMConstants.KEY_PESO_REQUISITO, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
 	public String toString() {
 		return String.valueOf(getID());

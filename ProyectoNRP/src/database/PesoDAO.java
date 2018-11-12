@@ -1,5 +1,3 @@
-package database;
-
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -13,6 +11,8 @@ package database;
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 import org.orm.*;
 import org.hibernate.Query;
 import org.hibernate.LockMode;
@@ -65,7 +65,7 @@ public class PesoDAO {
 	
 	public static Peso loadPesoByORMID(PersistentSession session, int ID) throws PersistentException {
 		try {
-			return (Peso) session.load(Peso.class, new Integer(ID));
+			return (Peso) session.load(database.Peso.class, new Integer(ID));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -75,7 +75,7 @@ public class PesoDAO {
 	
 	public static Peso getPesoByORMID(PersistentSession session, int ID) throws PersistentException {
 		try {
-			return (Peso) session.get(Peso.class, new Integer(ID));
+			return (Peso) session.get(database.Peso.class, new Integer(ID));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -85,7 +85,7 @@ public class PesoDAO {
 	
 	public static Peso loadPesoByORMID(PersistentSession session, int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			return (Peso) session.load(Peso.class, new Integer(ID), lockMode);
+			return (Peso) session.load(database.Peso.class, new Integer(ID), lockMode);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -95,7 +95,7 @@ public class PesoDAO {
 	
 	public static Peso getPesoByORMID(PersistentSession session, int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			return (Peso) session.get(Peso.class, new Integer(ID), lockMode);
+			return (Peso) session.get(database.Peso.class, new Integer(ID), lockMode);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -148,7 +148,7 @@ public class PesoDAO {
 	}
 	
 	public static List queryPeso(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Peso as Peso");
+		StringBuffer sb = new StringBuffer("From database.Peso as Peso");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -164,7 +164,7 @@ public class PesoDAO {
 	}
 	
 	public static List queryPeso(PersistentSession session, String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Peso as Peso");
+		StringBuffer sb = new StringBuffer("From database.Peso as Peso");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -263,7 +263,7 @@ public class PesoDAO {
 	}
 	
 	public static java.util.Iterator iteratePesoByQuery(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Peso as Peso");
+		StringBuffer sb = new StringBuffer("From database.Peso as Peso");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -279,7 +279,7 @@ public class PesoDAO {
 	}
 	
 	public static java.util.Iterator iteratePesoByQuery(PersistentSession session, String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Peso as Peso");
+		StringBuffer sb = new StringBuffer("From database.Peso as Peso");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -296,10 +296,10 @@ public class PesoDAO {
 	}
 	
 	public static Peso createPeso() {
-		return new Peso();
+		return new database.Peso();
 	}
 	
-	public static boolean save(Peso peso) throws PersistentException {
+	public static boolean save(database.Peso peso) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().saveObject(peso);
 			return true;
@@ -310,7 +310,7 @@ public class PesoDAO {
 		}
 	}
 	
-	public static boolean delete(Peso peso) throws PersistentException {
+	public static boolean delete(database.Peso peso) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().deleteObject(peso);
 			return true;
@@ -321,18 +321,18 @@ public class PesoDAO {
 		}
 	}
 	
-	public static boolean deleteAndDissociate(Peso peso)throws PersistentException {
+	public static boolean deleteAndDissociate(database.Peso peso)throws PersistentException {
 		try {
 			if (peso.getCliente() != null) {
-				peso.getCliente().setPeso(null);
+				peso.getCliente().pesos.remove(peso);
 			}
 			
 			if (peso.getProyecto() != null) {
-				peso.getProyecto().setPeso(null);
+				peso.getProyecto().pesos.remove(peso);
 			}
 			
 			if (peso.getRequisito() != null) {
-				peso.getRequisito().setPeso(null);
+				peso.getRequisito().pesos.remove(peso);
 			}
 			
 			return delete(peso);
@@ -343,18 +343,18 @@ public class PesoDAO {
 		}
 	}
 	
-	public static boolean deleteAndDissociate(Peso peso, org.orm.PersistentSession session)throws PersistentException {
+	public static boolean deleteAndDissociate(database.Peso peso, org.orm.PersistentSession session)throws PersistentException {
 		try {
 			if (peso.getCliente() != null) {
-				peso.getCliente().setPeso(null);
+				peso.getCliente().pesos.remove(peso);
 			}
 			
 			if (peso.getProyecto() != null) {
-				peso.getProyecto().setPeso(null);
+				peso.getProyecto().pesos.remove(peso);
 			}
 			
 			if (peso.getRequisito() != null) {
-				peso.getRequisito().setPeso(null);
+				peso.getRequisito().pesos.remove(peso);
 			}
 			
 			try {
@@ -370,7 +370,7 @@ public class PesoDAO {
 		}
 	}
 	
-	public static boolean refresh(Peso peso) throws PersistentException {
+	public static boolean refresh(database.Peso peso) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().getSession().refresh(peso);
 			return true;
@@ -381,7 +381,7 @@ public class PesoDAO {
 		}
 	}
 	
-	public static boolean evict(Peso peso) throws PersistentException {
+	public static boolean evict(database.Peso peso) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().getSession().evict(peso);
 			return true;

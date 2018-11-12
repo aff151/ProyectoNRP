@@ -1,29 +1,29 @@
-package database;
-
 /**
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 import org.orm.*;
 public class DeleteBasededatosData {
 	public void deleteTestData() throws PersistentException {
-		PersistentTransaction t = BasededatosPersistentManager.instance().getSession().beginTransaction();
+		PersistentTransaction t = database.BasededatosPersistentManager.instance().getSession().beginTransaction();
 		try {
-			Peso peso = PesoDAO.loadPesoByQuery(null, null);
+			database.Peso ldatabasePeso = database.PesoDAO.loadPesoByQuery(null, null);
 			// Delete the persistent object
-			PesoDAO.delete(peso);
-			Cliente cliente = ClienteDAO.loadClienteByQuery(null, null);
+			database.PesoDAO.delete(ldatabasePeso);
+			database.Requisito ldatabaseRequisito = database.RequisitoDAO.loadRequisitoByQuery(null, null);
 			// Delete the persistent object
-			ClienteDAO.delete(cliente);
-			Importancia importancia = ImportanciaDAO.loadImportanciaByQuery(null, null);
+			database.RequisitoDAO.delete(ldatabaseRequisito);
+			database.Proyecto ldatabaseProyecto = database.ProyectoDAO.loadProyectoByQuery(null, null);
 			// Delete the persistent object
-			ImportanciaDAO.delete(importancia);
-			Proyecto proyecto = ProyectoDAO.loadProyectoByQuery(null, null);
+			database.ProyectoDAO.delete(ldatabaseProyecto);
+			database.Cliente ldatabaseCliente = database.ClienteDAO.loadClienteByQuery(null, null);
 			// Delete the persistent object
-			ProyectoDAO.delete(proyecto);
-			Requisito requisito = RequisitoDAO.loadRequisitoByQuery(null, null);
+			database.ClienteDAO.delete(ldatabaseCliente);
+			database.Importancia ldatabaseImportancia = database.ImportanciaDAO.loadImportanciaByQuery(null, null);
 			// Delete the persistent object
-			RequisitoDAO.delete(requisito);
+			database.ImportanciaDAO.delete(ldatabaseImportancia);
 			t.commit();
 		}
 		catch (Exception e) {
@@ -39,7 +39,7 @@ public class DeleteBasededatosData {
 				deleteBasededatosData.deleteTestData();
 			}
 			finally {
-				BasededatosPersistentManager.instance().disposePersistentManager();
+				database.BasededatosPersistentManager.instance().disposePersistentManager();
 			}
 		}
 		catch (Exception e) {

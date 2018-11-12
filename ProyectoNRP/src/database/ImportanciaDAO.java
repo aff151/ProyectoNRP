@@ -1,5 +1,3 @@
-
-package database;
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -13,6 +11,8 @@ package database;
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 import org.orm.*;
 import org.hibernate.Query;
 import org.hibernate.LockMode;
@@ -65,7 +65,7 @@ public class ImportanciaDAO {
 	
 	public static Importancia loadImportanciaByORMID(PersistentSession session, int ID) throws PersistentException {
 		try {
-			return (Importancia) session.load(Importancia.class, new Integer(ID));
+			return (Importancia) session.load(database.Importancia.class, new Integer(ID));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -75,7 +75,7 @@ public class ImportanciaDAO {
 	
 	public static Importancia getImportanciaByORMID(PersistentSession session, int ID) throws PersistentException {
 		try {
-			return (Importancia) session.get(Importancia.class, new Integer(ID));
+			return (Importancia) session.get(database.Importancia.class, new Integer(ID));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -85,7 +85,7 @@ public class ImportanciaDAO {
 	
 	public static Importancia loadImportanciaByORMID(PersistentSession session, int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			return (Importancia) session.load(Importancia.class, new Integer(ID), lockMode);
+			return (Importancia) session.load(database.Importancia.class, new Integer(ID), lockMode);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -95,7 +95,7 @@ public class ImportanciaDAO {
 	
 	public static Importancia getImportanciaByORMID(PersistentSession session, int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			return (Importancia) session.get(Importancia.class, new Integer(ID), lockMode);
+			return (Importancia) session.get(database.Importancia.class, new Integer(ID), lockMode);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -148,7 +148,7 @@ public class ImportanciaDAO {
 	}
 	
 	public static List queryImportancia(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Importancia as Importancia");
+		StringBuffer sb = new StringBuffer("From database.Importancia as Importancia");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -164,7 +164,7 @@ public class ImportanciaDAO {
 	}
 	
 	public static List queryImportancia(PersistentSession session, String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Importancia as Importancia");
+		StringBuffer sb = new StringBuffer("From database.Importancia as Importancia");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -263,7 +263,7 @@ public class ImportanciaDAO {
 	}
 	
 	public static java.util.Iterator iterateImportanciaByQuery(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Importancia as Importancia");
+		StringBuffer sb = new StringBuffer("From database.Importancia as Importancia");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -279,7 +279,7 @@ public class ImportanciaDAO {
 	}
 	
 	public static java.util.Iterator iterateImportanciaByQuery(PersistentSession session, String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Importancia as Importancia");
+		StringBuffer sb = new StringBuffer("From database.Importancia as Importancia");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -296,10 +296,10 @@ public class ImportanciaDAO {
 	}
 	
 	public static Importancia createImportancia() {
-		return new Importancia();
+		return new database.Importancia();
 	}
 	
-	public static boolean save(Importancia importancia) throws PersistentException {
+	public static boolean save(database.Importancia importancia) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().saveObject(importancia);
 			return true;
@@ -310,7 +310,7 @@ public class ImportanciaDAO {
 		}
 	}
 	
-	public static boolean delete(Importancia importancia) throws PersistentException {
+	public static boolean delete(database.Importancia importancia) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().deleteObject(importancia);
 			return true;
@@ -321,14 +321,14 @@ public class ImportanciaDAO {
 		}
 	}
 	
-	public static boolean deleteAndDissociate(Importancia importancia)throws PersistentException {
+	public static boolean deleteAndDissociate(database.Importancia importancia)throws PersistentException {
 		try {
 			if (importancia.getCliente() != null) {
-				importancia.getCliente().setImportancia(null);
+				importancia.getCliente().importancias.remove(importancia);
 			}
 			
 			if (importancia.getProyecto() != null) {
-				importancia.getProyecto().setImportancia(null);
+				importancia.getProyecto().importancias.remove(importancia);
 			}
 			
 			return delete(importancia);
@@ -339,14 +339,14 @@ public class ImportanciaDAO {
 		}
 	}
 	
-	public static boolean deleteAndDissociate(Importancia importancia, org.orm.PersistentSession session)throws PersistentException {
+	public static boolean deleteAndDissociate(database.Importancia importancia, org.orm.PersistentSession session)throws PersistentException {
 		try {
 			if (importancia.getCliente() != null) {
-				importancia.getCliente().setImportancia(null);
+				importancia.getCliente().importancias.remove(importancia);
 			}
 			
 			if (importancia.getProyecto() != null) {
-				importancia.getProyecto().setImportancia(null);
+				importancia.getProyecto().importancias.remove(importancia);
 			}
 			
 			try {
@@ -362,7 +362,7 @@ public class ImportanciaDAO {
 		}
 	}
 	
-	public static boolean refresh(Importancia importancia) throws PersistentException {
+	public static boolean refresh(database.Importancia importancia) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().getSession().refresh(importancia);
 			return true;
@@ -373,7 +373,7 @@ public class ImportanciaDAO {
 		}
 	}
 	
-	public static boolean evict(Importancia importancia) throws PersistentException {
+	public static boolean evict(database.Importancia importancia) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().getSession().evict(importancia);
 			return true;

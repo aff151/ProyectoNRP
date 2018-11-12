@@ -1,5 +1,3 @@
-package database;
-
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -13,6 +11,8 @@ package database;
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.orm.PersistentSession;
@@ -29,7 +29,7 @@ public class PesoDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression peso;
 	
 	public PesoDetachedCriteria() {
-		super(Peso.class, PesoCriteria.class);
+		super(database.Peso.class, database.PesoCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		clienteId = new IntegerExpression("cliente.ID", this.getDetachedCriteria());
 		cliente = new AssociationExpression("cliente", this.getDetachedCriteria());
@@ -41,7 +41,7 @@ public class PesoDetachedCriteria extends AbstractORMDetachedCriteria {
 	}
 	
 	public PesoDetachedCriteria(DetachedCriteria aDetachedCriteria) {
-		super(aDetachedCriteria, PesoCriteria.class);
+		super(aDetachedCriteria, database.PesoCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		clienteId = new IntegerExpression("cliente.ID", this.getDetachedCriteria());
 		cliente = new AssociationExpression("cliente", this.getDetachedCriteria());

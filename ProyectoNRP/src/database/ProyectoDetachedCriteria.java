@@ -1,5 +1,3 @@
-package database;
-
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -13,6 +11,8 @@ package database;
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.orm.PersistentSession;
@@ -22,39 +22,33 @@ public class ProyectoDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression ID;
 	public final StringExpression nombre;
 	public final StringExpression descripcion;
-	public final IntegerExpression importanciaId;
-	public final AssociationExpression importancia;
-	public final IntegerExpression pesoId;
-	public final AssociationExpression peso;
+	public final CollectionExpression importancias;
+	public final CollectionExpression pesos;
 	
 	public ProyectoDetachedCriteria() {
-		super(Proyecto.class, ProyectoCriteria.class);
+		super(database.Proyecto.class, database.ProyectoCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		nombre = new StringExpression("nombre", this.getDetachedCriteria());
 		descripcion = new StringExpression("descripcion", this.getDetachedCriteria());
-		importanciaId = new IntegerExpression("importancia.ID", this.getDetachedCriteria());
-		importancia = new AssociationExpression("importancia", this.getDetachedCriteria());
-		pesoId = new IntegerExpression("peso.ID", this.getDetachedCriteria());
-		peso = new AssociationExpression("peso", this.getDetachedCriteria());
+		importancias = new CollectionExpression("ORM_importancias", this.getDetachedCriteria());
+		pesos = new CollectionExpression("ORM_pesos", this.getDetachedCriteria());
 	}
 	
 	public ProyectoDetachedCriteria(DetachedCriteria aDetachedCriteria) {
-		super(aDetachedCriteria, ProyectoCriteria.class);
+		super(aDetachedCriteria, database.ProyectoCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		nombre = new StringExpression("nombre", this.getDetachedCriteria());
 		descripcion = new StringExpression("descripcion", this.getDetachedCriteria());
-		importanciaId = new IntegerExpression("importancia.ID", this.getDetachedCriteria());
-		importancia = new AssociationExpression("importancia", this.getDetachedCriteria());
-		pesoId = new IntegerExpression("peso.ID", this.getDetachedCriteria());
-		peso = new AssociationExpression("peso", this.getDetachedCriteria());
+		importancias = new CollectionExpression("ORM_importancias", this.getDetachedCriteria());
+		pesos = new CollectionExpression("ORM_pesos", this.getDetachedCriteria());
 	}
 	
-	public ImportanciaDetachedCriteria createImportanciaCriteria() {
-		return new ImportanciaDetachedCriteria(createCriteria("importancia"));
+	public ImportanciaDetachedCriteria createImportanciasCriteria() {
+		return new ImportanciaDetachedCriteria(createCriteria("ORM_importancias"));
 	}
 	
-	public PesoDetachedCriteria createPesoCriteria() {
-		return new PesoDetachedCriteria(createCriteria("peso"));
+	public PesoDetachedCriteria createPesosCriteria() {
+		return new PesoDetachedCriteria(createCriteria("ORM_pesos"));
 	}
 	
 	public Proyecto uniqueProyecto(PersistentSession session) {

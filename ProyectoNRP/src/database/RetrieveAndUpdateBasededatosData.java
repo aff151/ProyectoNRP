@@ -1,30 +1,29 @@
-package database;
-
-
 /**
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 import org.orm.*;
 public class RetrieveAndUpdateBasededatosData {
 	public void retrieveAndUpdateTestData() throws PersistentException {
-		PersistentTransaction t = BasededatosPersistentManager.instance().getSession().beginTransaction();
+		PersistentTransaction t = database.BasededatosPersistentManager.instance().getSession().beginTransaction();
 		try {
-			Peso peso = PesoDAO.loadPesoByQuery(null, null);
+			database.Peso ldatabasePeso = database.PesoDAO.loadPesoByQuery(null, null);
 			// Update the properties of the persistent object
-			PesoDAO.save(peso);
-			Cliente cliente = ClienteDAO.loadClienteByQuery(null, null);
+			database.PesoDAO.save(ldatabasePeso);
+			database.Requisito ldatabaseRequisito = database.RequisitoDAO.loadRequisitoByQuery(null, null);
 			// Update the properties of the persistent object
-			ClienteDAO.save(cliente);
-			Importancia importancia = ImportanciaDAO.loadImportanciaByQuery(null, null);
+			database.RequisitoDAO.save(ldatabaseRequisito);
+			database.Proyecto ldatabaseProyecto = database.ProyectoDAO.loadProyectoByQuery(null, null);
 			// Update the properties of the persistent object
-			ImportanciaDAO.save(importancia);
-			Proyecto proyecto = ProyectoDAO.loadProyectoByQuery(null, null);
+			database.ProyectoDAO.save(ldatabaseProyecto);
+			database.Cliente ldatabaseCliente = database.ClienteDAO.loadClienteByQuery(null, null);
 			// Update the properties of the persistent object
-			ProyectoDAO.save(proyecto);
-			Requisito requisito = RequisitoDAO.loadRequisitoByQuery(null, null);
+			database.ClienteDAO.save(ldatabaseCliente);
+			database.Importancia ldatabaseImportancia = database.ImportanciaDAO.loadImportanciaByQuery(null, null);
 			// Update the properties of the persistent object
-			RequisitoDAO.save(requisito);
+			database.ImportanciaDAO.save(ldatabaseImportancia);
 			t.commit();
 		}
 		catch (Exception e) {
@@ -35,34 +34,34 @@ public class RetrieveAndUpdateBasededatosData {
 	
 	public void retrieveByCriteria() throws PersistentException {
 		System.out.println("Retrieving Peso by PesoCriteria");
-		PesoCriteria pesoCriteria = new PesoCriteria();
+		database.PesoCriteria ldatabasePesoCriteria = new database.PesoCriteria();
 		// Please uncomment the follow line and fill in parameter(s)
-		//pesoCriteria.ID.eq();
-		System.out.println(pesoCriteria.uniquePeso());
-		
-		System.out.println("Retrieving Cliente by ClienteCriteria");
-		ClienteCriteria clienteCriteria = new ClienteCriteria();
-		// Please uncomment the follow line and fill in parameter(s)
-		//clienteCriteria.ID.eq();
-		System.out.println(clienteCriteria.uniqueCliente());
-		
-		System.out.println("Retrieving Importancia by ImportanciaCriteria");
-		ImportanciaCriteria importanciaCriteria = new ImportanciaCriteria();
-		// Please uncomment the follow line and fill in parameter(s)
-		//importanciaCriteria.ID.eq();
-		System.out.println(importanciaCriteria.uniqueImportancia());
-		
-		System.out.println("Retrieving Proyecto by ProyectoCriteria");
-		ProyectoCriteria proyectoCriteria = new ProyectoCriteria();
-		// Please uncomment the follow line and fill in parameter(s)
-		//proyectoCriteria.ID.eq();
-		System.out.println(proyectoCriteria.uniqueProyecto());
+		//ldatabasePesoCriteria.ID.eq();
+		System.out.println(ldatabasePesoCriteria.uniquePeso());
 		
 		System.out.println("Retrieving Requisito by RequisitoCriteria");
-		RequisitoCriteria requisitoCriteria = new RequisitoCriteria();
+		database.RequisitoCriteria ldatabaseRequisitoCriteria = new database.RequisitoCriteria();
 		// Please uncomment the follow line and fill in parameter(s)
-		//requisitoCriteria.ID.eq();
-		System.out.println(requisitoCriteria.uniqueRequisito());
+		//ldatabaseRequisitoCriteria.ID.eq();
+		System.out.println(ldatabaseRequisitoCriteria.uniqueRequisito());
+		
+		System.out.println("Retrieving Proyecto by ProyectoCriteria");
+		database.ProyectoCriteria ldatabaseProyectoCriteria = new database.ProyectoCriteria();
+		// Please uncomment the follow line and fill in parameter(s)
+		//ldatabaseProyectoCriteria.ID.eq();
+		System.out.println(ldatabaseProyectoCriteria.uniqueProyecto());
+		
+		System.out.println("Retrieving Cliente by ClienteCriteria");
+		database.ClienteCriteria ldatabaseClienteCriteria = new database.ClienteCriteria();
+		// Please uncomment the follow line and fill in parameter(s)
+		//ldatabaseClienteCriteria.ID.eq();
+		System.out.println(ldatabaseClienteCriteria.uniqueCliente());
+		
+		System.out.println("Retrieving Importancia by ImportanciaCriteria");
+		database.ImportanciaCriteria ldatabaseImportanciaCriteria = new database.ImportanciaCriteria();
+		// Please uncomment the follow line and fill in parameter(s)
+		//ldatabaseImportanciaCriteria.ID.eq();
+		System.out.println(ldatabaseImportanciaCriteria.uniqueImportancia());
 		
 	}
 	
@@ -75,7 +74,7 @@ public class RetrieveAndUpdateBasededatosData {
 				//retrieveAndUpdateBasededatosData.retrieveByCriteria();
 			}
 			finally {
-				BasededatosPersistentManager.instance().disposePersistentManager();
+				database.BasededatosPersistentManager.instance().disposePersistentManager();
 			}
 		}
 		catch (Exception e) {

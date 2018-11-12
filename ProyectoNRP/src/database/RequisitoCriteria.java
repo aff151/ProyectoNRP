@@ -1,5 +1,3 @@
-package database;
-
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -13,6 +11,8 @@ package database;
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 import org.hibernate.Criteria;
 import org.orm.PersistentException;
 import org.orm.PersistentSession;
@@ -22,16 +22,14 @@ public class RequisitoCriteria extends AbstractORMCriteria {
 	public final IntegerExpression ID;
 	public final StringExpression nombre;
 	public final StringExpression descripcion;
-	public final IntegerExpression pesoId;
-	public final AssociationExpression peso;
+	public final CollectionExpression pesos;
 	
 	public RequisitoCriteria(Criteria criteria) {
 		super(criteria);
 		ID = new IntegerExpression("ID", this);
 		nombre = new StringExpression("nombre", this);
 		descripcion = new StringExpression("descripcion", this);
-		pesoId = new IntegerExpression("peso.ID", this);
-		peso = new AssociationExpression("peso", this);
+		pesos = new CollectionExpression("ORM_pesos", this);
 	}
 	
 	public RequisitoCriteria(PersistentSession session) {
@@ -42,8 +40,8 @@ public class RequisitoCriteria extends AbstractORMCriteria {
 		this(BasededatosPersistentManager.instance().getSession());
 	}
 	
-	public PesoCriteria createPesoCriteria() {
-		return new PesoCriteria(createCriteria("peso"));
+	public PesoCriteria createPesosCriteria() {
+		return new PesoCriteria(createCriteria("ORM_pesos"));
 	}
 	
 	public Requisito uniqueRequisito() {

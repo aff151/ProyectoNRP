@@ -1,5 +1,3 @@
-package database;
-
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -13,6 +11,8 @@ package database;
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.orm.PersistentSession;
@@ -20,30 +20,30 @@ import org.orm.criteria.*;
 
 public class ImportanciaDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression ID;
+	public final IntegerExpression importancia;
 	public final IntegerExpression clienteId;
 	public final AssociationExpression cliente;
 	public final IntegerExpression proyectoId;
 	public final AssociationExpression proyecto;
-	public final IntegerExpression importancia;
 	
 	public ImportanciaDetachedCriteria() {
-		super(Importancia.class, ImportanciaCriteria.class);
+		super(database.Importancia.class, database.ImportanciaCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
-		clienteId = new IntegerExpression("cliente.ID", this.getDetachedCriteria());
-		cliente = new AssociationExpression("cliente", this.getDetachedCriteria());
-		proyectoId = new IntegerExpression("proyecto.ID", this.getDetachedCriteria());
-		proyecto = new AssociationExpression("proyecto", this.getDetachedCriteria());
 		importancia = new IntegerExpression("importancia", this.getDetachedCriteria());
+		clienteId = new IntegerExpression("ORM_Cliente.null", this.getDetachedCriteria());
+		cliente = new AssociationExpression("ORM_Cliente", this.getDetachedCriteria());
+		proyectoId = new IntegerExpression("ORM_Proyecto.null", this.getDetachedCriteria());
+		proyecto = new AssociationExpression("ORM_Proyecto", this.getDetachedCriteria());
 	}
 	
 	public ImportanciaDetachedCriteria(DetachedCriteria aDetachedCriteria) {
-		super(aDetachedCriteria, ImportanciaCriteria.class);
+		super(aDetachedCriteria, database.ImportanciaCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
-		clienteId = new IntegerExpression("cliente.ID", this.getDetachedCriteria());
-		cliente = new AssociationExpression("cliente", this.getDetachedCriteria());
-		proyectoId = new IntegerExpression("proyecto.ID", this.getDetachedCriteria());
-		proyecto = new AssociationExpression("proyecto", this.getDetachedCriteria());
 		importancia = new IntegerExpression("importancia", this.getDetachedCriteria());
+		clienteId = new IntegerExpression("ORM_Cliente.null", this.getDetachedCriteria());
+		cliente = new AssociationExpression("ORM_Cliente", this.getDetachedCriteria());
+		proyectoId = new IntegerExpression("ORM_Proyecto.null", this.getDetachedCriteria());
+		proyecto = new AssociationExpression("ORM_Proyecto", this.getDetachedCriteria());
 	}
 	
 	public ClienteDetachedCriteria createClienteCriteria() {

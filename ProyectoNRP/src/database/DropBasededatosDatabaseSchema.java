@@ -1,9 +1,9 @@
-package database;
-
 /**
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 import org.orm.*;
 public class DropBasededatosDatabaseSchema {
 	public static void main(String[] args) {
@@ -11,8 +11,8 @@ public class DropBasededatosDatabaseSchema {
 			System.out.println("Are you sure to drop table(s)? (Y/N)");
 			java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
 			if (reader.readLine().trim().toUpperCase().equals("Y")) {
-				ORMDatabaseInitiator.dropSchema(BasededatosPersistentManager.instance());
-				BasededatosPersistentManager.instance().disposePersistentManager();
+				ORMDatabaseInitiator.dropSchema(database.BasededatosPersistentManager.instance());
+				database.BasededatosPersistentManager.instance().disposePersistentManager();
 			}
 			
 		}

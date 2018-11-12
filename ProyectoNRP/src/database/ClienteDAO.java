@@ -1,5 +1,3 @@
-package database;
-
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -13,6 +11,8 @@ package database;
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 import org.orm.*;
 import org.hibernate.Query;
 import org.hibernate.LockMode;
@@ -65,7 +65,7 @@ public class ClienteDAO {
 	
 	public static Cliente loadClienteByORMID(PersistentSession session, int ID) throws PersistentException {
 		try {
-			return (Cliente) session.load(Cliente.class, new Integer(ID));
+			return (Cliente) session.load(database.Cliente.class, new Integer(ID));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -75,7 +75,7 @@ public class ClienteDAO {
 	
 	public static Cliente getClienteByORMID(PersistentSession session, int ID) throws PersistentException {
 		try {
-			return (Cliente) session.get(Cliente.class, new Integer(ID));
+			return (Cliente) session.get(database.Cliente.class, new Integer(ID));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -85,7 +85,7 @@ public class ClienteDAO {
 	
 	public static Cliente loadClienteByORMID(PersistentSession session, int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			return (Cliente) session.load(Cliente.class, new Integer(ID), lockMode);
+			return (Cliente) session.load(database.Cliente.class, new Integer(ID), lockMode);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -95,7 +95,7 @@ public class ClienteDAO {
 	
 	public static Cliente getClienteByORMID(PersistentSession session, int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			return (Cliente) session.get(Cliente.class, new Integer(ID), lockMode);
+			return (Cliente) session.get(database.Cliente.class, new Integer(ID), lockMode);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -148,7 +148,7 @@ public class ClienteDAO {
 	}
 	
 	public static List queryCliente(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Cliente as Cliente");
+		StringBuffer sb = new StringBuffer("From database.Cliente as Cliente");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -164,7 +164,7 @@ public class ClienteDAO {
 	}
 	
 	public static List queryCliente(PersistentSession session, String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Cliente as Cliente");
+		StringBuffer sb = new StringBuffer("From database.Cliente as Cliente");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -263,7 +263,7 @@ public class ClienteDAO {
 	}
 	
 	public static java.util.Iterator iterateClienteByQuery(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Cliente as Cliente");
+		StringBuffer sb = new StringBuffer("From database.Cliente as Cliente");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -279,7 +279,7 @@ public class ClienteDAO {
 	}
 	
 	public static java.util.Iterator iterateClienteByQuery(PersistentSession session, String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Cliente as Cliente");
+		StringBuffer sb = new StringBuffer("From database.Cliente as Cliente");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -296,10 +296,10 @@ public class ClienteDAO {
 	}
 	
 	public static Cliente createCliente() {
-		return new Cliente();
+		return new database.Cliente();
 	}
 	
-	public static boolean save(Cliente cliente) throws PersistentException {
+	public static boolean save(database.Cliente cliente) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().saveObject(cliente);
 			return true;
@@ -310,7 +310,7 @@ public class ClienteDAO {
 		}
 	}
 	
-	public static boolean delete(Cliente cliente) throws PersistentException {
+	public static boolean delete(database.Cliente cliente) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().deleteObject(cliente);
 			return true;
@@ -321,16 +321,16 @@ public class ClienteDAO {
 		}
 	}
 	
-	public static boolean deleteAndDissociate(Cliente cliente)throws PersistentException {
+	public static boolean deleteAndDissociate(database.Cliente cliente)throws PersistentException {
 		try {
-			if (cliente.getImportancia() != null) {
-				cliente.getImportancia().setCliente(null);
+			database.Importancia[] lImportanciass = cliente.importancias.toArray();
+			for(int i = 0; i < lImportanciass.length; i++) {
+				lImportanciass[i].setCliente(null);
 			}
-			
-			if (cliente.getPeso() != null) {
-				cliente.getPeso().setCliente(null);
+			database.Peso[] lPesoss = cliente.pesos.toArray();
+			for(int i = 0; i < lPesoss.length; i++) {
+				lPesoss[i].setCliente(null);
 			}
-			
 			return delete(cliente);
 		}
 		catch(Exception e) {
@@ -339,16 +339,16 @@ public class ClienteDAO {
 		}
 	}
 	
-	public static boolean deleteAndDissociate(Cliente cliente, org.orm.PersistentSession session)throws PersistentException {
+	public static boolean deleteAndDissociate(database.Cliente cliente, org.orm.PersistentSession session)throws PersistentException {
 		try {
-			if (cliente.getImportancia() != null) {
-				cliente.getImportancia().setCliente(null);
+			database.Importancia[] lImportanciass = cliente.importancias.toArray();
+			for(int i = 0; i < lImportanciass.length; i++) {
+				lImportanciass[i].setCliente(null);
 			}
-			
-			if (cliente.getPeso() != null) {
-				cliente.getPeso().setCliente(null);
+			database.Peso[] lPesoss = cliente.pesos.toArray();
+			for(int i = 0; i < lPesoss.length; i++) {
+				lPesoss[i].setCliente(null);
 			}
-			
 			try {
 				session.delete(cliente);
 				return true;
@@ -362,7 +362,7 @@ public class ClienteDAO {
 		}
 	}
 	
-	public static boolean refresh(Cliente cliente) throws PersistentException {
+	public static boolean refresh(database.Cliente cliente) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().getSession().refresh(cliente);
 			return true;
@@ -373,7 +373,7 @@ public class ClienteDAO {
 		}
 	}
 	
-	public static boolean evict(Cliente cliente) throws PersistentException {
+	public static boolean evict(database.Cliente cliente) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().getSession().evict(cliente);
 			return true;

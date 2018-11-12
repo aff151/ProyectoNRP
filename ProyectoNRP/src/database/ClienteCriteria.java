@@ -1,5 +1,3 @@
-package database;
-
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -13,6 +11,8 @@ package database;
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 import org.hibernate.Criteria;
 import org.orm.PersistentException;
 import org.orm.PersistentSession;
@@ -21,19 +21,15 @@ import org.orm.criteria.*;
 public class ClienteCriteria extends AbstractORMCriteria {
 	public final IntegerExpression ID;
 	public final StringExpression nombre;
-	public final IntegerExpression importanciaId;
-	public final AssociationExpression importancia;
-	public final IntegerExpression pesoId;
-	public final AssociationExpression peso;
+	public final CollectionExpression importancias;
+	public final CollectionExpression pesos;
 	
 	public ClienteCriteria(Criteria criteria) {
 		super(criteria);
 		ID = new IntegerExpression("ID", this);
 		nombre = new StringExpression("nombre", this);
-		importanciaId = new IntegerExpression("importancia.ID", this);
-		importancia = new AssociationExpression("importancia", this);
-		pesoId = new IntegerExpression("peso.ID", this);
-		peso = new AssociationExpression("peso", this);
+		importancias = new CollectionExpression("ORM_importancias", this);
+		pesos = new CollectionExpression("ORM_pesos", this);
 	}
 	
 	public ClienteCriteria(PersistentSession session) {
@@ -44,12 +40,12 @@ public class ClienteCriteria extends AbstractORMCriteria {
 		this(BasededatosPersistentManager.instance().getSession());
 	}
 	
-	public ImportanciaCriteria createImportanciaCriteria() {
-		return new ImportanciaCriteria(createCriteria("importancia"));
+	public ImportanciaCriteria createImportanciasCriteria() {
+		return new ImportanciaCriteria(createCriteria("ORM_importancias"));
 	}
 	
-	public PesoCriteria createPesoCriteria() {
-		return new PesoCriteria(createCriteria("peso"));
+	public PesoCriteria createPesosCriteria() {
+		return new PesoCriteria(createCriteria("ORM_pesos"));
 	}
 	
 	public Cliente uniqueCliente() {

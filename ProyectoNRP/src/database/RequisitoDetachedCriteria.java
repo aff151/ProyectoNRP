@@ -1,5 +1,3 @@
-package database;
-
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -13,6 +11,8 @@ package database;
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.orm.PersistentSession;
@@ -22,29 +22,26 @@ public class RequisitoDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression ID;
 	public final StringExpression nombre;
 	public final StringExpression descripcion;
-	public final IntegerExpression pesoId;
-	public final AssociationExpression peso;
+	public final CollectionExpression pesos;
 	
 	public RequisitoDetachedCriteria() {
-		super(Requisito.class, RequisitoCriteria.class);
+		super(database.Requisito.class, database.RequisitoCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		nombre = new StringExpression("nombre", this.getDetachedCriteria());
 		descripcion = new StringExpression("descripcion", this.getDetachedCriteria());
-		pesoId = new IntegerExpression("peso.ID", this.getDetachedCriteria());
-		peso = new AssociationExpression("peso", this.getDetachedCriteria());
+		pesos = new CollectionExpression("ORM_pesos", this.getDetachedCriteria());
 	}
 	
 	public RequisitoDetachedCriteria(DetachedCriteria aDetachedCriteria) {
-		super(aDetachedCriteria, RequisitoCriteria.class);
+		super(aDetachedCriteria, database.RequisitoCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		nombre = new StringExpression("nombre", this.getDetachedCriteria());
 		descripcion = new StringExpression("descripcion", this.getDetachedCriteria());
-		pesoId = new IntegerExpression("peso.ID", this.getDetachedCriteria());
-		peso = new AssociationExpression("peso", this.getDetachedCriteria());
+		pesos = new CollectionExpression("ORM_pesos", this.getDetachedCriteria());
 	}
 	
-	public PesoDetachedCriteria createPesoCriteria() {
-		return new PesoDetachedCriteria(createCriteria("peso"));
+	public PesoDetachedCriteria createPesosCriteria() {
+		return new PesoDetachedCriteria(createCriteria("ORM_pesos"));
 	}
 	
 	public Requisito uniqueRequisito(PersistentSession session) {

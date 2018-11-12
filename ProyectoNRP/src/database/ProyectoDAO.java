@@ -1,5 +1,3 @@
-package database;
-
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -13,6 +11,8 @@ package database;
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 import org.orm.*;
 import org.hibernate.Query;
 import org.hibernate.LockMode;
@@ -65,7 +65,7 @@ public class ProyectoDAO {
 	
 	public static Proyecto loadProyectoByORMID(PersistentSession session, int ID) throws PersistentException {
 		try {
-			return (Proyecto) session.load(Proyecto.class, new Integer(ID));
+			return (Proyecto) session.load(database.Proyecto.class, new Integer(ID));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -75,7 +75,7 @@ public class ProyectoDAO {
 	
 	public static Proyecto getProyectoByORMID(PersistentSession session, int ID) throws PersistentException {
 		try {
-			return (Proyecto) session.get(Proyecto.class, new Integer(ID));
+			return (Proyecto) session.get(database.Proyecto.class, new Integer(ID));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -85,7 +85,7 @@ public class ProyectoDAO {
 	
 	public static Proyecto loadProyectoByORMID(PersistentSession session, int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			return (Proyecto) session.load(Proyecto.class, new Integer(ID), lockMode);
+			return (Proyecto) session.load(database.Proyecto.class, new Integer(ID), lockMode);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -95,7 +95,7 @@ public class ProyectoDAO {
 	
 	public static Proyecto getProyectoByORMID(PersistentSession session, int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			return (Proyecto) session.get(Proyecto.class, new Integer(ID), lockMode);
+			return (Proyecto) session.get(database.Proyecto.class, new Integer(ID), lockMode);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -148,7 +148,7 @@ public class ProyectoDAO {
 	}
 	
 	public static List queryProyecto(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Proyecto as Proyecto");
+		StringBuffer sb = new StringBuffer("From database.Proyecto as Proyecto");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -164,7 +164,7 @@ public class ProyectoDAO {
 	}
 	
 	public static List queryProyecto(PersistentSession session, String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Proyecto as Proyecto");
+		StringBuffer sb = new StringBuffer("From database.Proyecto as Proyecto");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -263,7 +263,7 @@ public class ProyectoDAO {
 	}
 	
 	public static java.util.Iterator iterateProyectoByQuery(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Proyecto as Proyecto");
+		StringBuffer sb = new StringBuffer("From database.Proyecto as Proyecto");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -279,7 +279,7 @@ public class ProyectoDAO {
 	}
 	
 	public static java.util.Iterator iterateProyectoByQuery(PersistentSession session, String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Proyecto as Proyecto");
+		StringBuffer sb = new StringBuffer("From database.Proyecto as Proyecto");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -296,10 +296,10 @@ public class ProyectoDAO {
 	}
 	
 	public static Proyecto createProyecto() {
-		return new Proyecto();
+		return new database.Proyecto();
 	}
 	
-	public static boolean save(Proyecto proyecto) throws PersistentException {
+	public static boolean save(database.Proyecto proyecto) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().saveObject(proyecto);
 			return true;
@@ -310,7 +310,7 @@ public class ProyectoDAO {
 		}
 	}
 	
-	public static boolean delete(Proyecto proyecto) throws PersistentException {
+	public static boolean delete(database.Proyecto proyecto) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().deleteObject(proyecto);
 			return true;
@@ -321,16 +321,16 @@ public class ProyectoDAO {
 		}
 	}
 	
-	public static boolean deleteAndDissociate(Proyecto proyecto)throws PersistentException {
+	public static boolean deleteAndDissociate(database.Proyecto proyecto)throws PersistentException {
 		try {
-			if (proyecto.getImportancia() != null) {
-				proyecto.getImportancia().setProyecto(null);
+			database.Importancia[] lImportanciass = proyecto.importancias.toArray();
+			for(int i = 0; i < lImportanciass.length; i++) {
+				lImportanciass[i].setProyecto(null);
 			}
-			
-			if (proyecto.getPeso() != null) {
-				proyecto.getPeso().setProyecto(null);
+			database.Peso[] lPesoss = proyecto.pesos.toArray();
+			for(int i = 0; i < lPesoss.length; i++) {
+				lPesoss[i].setProyecto(null);
 			}
-			
 			return delete(proyecto);
 		}
 		catch(Exception e) {
@@ -339,16 +339,16 @@ public class ProyectoDAO {
 		}
 	}
 	
-	public static boolean deleteAndDissociate(Proyecto proyecto, org.orm.PersistentSession session)throws PersistentException {
+	public static boolean deleteAndDissociate(database.Proyecto proyecto, org.orm.PersistentSession session)throws PersistentException {
 		try {
-			if (proyecto.getImportancia() != null) {
-				proyecto.getImportancia().setProyecto(null);
+			database.Importancia[] lImportanciass = proyecto.importancias.toArray();
+			for(int i = 0; i < lImportanciass.length; i++) {
+				lImportanciass[i].setProyecto(null);
 			}
-			
-			if (proyecto.getPeso() != null) {
-				proyecto.getPeso().setProyecto(null);
+			database.Peso[] lPesoss = proyecto.pesos.toArray();
+			for(int i = 0; i < lPesoss.length; i++) {
+				lPesoss[i].setProyecto(null);
 			}
-			
 			try {
 				session.delete(proyecto);
 				return true;
@@ -362,7 +362,7 @@ public class ProyectoDAO {
 		}
 	}
 	
-	public static boolean refresh(Proyecto proyecto) throws PersistentException {
+	public static boolean refresh(database.Proyecto proyecto) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().getSession().refresh(proyecto);
 			return true;
@@ -373,7 +373,7 @@ public class ProyectoDAO {
 		}
 	}
 	
-	public static boolean evict(Proyecto proyecto) throws PersistentException {
+	public static boolean evict(database.Proyecto proyecto) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().getSession().evict(proyecto);
 			return true;

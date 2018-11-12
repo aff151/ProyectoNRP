@@ -1,5 +1,3 @@
-package database;
-
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -13,6 +11,8 @@ package database;
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 import java.io.Serializable;
 import javax.persistence.*;
 @Entity
@@ -22,24 +22,42 @@ public class Importancia implements Serializable {
 	public Importancia() {
 	}
 	
+	private void this_setOwner(Object owner, int key) {
+		if (key == ORMConstants.KEY_IMPORTANCIA_PROYECTO) {
+			this.proyecto = (database.Proyecto) owner;
+		}
+		
+		else if (key == ORMConstants.KEY_IMPORTANCIA_CLIENTE) {
+			this.cliente = (database.Cliente) owner;
+		}
+	}
+	
+	@Transient	
+	org.orm.util.ORMAdapter _ormAdapter = new org.orm.util.AbstractORMAdapter() {
+		public void setOwner(Object owner, int key) {
+			this_setOwner(owner, key);
+		}
+		
+	};
+	
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
-	@GeneratedValue(generator="IMPORTANCIA_ID_GENERATOR")	
-	@org.hibernate.annotations.GenericGenerator(name="IMPORTANCIA_ID_GENERATOR", strategy="native")	
+	@GeneratedValue(generator="DATABASE_IMPORTANCIA_ID_GENERATOR")	
+	@org.hibernate.annotations.GenericGenerator(name="DATABASE_IMPORTANCIA_ID_GENERATOR", strategy="native")	
 	private int ID;
-	
-	@OneToOne(targetEntity=Cliente.class, fetch=FetchType.LAZY)	
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumns({ @JoinColumn(name="ClienteID", referencedColumnName="ID", nullable=false) })	
-	private Cliente cliente;
-	
-	@OneToOne(targetEntity=Proyecto.class, fetch=FetchType.LAZY)	
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumns({ @JoinColumn(name="ProyectoID", referencedColumnName="ID", nullable=false) })	
-	private Proyecto proyecto;
 	
 	@Column(name="Importancia", nullable=false, length=10)	
 	private int importancia;
+	
+	@ManyToOne(targetEntity=database.Cliente.class)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
+	@JoinColumns({ @JoinColumn(name="ClienteID", referencedColumnName="ID", nullable=false) })	
+	private database.Cliente cliente;
+	
+	@ManyToOne(targetEntity=database.Proyecto.class)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
+	@JoinColumns({ @JoinColumn(name="ProyectoID", referencedColumnName="ID", nullable=false) })	
+	private database.Proyecto proyecto;
 	
 	private void setID(int value) {
 		this.ID = value;
@@ -61,37 +79,51 @@ public class Importancia implements Serializable {
 		return importancia;
 	}
 	
-	public void setProyecto(Proyecto value) {
-		if (this.proyecto != value) {
-			Proyecto lproyecto = this.proyecto;
-			this.proyecto = value;
-			if (value != null) {
-				proyecto.setImportancia(this);
-			}
-			if (lproyecto != null && lproyecto.getImportancia() == this) {
-				lproyecto.setImportancia(null);
-			}
+	public void setProyecto(database.Proyecto value) {
+		if (proyecto != null) {
+			proyecto.importancias.remove(this);
+		}
+		if (value != null) {
+			value.importancias.add(this);
 		}
 	}
 	
-	public Proyecto getProyecto() {
+	public database.Proyecto getProyecto() {
 		return proyecto;
 	}
 	
-	public void setCliente(Cliente value) {
-		if (this.cliente != value) {
-			Cliente lcliente = this.cliente;
-			this.cliente = value;
-			if (value != null) {
-				cliente.setImportancia(this);
-			}
-			if (lcliente != null && lcliente.getImportancia() == this) {
-				lcliente.setImportancia(null);
-			}
+	/**
+	 * This method is for internal use only.
+	 */
+	public void setORM_Proyecto(database.Proyecto value) {
+		this.proyecto = value;
+	}
+	
+	private database.Proyecto getORM_Proyecto() {
+		return proyecto;
+	}
+	
+	public void setCliente(database.Cliente value) {
+		if (cliente != null) {
+			cliente.importancias.remove(this);
+		}
+		if (value != null) {
+			value.importancias.add(this);
 		}
 	}
 	
-	public Cliente getCliente() {
+	public database.Cliente getCliente() {
+		return cliente;
+	}
+	
+	/**
+	 * This method is for internal use only.
+	 */
+	public void setORM_Cliente(database.Cliente value) {
+		this.cliente = value;
+	}
+	
+	private database.Cliente getORM_Cliente() {
 		return cliente;
 	}
 	

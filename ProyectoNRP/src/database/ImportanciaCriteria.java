@@ -1,5 +1,3 @@
-package database;
-
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -13,6 +11,8 @@ package database;
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 import org.hibernate.Criteria;
 import org.orm.PersistentException;
 import org.orm.PersistentSession;
@@ -20,20 +20,20 @@ import org.orm.criteria.*;
 
 public class ImportanciaCriteria extends AbstractORMCriteria {
 	public final IntegerExpression ID;
+	public final IntegerExpression importancia;
 	public final IntegerExpression clienteId;
 	public final AssociationExpression cliente;
 	public final IntegerExpression proyectoId;
 	public final AssociationExpression proyecto;
-	public final IntegerExpression importancia;
 	
 	public ImportanciaCriteria(Criteria criteria) {
 		super(criteria);
 		ID = new IntegerExpression("ID", this);
-		clienteId = new IntegerExpression("cliente.ID", this);
-		cliente = new AssociationExpression("cliente", this);
-		proyectoId = new IntegerExpression("proyecto.ID", this);
-		proyecto = new AssociationExpression("proyecto", this);
 		importancia = new IntegerExpression("importancia", this);
+		clienteId = new IntegerExpression("ORM_Cliente.null", this);
+		cliente = new AssociationExpression("ORM_Cliente", this);
+		proyectoId = new IntegerExpression("ORM_Proyecto.null", this);
+		proyecto = new AssociationExpression("ORM_Proyecto", this);
 	}
 	
 	public ImportanciaCriteria(PersistentSession session) {
@@ -45,11 +45,11 @@ public class ImportanciaCriteria extends AbstractORMCriteria {
 	}
 	
 	public ClienteCriteria createClienteCriteria() {
-		return new ClienteCriteria(createCriteria("cliente"));
+		return new ClienteCriteria(createCriteria("ORM_Cliente"));
 	}
 	
 	public ProyectoCriteria createProyectoCriteria() {
-		return new ProyectoCriteria(createCriteria("proyecto"));
+		return new ProyectoCriteria(createCriteria("ORM_Proyecto"));
 	}
 	
 	public Importancia uniqueImportancia() {

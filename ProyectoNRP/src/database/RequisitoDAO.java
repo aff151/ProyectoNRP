@@ -1,7 +1,4 @@
-package database;
-
 /**
-
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
  * This is an automatic generated file. It will be regenerated every time 
@@ -14,6 +11,8 @@ package database;
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 import org.orm.*;
 import org.hibernate.Query;
 import org.hibernate.LockMode;
@@ -66,7 +65,7 @@ public class RequisitoDAO {
 	
 	public static Requisito loadRequisitoByORMID(PersistentSession session, int ID) throws PersistentException {
 		try {
-			return (Requisito) session.load(Requisito.class, new Integer(ID));
+			return (Requisito) session.load(database.Requisito.class, new Integer(ID));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -76,7 +75,7 @@ public class RequisitoDAO {
 	
 	public static Requisito getRequisitoByORMID(PersistentSession session, int ID) throws PersistentException {
 		try {
-			return (Requisito) session.get(Requisito.class, new Integer(ID));
+			return (Requisito) session.get(database.Requisito.class, new Integer(ID));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -86,7 +85,7 @@ public class RequisitoDAO {
 	
 	public static Requisito loadRequisitoByORMID(PersistentSession session, int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			return (Requisito) session.load(Requisito.class, new Integer(ID), lockMode);
+			return (Requisito) session.load(database.Requisito.class, new Integer(ID), lockMode);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -96,7 +95,7 @@ public class RequisitoDAO {
 	
 	public static Requisito getRequisitoByORMID(PersistentSession session, int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			return (Requisito) session.get(Requisito.class, new Integer(ID), lockMode);
+			return (Requisito) session.get(database.Requisito.class, new Integer(ID), lockMode);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -149,7 +148,7 @@ public class RequisitoDAO {
 	}
 	
 	public static List queryRequisito(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Requisito as Requisito");
+		StringBuffer sb = new StringBuffer("From database.Requisito as Requisito");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -165,7 +164,7 @@ public class RequisitoDAO {
 	}
 	
 	public static List queryRequisito(PersistentSession session, String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Requisito as Requisito");
+		StringBuffer sb = new StringBuffer("From database.Requisito as Requisito");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -264,7 +263,7 @@ public class RequisitoDAO {
 	}
 	
 	public static java.util.Iterator iterateRequisitoByQuery(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Requisito as Requisito");
+		StringBuffer sb = new StringBuffer("From database.Requisito as Requisito");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -280,7 +279,7 @@ public class RequisitoDAO {
 	}
 	
 	public static java.util.Iterator iterateRequisitoByQuery(PersistentSession session, String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Requisito as Requisito");
+		StringBuffer sb = new StringBuffer("From database.Requisito as Requisito");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
@@ -297,10 +296,10 @@ public class RequisitoDAO {
 	}
 	
 	public static Requisito createRequisito() {
-		return new Requisito();
+		return new database.Requisito();
 	}
 	
-	public static boolean save(Requisito requisito) throws PersistentException {
+	public static boolean save(database.Requisito requisito) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().saveObject(requisito);
 			return true;
@@ -311,7 +310,7 @@ public class RequisitoDAO {
 		}
 	}
 	
-	public static boolean delete(Requisito requisito) throws PersistentException {
+	public static boolean delete(database.Requisito requisito) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().deleteObject(requisito);
 			return true;
@@ -322,12 +321,12 @@ public class RequisitoDAO {
 		}
 	}
 	
-	public static boolean deleteAndDissociate(Requisito requisito)throws PersistentException {
+	public static boolean deleteAndDissociate(database.Requisito requisito)throws PersistentException {
 		try {
-			if (requisito.getPeso() != null) {
-				requisito.getPeso().setRequisito(null);
+			database.Peso[] lPesoss = requisito.pesos.toArray();
+			for(int i = 0; i < lPesoss.length; i++) {
+				lPesoss[i].setRequisito(null);
 			}
-			
 			return delete(requisito);
 		}
 		catch(Exception e) {
@@ -336,12 +335,12 @@ public class RequisitoDAO {
 		}
 	}
 	
-	public static boolean deleteAndDissociate(Requisito requisito, org.orm.PersistentSession session)throws PersistentException {
+	public static boolean deleteAndDissociate(database.Requisito requisito, org.orm.PersistentSession session)throws PersistentException {
 		try {
-			if (requisito.getPeso() != null) {
-				requisito.getPeso().setRequisito(null);
+			database.Peso[] lPesoss = requisito.pesos.toArray();
+			for(int i = 0; i < lPesoss.length; i++) {
+				lPesoss[i].setRequisito(null);
 			}
-			
 			try {
 				session.delete(requisito);
 				return true;
@@ -355,7 +354,7 @@ public class RequisitoDAO {
 		}
 	}
 	
-	public static boolean refresh(Requisito requisito) throws PersistentException {
+	public static boolean refresh(database.Requisito requisito) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().getSession().refresh(requisito);
 			return true;
@@ -366,7 +365,7 @@ public class RequisitoDAO {
 		}
 	}
 	
-	public static boolean evict(Requisito requisito) throws PersistentException {
+	public static boolean evict(database.Requisito requisito) throws PersistentException {
 		try {
 			BasededatosPersistentManager.instance().getSession().evict(requisito);
 			return true;

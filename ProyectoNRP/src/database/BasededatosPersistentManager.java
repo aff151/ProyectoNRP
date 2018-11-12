@@ -1,5 +1,3 @@
-package database;
-
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -13,6 +11,8 @@ package database;
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 import org.orm.*;
 import org.orm.cfg.JDBCConnectionSetting;
 import org.hibernate.*;
@@ -36,11 +36,11 @@ public class BasededatosPersistentManager extends PersistentManager {
 	@Override
 	public Configuration createConfiguration() {
 		Configuration configuration = new Configuration();
-		configuration.addAnnotatedClass(Peso.class);
-		configuration.addAnnotatedClass(Cliente.class);
-		configuration.addAnnotatedClass(Importancia.class);
-		configuration.addAnnotatedClass(Proyecto.class);
-		configuration.addAnnotatedClass(Requisito.class);
+		configuration.addAnnotatedClass(database.Peso.class);
+		configuration.addAnnotatedClass(database.Requisito.class);
+		configuration.addAnnotatedClass(database.Proyecto.class);
+		configuration.addAnnotatedClass(database.Cliente.class);
+		configuration.addAnnotatedClass(database.Importancia.class);
 		configuration.buildMappings();
 		return configuration;
 	}

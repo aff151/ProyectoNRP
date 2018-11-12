@@ -1,5 +1,3 @@
-package database;
-
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -13,10 +11,12 @@ package database;
  * Licensee: usuario(University of Almeria)
  * License Type: Academic
  */
+package database;
+
 public interface ORMConstants extends org.orm.util.ORMBaseConstants {
-	final int KEY_CLIENTE_IMPORTANCIA = 375978500;
+	final int KEY_CLIENTE_IMPORTANCIAS = -1229568273;
 	
-	final int KEY_CLIENTE_PESO = -772430250;
+	final int KEY_CLIENTE_PESOS = 1824466141;
 	
 	final int KEY_IMPORTANCIA_CLIENTE = 785150084;
 	
@@ -28,10 +28,10 @@ public interface ORMConstants extends org.orm.util.ORMBaseConstants {
 	
 	final int KEY_PESO_REQUISITO = -2083707275;
 	
-	final int KEY_PROYECTO_IMPORTANCIA = 138944719;
+	final int KEY_PROYECTO_IMPORTANCIAS = 12319108;
 	
-	final int KEY_PROYECTO_PESO = 1647164907;
+	final int KEY_PROYECTO_PESOS = -477495320;
 	
-	final int KEY_REQUISITO_PESO = 135295981;
+	final int KEY_REQUISITO_PESOS = -100791770;
 	
 }
