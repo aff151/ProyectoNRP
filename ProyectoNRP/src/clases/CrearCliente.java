@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JList;
 import javax.swing.JLabel;
 import java.awt.Color;
@@ -79,7 +80,13 @@ public class CrearCliente extends JFrame {
 				String nombreCliente = nombreTexttField.getText();
 
 				try {
-					bd_Clientes.crearCliente(nombreCliente);
+					if(nombreCliente.equals("")) {
+						JOptionPane.showMessageDialog(null, "Debe introducir el nombre de un cliente", "MENSAJE", JOptionPane.WARNING_MESSAGE);
+					}else {
+						bd_Clientes.crearCliente(nombreCliente);
+						//JOptionPane.showMessageDialog(null, "CLIENTE "+ nombreCliente +" CREADO CON Ã‰XITO", "MENSAJE", JOptionPane.WARNING_MESSAGE);
+						nombreTexttField.setText("");
+					}
 				} catch (PersistentException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -92,7 +99,7 @@ public class CrearCliente extends JFrame {
 
 		
 		
-		JButton volverInicio = new JButton("Atrás");
+		JButton volverInicio = new JButton("Atrï¿½s");
 		volverInicio.setBounds(35, 373, 117, 29);
 		contentPane.add(volverInicio);
 		
