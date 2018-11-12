@@ -1,8 +1,11 @@
 package database;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import org.orm.PersistentException;
+import org.orm.PersistentTransaction;
 
 public class BD_Requisitos {
 	public BD_Principal _c_bd_req;
@@ -19,4 +22,5 @@ public class BD_Requisitos {
 			e.printStackTrace();
 		}
 	}
+	
 }

@@ -13,6 +13,7 @@ import database.BD_Requisitos;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -117,5 +118,6 @@ public class CrearRequisito extends JFrame {
 	}
 	public void crearRequisito() {
 		req.crearRequisito(txtNombreDelRequisito.getText(), descripcion.getText());
+		JOptionPane.showMessageDialog(null, "El requisito ha sido creado con éxito", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
 	}
 }

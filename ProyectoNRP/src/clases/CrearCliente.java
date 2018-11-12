@@ -84,7 +84,7 @@ public class CrearCliente extends JFrame {
 						JOptionPane.showMessageDialog(null, "Debe introducir el nombre de un cliente", "MENSAJE", JOptionPane.WARNING_MESSAGE);
 					}else {
 						bd_Clientes.crearCliente(nombreCliente);
-						//JOptionPane.showMessageDialog(null, "CLIENTE "+ nombreCliente +" CREADO CON ÉXITO", "MENSAJE", JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(null, "El cliente ha sido creado con éxito", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
 						nombreTexttField.setText("");
 					}
 				} catch (PersistentException e1) {
