@@ -37,12 +37,10 @@ import javax.swing.JButton;
 public class CrearCliente extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField importanciaCliente;
 	private JTextField nombreTexttField;
 	private BD_Clientes bd_Clientes = new BD_Clientes();
 	private BD_Proyectos bd_Proyectos = new BD_Proyectos();
 	private DefaultListModel modelo;
-	private JList listProyectos;
 	private List<Proyecto> listaProyecto;
 
 	/**
@@ -66,32 +64,9 @@ public class CrearCliente extends JFrame {
 	 */
 	public CrearCliente() {
 		
-		inicializar();		
-		
-		listProyectos = new JList();
-		listProyectos.setBackground(Color.WHITE);
-		listProyectos.setBounds(35, 121, 189, 226);
-		listProyectos.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		contentPane.add(listProyectos);
+		inicializar();
 		
 		modelo = new DefaultListModel();
-		//meter aqui todos los proyectos que hay creados
-		
-		
-		
-		//////////////////////////////////////////////////////////////////////////////////
-		JLabel lblNewLabel1 = new JLabel("Seleccionar Proyecto");
-		lblNewLabel1.setBounds(52, 93, 160, 16);
-		contentPane.add(lblNewLabel1);
-		
-		JLabel lblIntroduceElPeso = new JLabel("Introduce el peso del cliente en el proyecto");
-		lblIntroduceElPeso.setBounds(262, 149, 267, 49);
-		contentPane.add(lblIntroduceElPeso);
-		
-		importanciaCliente = new JTextField();
-		importanciaCliente.setBounds(310, 220, 130, 26);
-		contentPane.add(importanciaCliente);
-		importanciaCliente.setColumns(10);
 		
 		JButton crearClienteBoton = new JButton("Crear Cliente");
 		crearClienteBoton.setBounds(400, 373, 117, 29);
@@ -102,7 +77,13 @@ public class CrearCliente extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//IR A LA BBDD PARA METER AL CLIENTE
 				String nombreCliente = nombreTexttField.getText();
-				String importancia = importanciaCliente.getText();
+
+				try {
+					bd_Clientes.crearCliente(nombreCliente);
+				} catch (PersistentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				//listProyectos.
 			}
 		});
@@ -159,7 +140,7 @@ public class CrearCliente extends JFrame {
 		for(Proyecto p : listaProyecto)
 		{
 			modelo.addElement(p.getNombre());
-			listProyectos.setModel(modelo);
+			//listProyectos.setModel(modelo);
 		}
 	}
 	
