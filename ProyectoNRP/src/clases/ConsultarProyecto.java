@@ -25,6 +25,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JTextPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.JTextField;
 
 public class ConsultarProyecto extends JFrame {
@@ -79,10 +80,11 @@ public class ConsultarProyecto extends JFrame {
 
 		listClientes = new JList();
 		listClientes.setBounds(43, 135, 170, 240);
+		modelo = new DefaultListModel();
 		cargarNombresLista();
 		contentPane.add(listClientes);
 		
-		modelo = new DefaultListModel();
+		
 
 
 		JList listRequisitos = new JList();

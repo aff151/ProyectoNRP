@@ -9,17 +9,40 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import org.orm.PersistentException;
+
+import database.BD_Importancia;
+import database.BD_Proyectos;
+import database.Cliente;
+import database.Proyecto;
+
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 public class ModificarProyecto extends JFrame {
 
 	private JPanel contentPane;
 	public static String procedencia="";
+	private JTextField textFieldDescripcion;
+	private DefaultListModel modelo;
+	BD_Proyectos bdproy = new BD_Proyectos();
+	BD_Importancia bdimp = new BD_Importancia();
+	ConsultarProyectos cons = new ConsultarProyectos();
+	private JList listClientes;
+	private JList listRequisitos;
+	Proyecto consproy = null;
+	private List<Cliente> listCli;
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -40,29 +63,31 @@ public class ModificarProyecto extends JFrame {
 	 * Create the frame.
 	 */
 	public ModificarProyecto() {
+		
+		inicializar();
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz.class.getResource("/imagenes/icono.PNG")));
-		setResizable(false);
-		setBounds(100, 100, 600, 500);
-		setLocationRelativeTo(null);
+		try {
+			consproy = descargarInformacion(cons.proySeleccionado);
+		} catch (PersistentException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		JLabel lblNombreProyecto = new JLabel(ConsultarProyectos.proySeleccionado);
+		JLabel lblNombreProyecto = new JLabel(consproy.getNombre());
 		lblNombreProyecto.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNombreProyecto.setBounds(171, 43, 174, 16);
+		lblNombreProyecto.setBounds(169, 22, 174, 16);
 		contentPane.add(lblNombreProyecto);
 
-		JList list = new JList();
-		list.setBounds(68, 154, 124, 199);
-		contentPane.add(list);
+		listClientes = new JList();
+		listClientes.setBounds(68, 154, 124, 199);
+		modelo = new DefaultListModel();
+		cargarNombresLista();
+		listClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		contentPane.add(listClientes);
 
-		JList list_1 = new JList();
-		list_1.setBounds(353, 154, 124, 199);
-		contentPane.add(list_1);
+		listRequisitos = new JList();
+		listRequisitos.setBounds(353, 154, 124, 199);
+		contentPane.add(listRequisitos);
 
 		JLabel lblListaDeClientes = new JLabel("Lista de clientes del proyecto");
 		lblListaDeClientes.setBounds(31, 126, 217, 16);
@@ -71,19 +96,6 @@ public class ModificarProyecto extends JFrame {
 		JLabel lblListaDeRequisitos = new JLabel("Lista de requisitos del proyecto");
 		lblListaDeRequisitos.setBounds(313, 126, 217, 16);
 		contentPane.add(lblListaDeRequisitos);
-
-		JButton btnAadirMsClientes = new JButton("Eliminar Clientes");
-		btnAadirMsClientes.setBounds(45, 365, 170, 29);
-		contentPane.add(btnAadirMsClientes);
-
-		JButton btnAadirMsRequisitos = new JButton("Eliminar Requisitos");
-		btnAadirMsRequisitos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		btnAadirMsRequisitos.setBounds(333, 365, 170, 29);
-		contentPane.add(btnAadirMsRequisitos);
 
 		JButton btnAtrs = new JButton("Atrás");
 		btnAtrs.addActionListener(new ActionListener() {
@@ -95,7 +107,7 @@ public class ModificarProyecto extends JFrame {
 				dispose();
 			}
 		});
-		btnAtrs.setBounds(491, 443, 77, 29);
+		btnAtrs.setBounds(234, 395, 77, 29);
 		contentPane.add(btnAtrs);
 
 		JButton btnAadirMsClientes_1 = new JButton("Añadir más Clientes");
@@ -107,7 +119,7 @@ public class ModificarProyecto extends JFrame {
 				dispose();
 			}
 		});
-		btnAadirMsClientes_1.setBounds(45, 391, 170, 29);
+		btnAadirMsClientes_1.setBounds(44, 364, 170, 29);
 		contentPane.add(btnAadirMsClientes_1);
 
 		JButton btnAadirMsRequisitos_1 = new JButton("Añadir más Requisitos");
@@ -119,13 +131,49 @@ public class ModificarProyecto extends JFrame {
 				dispose();
 			}
 		});
-		btnAadirMsRequisitos_1.setBounds(333, 391, 170, 29);
+		btnAadirMsRequisitos_1.setBounds(330, 364, 170, 29);
 		contentPane.add(btnAadirMsRequisitos_1);
 		
-				JLabel lblNewLabel = new JLabel("");
-				lblNewLabel.setIcon(new ImageIcon(Interfaz.class.getResource("/imagenes/fondo.png")));
-				lblNewLabel.setBounds(0, 0, 600, 500);
-				contentPane.add(lblNewLabel);
+		JLabel lblDescripcin = new JLabel("Descripción");
+		lblDescripcin.setBounds(31, 67, 109, 21);
+		contentPane.add(lblDescripcin);
+		
+		textFieldDescripcion = new JTextField(consproy.getDescripcion());
+		textFieldDescripcion.setBounds(127, 53, 393, 48);
+		textFieldDescripcion.setEditable(false);
+		contentPane.add(textFieldDescripcion);
+		textFieldDescripcion.setColumns(10);
+	
 
+	}
+	
+	public void inicializar() {
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
+		setResizable(false);
+		setBounds(100, 100, 560, 473);
+		setLocationRelativeTo(null);
+		setTitle("Modificar Proyecto");
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+	}
+	public Proyecto descargarInformacion(String proySeleccionado) throws PersistentException {
+		return bdproy.descargarInformacion(proySeleccionado);
+	}
+
+	private void cargarNombresLista() {
+		try {
+			listCli = bdimp.cargarClientesProyecto(cons.proySeleccionado);
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(Cliente c : listCli) {
+			modelo.addElement(c.getNombre());
+			listClientes.setModel(modelo);
+		}
 	}
 }
