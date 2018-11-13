@@ -26,6 +26,9 @@ public class Requisito implements Serializable {
 		if (key == ORMConstants.KEY_REQUISITO_PESOS) {
 			return ORM_pesos;
 		}
+		else if (key == ORMConstants.KEY_REQUISITO_PROYREQS) {
+			return ORM_proyReqs;
+		}
 		
 		return null;
 	}
@@ -54,6 +57,11 @@ public class Requisito implements Serializable {
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.Set ORM_pesos = new java.util.HashSet();
+	
+	@OneToMany(mappedBy="requisito", targetEntity=database.ProyReq.class)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
+	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
+	private java.util.Set ORM_proyReqs = new java.util.HashSet();
 	
 	private void setID(int value) {
 		this.ID = value;
@@ -93,6 +101,49 @@ public class Requisito implements Serializable {
 	
 	@Transient	
 	public final database.PesoSetCollection pesos = new database.PesoSetCollection(this, _ormAdapter, ORMConstants.KEY_REQUISITO_PESOS, ORMConstants.KEY_PESO_REQUISITO, ORMConstants.KEY_MUL_ONE_TO_MANY);
+	
+	public database.Proyecto[] getProyectos() {
+		java.util.ArrayList lValues = new java.util.ArrayList(5);
+		for(java.util.Iterator lIter = proyReqs.getIterator();lIter.hasNext();) {
+			lValues.add(((database.ProyReq)lIter.next()).getProyecto());
+		}
+		return (database.Proyecto[])lValues.toArray(new database.Proyecto[lValues.size()]);
+	}
+	
+	public void removeProyecto(database.Proyecto aProyecto) {
+		database.ProyReq[] lProyReqs = proyReqs.toArray();
+		for(int i = 0; i < lProyReqs.length; i++) {
+			if(lProyReqs[i].getProyecto().equals(aProyecto)) {
+				proyReqs.remove(lProyReqs[i]);
+			}
+		}
+	}
+	
+	public void addProyecto(database.ProyReq aProyReq, database.Proyecto aProyecto) {
+		aProyReq.setProyecto(aProyecto);
+		proyReqs.add(aProyReq);
+	}
+	
+	public database.ProyReq getProyReqByProyecto(database.Proyecto aProyecto) {
+		database.ProyReq[] lProyReqs = proyReqs.toArray();
+		for(int i = 0; i < lProyReqs.length; i++) {
+			if(lProyReqs[i].getProyecto().equals(aProyecto)) {
+				return lProyReqs[i];
+			}
+		}
+		return null;
+	}
+	
+	private void setORM_ProyReqs(java.util.Set value) {
+		this.ORM_proyReqs = value;
+	}
+	
+	private java.util.Set getORM_ProyReqs() {
+		return ORM_proyReqs;
+	}
+	
+	@Transient	
+	public final database.ProyReqSetCollection proyReqs = new database.ProyReqSetCollection(this, _ormAdapter, ORMConstants.KEY_REQUISITO_PROYREQS, ORMConstants.KEY_PROYREQ_REQUISITO, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
 	public String toString() {
 		return String.valueOf(getID());

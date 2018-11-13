@@ -323,6 +323,10 @@ public class ProyectoDAO {
 	
 	public static boolean deleteAndDissociate(database.Proyecto proyecto)throws PersistentException {
 		try {
+			database.ProyReq[] lProyReqss = proyecto.proyReqs.toArray();
+			for(int i = 0; i < lProyReqss.length; i++) {
+				lProyReqss[i].setProyecto(null);
+			}
 			database.Importancia[] lImportanciass = proyecto.importancias.toArray();
 			for(int i = 0; i < lImportanciass.length; i++) {
 				lImportanciass[i].setProyecto(null);
@@ -341,6 +345,10 @@ public class ProyectoDAO {
 	
 	public static boolean deleteAndDissociate(database.Proyecto proyecto, org.orm.PersistentSession session)throws PersistentException {
 		try {
+			database.ProyReq[] lProyReqss = proyecto.proyReqs.toArray();
+			for(int i = 0; i < lProyReqss.length; i++) {
+				lProyReqss[i].setProyecto(null);
+			}
 			database.Importancia[] lImportanciass = proyecto.importancias.toArray();
 			for(int i = 0; i < lImportanciass.length; i++) {
 				lImportanciass[i].setProyecto(null);

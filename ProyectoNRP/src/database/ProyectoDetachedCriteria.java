@@ -22,6 +22,7 @@ public class ProyectoDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression ID;
 	public final StringExpression nombre;
 	public final StringExpression descripcion;
+	public final CollectionExpression proyReqs;
 	public final CollectionExpression importancias;
 	public final CollectionExpression pesos;
 	
@@ -30,6 +31,7 @@ public class ProyectoDetachedCriteria extends AbstractORMDetachedCriteria {
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		nombre = new StringExpression("nombre", this.getDetachedCriteria());
 		descripcion = new StringExpression("descripcion", this.getDetachedCriteria());
+		proyReqs = new CollectionExpression("ORM_proyReqs", this.getDetachedCriteria());
 		importancias = new CollectionExpression("ORM_importancias", this.getDetachedCriteria());
 		pesos = new CollectionExpression("ORM_pesos", this.getDetachedCriteria());
 	}
@@ -39,8 +41,13 @@ public class ProyectoDetachedCriteria extends AbstractORMDetachedCriteria {
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		nombre = new StringExpression("nombre", this.getDetachedCriteria());
 		descripcion = new StringExpression("descripcion", this.getDetachedCriteria());
+		proyReqs = new CollectionExpression("ORM_proyReqs", this.getDetachedCriteria());
 		importancias = new CollectionExpression("ORM_importancias", this.getDetachedCriteria());
 		pesos = new CollectionExpression("ORM_pesos", this.getDetachedCriteria());
+	}
+	
+	public ProyReqDetachedCriteria createProyReqsCriteria() {
+		return new ProyReqDetachedCriteria(createCriteria("ORM_proyReqs"));
 	}
 	
 	public ImportanciaDetachedCriteria createImportanciasCriteria() {

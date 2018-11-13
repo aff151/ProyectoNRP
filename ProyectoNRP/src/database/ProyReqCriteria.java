@@ -18,47 +18,45 @@ import org.orm.PersistentException;
 import org.orm.PersistentSession;
 import org.orm.criteria.*;
 
-public class ImportanciaCriteria extends AbstractORMCriteria {
+public class ProyReqCriteria extends AbstractORMCriteria {
 	public final IntegerExpression ID;
-	public final IntegerExpression importancia;
-	public final IntegerExpression clienteId;
-	public final AssociationExpression cliente;
 	public final IntegerExpression proyectoId;
 	public final AssociationExpression proyecto;
+	public final IntegerExpression requisitoId;
+	public final AssociationExpression requisito;
 	
-	public ImportanciaCriteria(Criteria criteria) {
+	public ProyReqCriteria(Criteria criteria) {
 		super(criteria);
 		ID = new IntegerExpression("ID", this);
-		importancia = new IntegerExpression("importancia", this);
-		clienteId = new IntegerExpression("ORM_Cliente.null", this);
-		cliente = new AssociationExpression("ORM_Cliente", this);
 		proyectoId = new IntegerExpression("ORM_Proyecto.null", this);
 		proyecto = new AssociationExpression("ORM_Proyecto", this);
+		requisitoId = new IntegerExpression("ORM_Requisito.null", this);
+		requisito = new AssociationExpression("ORM_Requisito", this);
 	}
 	
-	public ImportanciaCriteria(PersistentSession session) {
-		this(session.createCriteria(Importancia.class));
+	public ProyReqCriteria(PersistentSession session) {
+		this(session.createCriteria(ProyReq.class));
 	}
 	
-	public ImportanciaCriteria() throws PersistentException {
+	public ProyReqCriteria() throws PersistentException {
 		this(BasededatosPersistentManager.instance().getSession());
-	}
-	
-	public ClienteCriteria createClienteCriteria() {
-		return new ClienteCriteria(createCriteria("ORM_Cliente"));
 	}
 	
 	public ProyectoCriteria createProyectoCriteria() {
 		return new ProyectoCriteria(createCriteria("ORM_Proyecto"));
 	}
 	
-	public Importancia uniqueImportancia() {
-		return (Importancia) super.uniqueResult();
+	public RequisitoCriteria createRequisitoCriteria() {
+		return new RequisitoCriteria(createCriteria("ORM_Requisito"));
 	}
 	
-	public Importancia[] listImportancia() {
+	public ProyReq uniqueProyReq() {
+		return (ProyReq) super.uniqueResult();
+	}
+	
+	public ProyReq[] listProyReq() {
 		java.util.List list = super.list();
-		return (Importancia[]) list.toArray(new Importancia[list.size()]);
+		return (ProyReq[]) list.toArray(new ProyReq[list.size()]);
 	}
 }
 

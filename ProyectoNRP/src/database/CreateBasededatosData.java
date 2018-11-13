@@ -13,10 +13,10 @@ public class CreateBasededatosData {
 			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : peso, requisito, proyecto, cliente
 			database.PesoDAO.save(ldatabasePeso);
 			database.Requisito ldatabaseRequisito = database.RequisitoDAO.createRequisito();
-			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : pesos
+			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : proyReqs, pesos
 			database.RequisitoDAO.save(ldatabaseRequisito);
 			database.Proyecto ldatabaseProyecto = database.ProyectoDAO.createProyecto();
-			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : pesos, importancias
+			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : pesos, importancias, proyReqs
 			database.ProyectoDAO.save(ldatabaseProyecto);
 			database.Cliente ldatabaseCliente = database.ClienteDAO.createCliente();
 			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : pesos, importancias
@@ -24,6 +24,9 @@ public class CreateBasededatosData {
 			database.Importancia ldatabaseImportancia = database.ImportanciaDAO.createImportancia();
 			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : proyecto, cliente, importancia
 			database.ImportanciaDAO.save(ldatabaseImportancia);
+			database.ProyReq ldatabaseProyReq = database.ProyReqDAO.createProyReq();
+			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : requisito, proyecto
+			database.ProyReqDAO.save(ldatabaseProyReq);
 			t.commit();
 		}
 		catch (Exception e) {

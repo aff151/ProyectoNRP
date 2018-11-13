@@ -28,10 +28,18 @@ public interface ORMConstants extends org.orm.util.ORMBaseConstants {
 	
 	final int KEY_PESO_REQUISITO = -2083707275;
 	
+	final int KEY_PROYREQ_PROYECTO = 10566962;
+	
+	final int KEY_PROYREQ_REQUISITO = 1490587510;
+	
 	final int KEY_PROYECTO_IMPORTANCIAS = 12319108;
 	
 	final int KEY_PROYECTO_PESOS = -477495320;
 	
+	final int KEY_PROYECTO_PROYREQS = -1584911621;
+	
 	final int KEY_REQUISITO_PESOS = -100791770;
+	
+	final int KEY_REQUISITO_PROYREQS = -1958998019;
 	
 }

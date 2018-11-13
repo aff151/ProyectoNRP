@@ -17,22 +17,18 @@ import java.io.Serializable;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
-@Table(name="Peso")
-public class Peso implements Serializable {
-	public Peso() {
+@Table(name="ProyReq")
+public class ProyReq implements Serializable {
+	public ProyReq() {
 	}
 	
 	private void this_setOwner(Object owner, int key) {
-		if (key == ORMConstants.KEY_PESO_REQUISITO) {
+		if (key == ORMConstants.KEY_PROYREQ_REQUISITO) {
 			this.requisito = (database.Requisito) owner;
 		}
 		
-		else if (key == ORMConstants.KEY_PESO_PROYECTO) {
+		else if (key == ORMConstants.KEY_PROYREQ_PROYECTO) {
 			this.proyecto = (database.Proyecto) owner;
-		}
-		
-		else if (key == ORMConstants.KEY_PESO_CLIENTE) {
-			this.cliente = (database.Cliente) owner;
 		}
 	}
 	
@@ -46,27 +42,19 @@ public class Peso implements Serializable {
 	
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
-	@GeneratedValue(generator="DATABASE_PESO_ID_GENERATOR")	
-	@org.hibernate.annotations.GenericGenerator(name="DATABASE_PESO_ID_GENERATOR", strategy="native")	
+	@GeneratedValue(generator="DATABASE_PROYREQ_ID_GENERATOR")	
+	@org.hibernate.annotations.GenericGenerator(name="DATABASE_PROYREQ_ID_GENERATOR", strategy="native")	
 	private int ID;
 	
-	@ManyToOne(targetEntity=database.Cliente.class, fetch=FetchType.LAZY)	
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumns({ @JoinColumn(name="ClienteID", referencedColumnName="ID", nullable=false) })	
-	private database.Cliente cliente;
-	
-	@ManyToOne(targetEntity=database.Proyecto.class, fetch=FetchType.LAZY)	
+	@ManyToOne(targetEntity=database.Proyecto.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="ProyectoID", referencedColumnName="ID", nullable=false) })	
 	private database.Proyecto proyecto;
 	
-	@ManyToOne(targetEntity=database.Requisito.class, fetch=FetchType.LAZY)	
+	@ManyToOne(targetEntity=database.Requisito.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="RequisitoID", referencedColumnName="ID", nullable=false) })	
 	private database.Requisito requisito;
-	
-	@Column(name="Peso", nullable=false, length=10)	
-	private int peso;
 	
 	private void setID(int value) {
 		this.ID = value;
@@ -80,20 +68,12 @@ public class Peso implements Serializable {
 		return getID();
 	}
 	
-	public void setPeso(int value) {
-		this.peso = value;
-	}
-	
-	public int getPeso() {
-		return peso;
-	}
-	
 	public void setRequisito(database.Requisito value) {
 		if (requisito != null) {
-			requisito.pesos.remove(this);
+			requisito.proyReqs.remove(this);
 		}
 		if (value != null) {
-			value.pesos.add(this);
+			value.proyReqs.add(this);
 		}
 	}
 	
@@ -114,10 +94,10 @@ public class Peso implements Serializable {
 	
 	public void setProyecto(database.Proyecto value) {
 		if (proyecto != null) {
-			proyecto.pesos.remove(this);
+			proyecto.proyReqs.remove(this);
 		}
 		if (value != null) {
-			value.pesos.add(this);
+			value.proyReqs.add(this);
 		}
 	}
 	
@@ -134,30 +114,6 @@ public class Peso implements Serializable {
 	
 	private database.Proyecto getORM_Proyecto() {
 		return proyecto;
-	}
-	
-	public void setCliente(database.Cliente value) {
-		if (cliente != null) {
-			cliente.pesos.remove(this);
-		}
-		if (value != null) {
-			value.pesos.add(this);
-		}
-	}
-	
-	public database.Cliente getCliente() {
-		return cliente;
-	}
-	
-	/**
-	 * This method is for internal use only.
-	 */
-	public void setORM_Cliente(database.Cliente value) {
-		this.cliente = value;
-	}
-	
-	private database.Cliente getORM_Cliente() {
-		return cliente;
 	}
 	
 	public String toString() {

@@ -23,7 +23,10 @@ public class Proyecto implements Serializable {
 	}
 	
 	private java.util.Set this_getSet (int key) {
-		if (key == ORMConstants.KEY_PROYECTO_IMPORTANCIAS) {
+		if (key == ORMConstants.KEY_PROYECTO_PROYREQS) {
+			return ORM_proyReqs;
+		}
+		else if (key == ORMConstants.KEY_PROYECTO_IMPORTANCIAS) {
 			return ORM_importancias;
 		}
 		else if (key == ORMConstants.KEY_PROYECTO_PESOS) {
@@ -52,6 +55,11 @@ public class Proyecto implements Serializable {
 	
 	@Column(name="Descripcion", nullable=true, length=255)	
 	private String descripcion;
+	
+	@OneToMany(mappedBy="proyecto", targetEntity=database.ProyReq.class)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
+	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
+	private java.util.Set ORM_proyReqs = new java.util.HashSet();
 	
 	@OneToMany(mappedBy="proyecto", targetEntity=database.Importancia.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
@@ -90,6 +98,49 @@ public class Proyecto implements Serializable {
 	public String getDescripcion() {
 		return descripcion;
 	}
+	
+	public database.Requisito[] getRequisitos() {
+		java.util.ArrayList lValues = new java.util.ArrayList(5);
+		for(java.util.Iterator lIter = proyReqs.getIterator();lIter.hasNext();) {
+			lValues.add(((database.ProyReq)lIter.next()).getRequisito());
+		}
+		return (database.Requisito[])lValues.toArray(new database.Requisito[lValues.size()]);
+	}
+	
+	public void removeRequisito(database.Requisito aRequisito) {
+		database.ProyReq[] lProyReqs = proyReqs.toArray();
+		for(int i = 0; i < lProyReqs.length; i++) {
+			if(lProyReqs[i].getRequisito().equals(aRequisito)) {
+				proyReqs.remove(lProyReqs[i]);
+			}
+		}
+	}
+	
+	public void addRequisito(database.ProyReq aProyReq, database.Requisito aRequisito) {
+		aProyReq.setRequisito(aRequisito);
+		proyReqs.add(aProyReq);
+	}
+	
+	public database.ProyReq getProyReqByRequisito(database.Requisito aRequisito) {
+		database.ProyReq[] lProyReqs = proyReqs.toArray();
+		for(int i = 0; i < lProyReqs.length; i++) {
+			if(lProyReqs[i].getRequisito().equals(aRequisito)) {
+				return lProyReqs[i];
+			}
+		}
+		return null;
+	}
+	
+	private void setORM_ProyReqs(java.util.Set value) {
+		this.ORM_proyReqs = value;
+	}
+	
+	private java.util.Set getORM_ProyReqs() {
+		return ORM_proyReqs;
+	}
+	
+	@Transient	
+	public final database.ProyReqSetCollection proyReqs = new database.ProyReqSetCollection(this, _ormAdapter, ORMConstants.KEY_PROYECTO_PROYREQS, ORMConstants.KEY_PROYREQ_PROYECTO, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
 	public database.Cliente[] getClientes() {
 		java.util.ArrayList lValues = new java.util.ArrayList(5);

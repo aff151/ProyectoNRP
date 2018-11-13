@@ -327,6 +327,10 @@ public class RequisitoDAO {
 			for(int i = 0; i < lPesoss.length; i++) {
 				lPesoss[i].setRequisito(null);
 			}
+			database.ProyReq[] lProyReqss = requisito.proyReqs.toArray();
+			for(int i = 0; i < lProyReqss.length; i++) {
+				lProyReqss[i].setRequisito(null);
+			}
 			return delete(requisito);
 		}
 		catch(Exception e) {
@@ -340,6 +344,10 @@ public class RequisitoDAO {
 			database.Peso[] lPesoss = requisito.pesos.toArray();
 			for(int i = 0; i < lPesoss.length; i++) {
 				lPesoss[i].setRequisito(null);
+			}
+			database.ProyReq[] lProyReqss = requisito.proyReqs.toArray();
+			for(int i = 0; i < lProyReqss.length; i++) {
+				lProyReqss[i].setRequisito(null);
 			}
 			try {
 				session.delete(requisito);

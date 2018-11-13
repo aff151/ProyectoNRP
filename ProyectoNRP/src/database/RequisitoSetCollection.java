@@ -15,12 +15,12 @@ package database;
 
 import org.orm.*;
 
-public class ProyectoSetCollection extends org.orm.util.ORMSet {
-	public ProyectoSetCollection(Object owner, org.orm.util.ORMAdapter adapter, int ownerKey, int targetKey, int collType) {
+public class RequisitoSetCollection extends org.orm.util.ORMSet {
+	public RequisitoSetCollection(Object owner, org.orm.util.ORMAdapter adapter, int ownerKey, int targetKey, int collType) {
 		super(owner, adapter, ownerKey, targetKey, true, collType);
 	}
 	
-	public ProyectoSetCollection(Object owner, org.orm.util.ORMAdapter adapter, int ownerKey, int collType) {
+	public RequisitoSetCollection(Object owner, org.orm.util.ORMAdapter adapter, int ownerKey, int collType) {
 		super(owner, adapter, ownerKey, -1, false, collType);
 	}
 	
@@ -36,7 +36,7 @@ public class ProyectoSetCollection extends org.orm.util.ORMSet {
 	 * Add the specified persistent object to ORMSet
 	 * @param value the persistent object
 	 */
-	public void add(Proyecto value) {
+	public void add(Requisito value) {
 		if (value != null) {
 			super.add(value, value._ormAdapter);
 		}
@@ -46,7 +46,7 @@ public class ProyectoSetCollection extends org.orm.util.ORMSet {
 	 * Remove the specified persistent object from ORMSet
 	 * @param value the persistent object
 	 */
-	public void remove(Proyecto value) {
+	public void remove(Requisito value) {
 		super.remove(value, value._ormAdapter);
 	}
 	
@@ -55,7 +55,7 @@ public class ProyectoSetCollection extends org.orm.util.ORMSet {
 	 * @param value the persistent object
 	 * @return True if this contains the specified persistent object
 	 */
-	public boolean contains(Proyecto value) {
+	public boolean contains(Requisito value) {
 		return super.contains(value);
 	}
 	
@@ -63,8 +63,8 @@ public class ProyectoSetCollection extends org.orm.util.ORMSet {
 	 * Return an array containing all of the persistent objects in ORMSet
 	 * @return The persistent objects array
 	 */
-	public Proyecto[] toArray() {
-		return (Proyecto[]) super.toArray(new Proyecto[size()]);
+	public Requisito[] toArray() {
+		return (Requisito[]) super.toArray(new Requisito[size()]);
 	}
 	
 	/**
@@ -76,7 +76,7 @@ public class ProyectoSetCollection extends org.orm.util.ORMSet {
 	 * </ul>
 	 * @return The persistent objects sorted array
 	 */
-	public Proyecto[] toArray(String propertyName) {
+	public Requisito[] toArray(String propertyName) {
 		return toArray(propertyName, true);
 	}
 	
@@ -90,8 +90,8 @@ public class ProyectoSetCollection extends org.orm.util.ORMSet {
 	 * @param ascending true for ascending, false for descending
 	 * @return The persistent objects sorted array
 	 */
-	public Proyecto[] toArray(String propertyName, boolean ascending) {
-		return (Proyecto[]) super.toArray(new Proyecto[size()], propertyName, ascending);
+	public Requisito[] toArray(String propertyName, boolean ascending) {
+		return (Requisito[]) super.toArray(new Requisito[size()], propertyName, ascending);
 	}
 	
 	protected PersistentManager getPersistentManager() throws PersistentException {

@@ -41,6 +41,7 @@ public class BasededatosPersistentManager extends PersistentManager {
 		configuration.addAnnotatedClass(database.Proyecto.class);
 		configuration.addAnnotatedClass(database.Cliente.class);
 		configuration.addAnnotatedClass(database.Importancia.class);
+		configuration.addAnnotatedClass(database.ProyReq.class);
 		configuration.buildMappings();
 		return configuration;
 	}

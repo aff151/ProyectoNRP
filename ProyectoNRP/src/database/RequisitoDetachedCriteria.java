@@ -23,6 +23,7 @@ public class RequisitoDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final StringExpression nombre;
 	public final StringExpression descripcion;
 	public final CollectionExpression pesos;
+	public final CollectionExpression proyReqs;
 	
 	public RequisitoDetachedCriteria() {
 		super(database.Requisito.class, database.RequisitoCriteria.class);
@@ -30,6 +31,7 @@ public class RequisitoDetachedCriteria extends AbstractORMDetachedCriteria {
 		nombre = new StringExpression("nombre", this.getDetachedCriteria());
 		descripcion = new StringExpression("descripcion", this.getDetachedCriteria());
 		pesos = new CollectionExpression("ORM_pesos", this.getDetachedCriteria());
+		proyReqs = new CollectionExpression("ORM_proyReqs", this.getDetachedCriteria());
 	}
 	
 	public RequisitoDetachedCriteria(DetachedCriteria aDetachedCriteria) {
@@ -38,10 +40,15 @@ public class RequisitoDetachedCriteria extends AbstractORMDetachedCriteria {
 		nombre = new StringExpression("nombre", this.getDetachedCriteria());
 		descripcion = new StringExpression("descripcion", this.getDetachedCriteria());
 		pesos = new CollectionExpression("ORM_pesos", this.getDetachedCriteria());
+		proyReqs = new CollectionExpression("ORM_proyReqs", this.getDetachedCriteria());
 	}
 	
 	public PesoDetachedCriteria createPesosCriteria() {
 		return new PesoDetachedCriteria(createCriteria("ORM_pesos"));
+	}
+	
+	public ProyReqDetachedCriteria createProyReqsCriteria() {
+		return new ProyReqDetachedCriteria(createCriteria("ORM_proyReqs"));
 	}
 	
 	public Requisito uniqueRequisito(PersistentSession session) {

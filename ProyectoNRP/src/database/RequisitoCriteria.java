@@ -23,6 +23,7 @@ public class RequisitoCriteria extends AbstractORMCriteria {
 	public final StringExpression nombre;
 	public final StringExpression descripcion;
 	public final CollectionExpression pesos;
+	public final CollectionExpression proyReqs;
 	
 	public RequisitoCriteria(Criteria criteria) {
 		super(criteria);
@@ -30,6 +31,7 @@ public class RequisitoCriteria extends AbstractORMCriteria {
 		nombre = new StringExpression("nombre", this);
 		descripcion = new StringExpression("descripcion", this);
 		pesos = new CollectionExpression("ORM_pesos", this);
+		proyReqs = new CollectionExpression("ORM_proyReqs", this);
 	}
 	
 	public RequisitoCriteria(PersistentSession session) {
@@ -42,6 +44,10 @@ public class RequisitoCriteria extends AbstractORMCriteria {
 	
 	public PesoCriteria createPesosCriteria() {
 		return new PesoCriteria(createCriteria("ORM_pesos"));
+	}
+	
+	public ProyReqCriteria createProyReqsCriteria() {
+		return new ProyReqCriteria(createCriteria("ORM_proyReqs"));
 	}
 	
 	public Requisito uniqueRequisito() {

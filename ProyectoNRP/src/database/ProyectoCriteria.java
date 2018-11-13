@@ -22,6 +22,7 @@ public class ProyectoCriteria extends AbstractORMCriteria {
 	public final IntegerExpression ID;
 	public final StringExpression nombre;
 	public final StringExpression descripcion;
+	public final CollectionExpression proyReqs;
 	public final CollectionExpression importancias;
 	public final CollectionExpression pesos;
 	
@@ -30,6 +31,7 @@ public class ProyectoCriteria extends AbstractORMCriteria {
 		ID = new IntegerExpression("ID", this);
 		nombre = new StringExpression("nombre", this);
 		descripcion = new StringExpression("descripcion", this);
+		proyReqs = new CollectionExpression("ORM_proyReqs", this);
 		importancias = new CollectionExpression("ORM_importancias", this);
 		pesos = new CollectionExpression("ORM_pesos", this);
 	}
@@ -40,6 +42,10 @@ public class ProyectoCriteria extends AbstractORMCriteria {
 	
 	public ProyectoCriteria() throws PersistentException {
 		this(BasededatosPersistentManager.instance().getSession());
+	}
+	
+	public ProyReqCriteria createProyReqsCriteria() {
+		return new ProyReqCriteria(createCriteria("ORM_proyReqs"));
 	}
 	
 	public ImportanciaCriteria createImportanciasCriteria() {

@@ -203,6 +203,43 @@
       <UserTypes/>
     </Column>
   </Entity>
+  <Entity name="ProyReq" Unlogged="false" PKClustered="0">
+    <Column name="ID">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="ProyectoID">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>database.Proyecto.ID</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="RequisitoID">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>database.Requisito.ID</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
   <ForeignKey name="Importancia">
     <ReferenceTable>Importancia</ReferenceTable>
     <ReferencedTable>Cliente</ReferencedTable>
@@ -248,6 +285,26 @@
     <ReferencedTable>Cliente</ReferencedTable>
     <Columns>
       <Column>ClienteID</Column>
+    </Columns>
+    <RefColumns>
+      <Column>ID</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="ProyReq">
+    <ReferenceTable>ProyReq</ReferenceTable>
+    <ReferencedTable>Proyecto</ReferencedTable>
+    <Columns>
+      <Column>ProyectoID</Column>
+    </Columns>
+    <RefColumns>
+      <Column>ID</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="ProyReq2">
+    <ReferenceTable>ProyReq</ReferenceTable>
+    <ReferencedTable>Requisito</ReferencedTable>
+    <Columns>
+      <Column>RequisitoID</Column>
     </Columns>
     <RefColumns>
       <Column>ID</Column>

@@ -24,6 +24,9 @@ public class DeleteBasededatosData {
 			database.Importancia ldatabaseImportancia = database.ImportanciaDAO.loadImportanciaByQuery(null, null);
 			// Delete the persistent object
 			database.ImportanciaDAO.delete(ldatabaseImportancia);
+			database.ProyReq ldatabaseProyReq = database.ProyReqDAO.loadProyReqByQuery(null, null);
+			// Delete the persistent object
+			database.ProyReqDAO.delete(ldatabaseProyReq);
 			t.commit();
 		}
 		catch (Exception e) {

@@ -49,6 +49,14 @@ public class ListBasededatosData {
 		}
 		System.out.println(length + " record(s) retrieved.");
 		
+		System.out.println("Listing ProyReq...");
+		database.ProyReq[] databaseProyReqs = database.ProyReqDAO.listProyReqByQuery(null, null);
+		length = Math.min(databaseProyReqs.length, ROW_COUNT);
+		for (int i = 0; i < length; i++) {
+			System.out.println(databaseProyReqs[i]);
+		}
+		System.out.println(length + " record(s) retrieved.");
+		
 	}
 	
 	public void listByCriteria() throws PersistentException {
@@ -111,6 +119,18 @@ public class ListBasededatosData {
 			 System.out.println(databaseImportancias[i]);
 		}
 		System.out.println(length + " Importancia record(s) retrieved."); 
+		
+		System.out.println("Listing ProyReq by Criteria...");
+		database.ProyReqCriteria ldatabaseProyReqCriteria = new database.ProyReqCriteria();
+		// Please uncomment the follow line and fill in parameter(s) 
+		//ldatabaseProyReqCriteria.ID.eq();
+		ldatabaseProyReqCriteria.setMaxResults(ROW_COUNT);
+		database.ProyReq[] databaseProyReqs = ldatabaseProyReqCriteria.listProyReq();
+		length =databaseProyReqs== null ? 0 : Math.min(databaseProyReqs.length, ROW_COUNT); 
+		for (int i = 0; i < length; i++) {
+			 System.out.println(databaseProyReqs[i]);
+		}
+		System.out.println(length + " ProyReq record(s) retrieved."); 
 		
 	}
 	

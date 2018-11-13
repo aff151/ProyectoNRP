@@ -21,5 +21,10 @@ public class BD_Requisitos {
 		RequisitoDAO.save(req);
 		return true;
 	}
+	public List<Requisito> cargarRequisitosProyecto(String proySeleccionado) throws PersistentException {
+		List<Requisito> listRequisitos = new ArrayList<Requisito>();
+			listRequisitos = RequisitoDAO.queryRequisito(null, null);
+		return listRequisitos;
+	}
 	
 }

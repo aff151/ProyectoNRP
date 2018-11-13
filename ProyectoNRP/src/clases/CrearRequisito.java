@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.orm.PersistentException;
 
+import database.BD_ProyReq;
 import database.BD_Requisitos;
 
 import javax.swing.JLabel;
@@ -30,6 +31,9 @@ public class CrearRequisito extends JFrame {
 	private JTextArea txtAdescripcion;
 	public static String procedencia="";
 	BD_Requisitos bd_req = new BD_Requisitos();
+	BD_ProyReq bdpr = new BD_ProyReq();
+	ConsultarProyectos cons = new ConsultarProyectos();
+	
 
 	/**
 	 * Launch the application.
@@ -123,6 +127,7 @@ public class CrearRequisito extends JFrame {
 						JOptionPane.WARNING_MESSAGE);
 			} else {
 				if(bd_req.crearRequisito(txtNombreDelRequisito.getText(), txtAdescripcion.getText())) {
+					bdpr.asignarRequisitoProyecto(txtNombreDelRequisito.getText(), cons.proySeleccionado);
 					txtNombreDelRequisito.setText("");
 					txtAdescripcion.setText("");
 					JOptionPane.showMessageDialog(null, "El requisito se ha creado con éxito", "MENSAJE",
