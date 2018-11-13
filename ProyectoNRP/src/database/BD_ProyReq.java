@@ -44,4 +44,19 @@ public class BD_ProyReq {
 			t.rollback();
 		}
 	}
+	public List<Requisito> cargarRequisitosProyecto(String proyecto) throws PersistentException {
+		List<Requisito> listReq = new ArrayList<Requisito>();
+		PersistentTransaction t = database.BasededatosPersistentManager.instance().getSession().beginTransaction();
+		try {
+			for(ProyReq pr : ProyReqDAO.listProyReqByQuery(null, null)) {
+				if(pr.getProyecto().getNombre().equals(proyecto)) {
+					listReq.add(pr.getRequisito());
+				}
+			}
+			t.commit();
+		} catch (PersistentException e) {
+			t.rollback();
+		}
+		return listReq;
+	}
 }
