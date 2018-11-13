@@ -11,9 +11,12 @@ import javax.swing.border.EmptyBorder;
 import org.orm.PersistentException;
 
 import database.BD_Importancia;
+import database.BD_ProyReq;
 import database.BD_Proyectos;
+import database.BD_Requisitos;
 import database.Cliente;
 import database.Proyecto;
+import database.Requisito;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -35,10 +38,14 @@ public class ConsultarProyecto extends JFrame {
 	ConsultarProyectos cons = new ConsultarProyectos();
 	BD_Proyectos bdproy = new BD_Proyectos();
 	BD_Importancia bdimp = new BD_Importancia();
+	BD_ProyReq bdreq = new BD_ProyReq();
 	private JTextField textFieldDescripcion;
 	private List<Cliente> listCli;
+	private List<Requisito> listReq;
 	private DefaultListModel modelo;
+	private DefaultListModel modelo2;
 	private JList listClientes;
+	private JList listRequisitos;
 	Proyecto consproy = null;
 
 
@@ -87,8 +94,10 @@ public class ConsultarProyecto extends JFrame {
 		
 
 
-		JList listRequisitos = new JList();
+		listRequisitos = new JList();
 		listRequisitos.setBounds(324, 135, 170, 240);
+		modelo2 = new DefaultListModel();
+		cargarRequisitos();
 		contentPane.add(listRequisitos);
 
 		JLabel lblListaDeClientes = new JLabel("Lista de clientes del proyecto");
@@ -139,6 +148,18 @@ public class ConsultarProyecto extends JFrame {
 		for(Cliente c : listCli) {
 			modelo.addElement(c.getNombre());
 			listClientes.setModel(modelo);
+		}
+	}
+	
+	private void cargarRequisitos() {
+		try {
+			listReq = bdreq.cargarRequisitosProyecto(cons.proySeleccionado);
+		} catch (PersistentException e) {
+			e.printStackTrace();
+		}
+		for(Requisito c : listReq) {
+			modelo2.addElement(c.getNombre());
+			listRequisitos.setModel(modelo2);
 		}
 	}
 
