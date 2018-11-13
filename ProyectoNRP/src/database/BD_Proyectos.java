@@ -59,4 +59,15 @@ public class BD_Proyectos {
 		}
 		return listProyectosCliente;
 	}
+	
+	public Proyecto descargarInformacion(String proySeleccionado) throws PersistentException {
+		for (Proyecto proyecto : ProyectoDAO.listProyectoByQuery(null, null)) {
+			if (proyecto.getNombre().equals(proySeleccionado)) {
+				return proyecto;
+			}
+		}
+
+		return null;
+	}
+
 }

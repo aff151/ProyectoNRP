@@ -81,7 +81,7 @@ public class ConsultarProyectos extends JFrame {
 					JOptionPane.showMessageDialog(null, "Debe seleccionar un proyecto", "MENSAJE",
 							JOptionPane.WARNING_MESSAGE);
 				} else {
-					btnConsultarProyecto.setEnabled(true);
+					proySeleccionado = listProyectos.getSelectedValue().toString();
 					ConsultarProyecto consultarproyecto = new ConsultarProyecto();
 					consultarproyecto.setVisible(true);
 					ConsultarProyecto.procedencia = "ConsultarProyectos";
