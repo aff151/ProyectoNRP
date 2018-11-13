@@ -83,7 +83,7 @@ public class CrearCliente extends JFrame {
 
 		
 		
-		JButton volverInicio = new JButton("Atr�s");
+		JButton volverInicio = new JButton("Atrás");
 		volverInicio.setBounds(23, 107, 117, 29);
 		contentPane.add(volverInicio);
 		
@@ -92,7 +92,6 @@ public class CrearCliente extends JFrame {
 				Menu m = new Menu();
 				m.setVisible(true);
 				dispose();
-				
 			}
 		});
 		

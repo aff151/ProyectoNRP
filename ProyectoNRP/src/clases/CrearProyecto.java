@@ -61,6 +61,7 @@ public class CrearProyecto extends JFrame {
 	 * Create the frame.
 	 */
 	public CrearProyecto() {
+		setTitle("Crear Proyecto");
 		inicializar();
 		
 		
@@ -74,15 +75,15 @@ public class CrearProyecto extends JFrame {
 		});
 		
 		tAreaDesc = new JTextArea();
-		tAreaDesc.setBounds(269, 191, 252, 74);
+		tAreaDesc.setBounds(247, 69, 175, 74);
 		tAreaDesc.setLineWrap(true);
 		tAreaDesc.setWrapStyleWord(true);
 		contentPane.add(tAreaDesc);
 		
 		JLabel lblDescripcion = new JLabel("Descripción");
-		lblDescripcion.setBounds(160, 196, 99, 14);
+		lblDescripcion.setBounds(163, 74, 74, 14);
 		contentPane.add(lblDescripcion);
-		btnAtras.setBounds(35, 431, 117, 29);
+		btnAtras.setBounds(10, 182, 125, 29);
 		contentPane.add(btnAtras);
 		
 		JButton btnCrearProyecto = new JButton("Crear Proyecto");
@@ -91,16 +92,16 @@ public class CrearProyecto extends JFrame {
 				crearProyecto();
 			}
 		});
-		btnCrearProyecto.setBounds(388, 431, 133, 29);
+		btnCrearProyecto.setBounds(297, 182, 125, 29);
 		contentPane.add(btnCrearProyecto);
 		
 		textFNombre = new JTextField();
-		textFNombre.setBounds(269, 100, 252, 26);
+		textFNombre.setBounds(247, 20, 175, 26);
 		contentPane.add(textFNombre);
 		textFNombre.setColumns(10);
 		
 		JLabel lblIntrodProyecto = new JLabel("Introduce el nombre del nuevo proyecto");
-		lblIntrodProyecto.setBounds(22, 105, 237, 16);
+		lblIntrodProyecto.setBounds(10, 25, 237, 16);
 		contentPane.add(lblIntrodProyecto);
 		
 		/*listClientes = new JList();
@@ -124,11 +125,6 @@ public class CrearProyecto extends JFrame {
 		lblSelecCliente.setBounds(82, 146, 122, 16);
 		contentPane.add(lblSelecCliente);*/
 		
-		JLabel lblFondo = new JLabel("");
-		lblFondo.setIcon(new ImageIcon(CrearProyecto.class.getResource("/imagenes/fondo.png")));
-		lblFondo.setBounds(0, 0, 600, 500);
-		contentPane.add(lblFondo);
-		
 		//cargarClientes();
 	}
 	
@@ -136,7 +132,7 @@ public class CrearProyecto extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 549, 500);
+		setBounds(100, 100, 454, 262);
 		setLocationRelativeTo(null);
 		//setTitle("Programa para gestión de requisitos");
 		contentPane = new JPanel();
