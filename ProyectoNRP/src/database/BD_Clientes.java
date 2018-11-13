@@ -11,20 +11,17 @@ public class BD_Clientes {
 	public BD_Principal _c_bd_clien;
 	public Vector<Cliente> _cont_clientes = new Vector<Cliente>();
 	
-	public void crearCliente (String nombreCliente) throws PersistentException
-	{
-		PersistentTransaction t = database.BasededatosPersistentManager.instance().getSession().beginTransaction();
-		try {
+	public boolean crearCliente (String nombreCliente) throws PersistentException{
+		for(Cliente cliente : ClienteDAO.listClienteByQuery(null, null)) {
+			if(cliente.getNombre().equals(nombreCliente))
+				return false;
+		}
 		Cliente c = ClienteDAO.createCliente();
 		c.setNombre(nombreCliente);
 		ClienteDAO.save(c);
-		t.commit();
-		} 
-		catch (PersistentException e)
-		{
-			t.rollback();
-		}
+		return true;
 	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Cliente> cargarClientes() throws PersistentException {
 		PersistentTransaction t = database.BasededatosPersistentManager.instance().getSession().beginTransaction();

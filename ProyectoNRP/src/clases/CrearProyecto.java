@@ -148,13 +148,19 @@ public class CrearProyecto extends JFrame {
 	public void crearProyecto() {
 		try {
 			if(textFNombre.getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "Debe introducir el nombre del proyecto", "MENSAJE", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Debe introducir el nombre del proyecto", "MENSAJE",
+						JOptionPane.WARNING_MESSAGE);
 			} else {
-				bdProy.crearProyecto(textFNombre.getText(), tAreaDesc.getText());
-				textFNombre.setText("");
-				tAreaDesc.setText("");
-				JOptionPane.showMessageDialog(null, "El proyecto se ha creado con éxito", "MENSAJE",
-						JOptionPane.INFORMATION_MESSAGE);
+				if(bdProy.crearProyecto(textFNombre.getText(), tAreaDesc.getText())) {
+					textFNombre.setText("");
+					tAreaDesc.setText("");
+					JOptionPane.showMessageDialog(null, "El proyecto se ha creado con éxito", "MENSAJE",
+							JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null, "El proyecto introducido ya existe"
+							+ "", "MENSAJE",
+							JOptionPane.WARNING_MESSAGE);
+				}
 			}
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block

@@ -76,25 +76,9 @@ public class CrearCliente extends JFrame {
 		/////////////////////////////////////
 		crearClienteBoton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//IR A LA BBDD PARA METER AL CLIENTE
-				String nombreCliente = nombreTexttField.getText();
-
-				try {
-					if(nombreCliente.equals("")) {
-						JOptionPane.showMessageDialog(null, "Debe introducir el nombre de un cliente", "MENSAJE", JOptionPane.WARNING_MESSAGE);
-					}else {
-						bd_Clientes.crearCliente(nombreCliente);
-						JOptionPane.showMessageDialog(null, "El cliente ha sido creado con éxito", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
-						nombreTexttField.setText("");
-					}
-				} catch (PersistentException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				//listProyectos.
+				crearCliente();
 			}
 		});
-		
 		//////////////////////////////
 
 		
@@ -135,7 +119,28 @@ public class CrearCliente extends JFrame {
 		contentPane.setLayout(null);
 	}
 	
-	public void cargarProyectos() {
+	public void crearCliente() {
+		try {
+			if(nombreTexttField.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "Debe introducir el nombre del cliente", "MENSAJE",
+						JOptionPane.WARNING_MESSAGE);
+			} else {
+				if(bd_Clientes.crearCliente(nombreTexttField.getText())) {
+					nombreTexttField.setText("");
+					JOptionPane.showMessageDialog(null, "El cliente se ha creado con éxito", "MENSAJE",
+							JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null, "El cliente introducido ya existe"
+							+ "", "MENSAJE",
+							JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/*public void cargarProyectos() {
 	
 		try {
 			listaProyecto = bd_Proyectos.cargarProyectos();
@@ -149,26 +154,8 @@ public class CrearCliente extends JFrame {
 			modelo.addElement(p.getNombre());
 			//listProyectos.setModel(modelo);
 		}
-	}
-	
+	}*/
 
-	/*private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});*/
-	//}
 	
 
 }

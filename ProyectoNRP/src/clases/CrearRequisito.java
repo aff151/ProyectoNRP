@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.orm.PersistentException;
+
 import database.BD_Requisitos;
 
 import javax.swing.JLabel;
@@ -25,9 +27,9 @@ public class CrearRequisito extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtNombreDelRequisito;
-	private JTextArea descripcion;
+	private JTextArea txtAdescripcion;
 	public static String procedencia="";
-	BD_Requisitos req = new BD_Requisitos();
+	BD_Requisitos bd_req = new BD_Requisitos();
 
 	/**
 	 * Launch the application.
@@ -60,12 +62,12 @@ public class CrearRequisito extends JFrame {
 		placeholder.changeStyle(Font.ITALIC);
 
 		
-		descripcion = new JTextArea();
-		descripcion.setBounds(146, 53, 174, 93);
-		descripcion.setLineWrap(true);
-		descripcion.setWrapStyleWord(true);
+		txtAdescripcion = new JTextArea();
+		txtAdescripcion.setBounds(146, 53, 174, 93);
+		txtAdescripcion.setLineWrap(true);
+		txtAdescripcion.setWrapStyleWord(true);
 
-		contentPane.add(descripcion);
+		contentPane.add(txtAdescripcion);
 		
 		JLabel label = new JLabel("Descripción");
 		label.setBounds(52, 73, 99, 14);
@@ -74,11 +76,7 @@ public class CrearRequisito extends JFrame {
 		JButton btnCrearRequisitos = new JButton("Crear Requisito");
 		btnCrearRequisitos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(txtNombreDelRequisito.getText().equals("")) {
-					JOptionPane.showMessageDialog(null, "Debe introducir el nombre de un requisito", "MENSAJE", JOptionPane.WARNING_MESSAGE);
-				}else {
-					crearRequisito();
-				}
+				crearRequisito();
 			}
 		});
 		
@@ -119,7 +117,25 @@ public class CrearRequisito extends JFrame {
 	}
 	
 	public void crearRequisito() {
-		req.crearRequisito(txtNombreDelRequisito.getText(), descripcion.getText());
-		JOptionPane.showMessageDialog(null, "El requisito ha sido creado con éxito", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
+		try {
+			if(txtNombreDelRequisito.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "Debe introducir el nombre del requisito", "MENSAJE",
+						JOptionPane.WARNING_MESSAGE);
+			} else {
+				if(bd_req.crearRequisito(txtNombreDelRequisito.getText(), txtAdescripcion.getText())) {
+					txtNombreDelRequisito.setText("");
+					txtAdescripcion.setText("");
+					JOptionPane.showMessageDialog(null, "El requisito se ha creado con éxito", "MENSAJE",
+							JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null, "El requisito introducido ya existe"
+							+ "", "MENSAJE",
+							JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
