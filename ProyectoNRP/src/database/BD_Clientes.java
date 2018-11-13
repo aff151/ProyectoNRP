@@ -35,4 +35,37 @@ public class BD_Clientes {
 		}
 		return listClientes;
 	}
+	
+	public void asignaClienteProyecto(String nombre,String importancia,String proyecto) throws PersistentException 
+	{
+		PersistentTransaction t = database.BasededatosPersistentManager.instance().getSession().beginTransaction();
+		Cliente clien = null;
+		Proyecto proy = null;
+		try {
+			Importancia imp = ImportanciaDAO.createImportancia();
+			
+			for(Cliente c : ClienteDAO.listClienteByQuery(null, null))
+			{
+				if(nombre.equals(c.getNombre()))
+					clien = c;
+			}
+			for(Proyecto p : ProyectoDAO.listProyectoByQuery(null,null))
+			{
+				if(proyecto.equals(p.getNombre()))
+					proy = p;
+			}
+			
+			imp.setCliente(clien);
+			imp.setProyecto(proy);
+			imp.setImportancia(Integer.parseInt(importancia));
+			
+			ImportanciaDAO.save(imp);
+			
+			t.commit();
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			t.rollback();
+		}
+
+	}
 }
