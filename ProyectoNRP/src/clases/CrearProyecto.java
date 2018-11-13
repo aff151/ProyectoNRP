@@ -153,6 +153,8 @@ public class CrearProyecto extends JFrame {
 				bdProy.crearProyecto(textFNombre.getText(), tAreaDesc.getText());
 				textFNombre.setText("");
 				tAreaDesc.setText("");
+				JOptionPane.showMessageDialog(null, "El proyecto se ha creado con éxito", "MENSAJE",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block

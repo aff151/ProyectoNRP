@@ -120,5 +120,6 @@ public class CrearRequisito extends JFrame {
 	
 	public void crearRequisito() {
 		req.crearRequisito(txtNombreDelRequisito.getText(), descripcion.getText());
+		JOptionPane.showMessageDialog(null, "El requisito ha sido creado con éxito", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
