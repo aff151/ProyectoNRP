@@ -13,11 +13,6 @@ public class BD_Importancia {
 
 	public List<Cliente> cargarClientesProyecto(String proyecto) throws PersistentException  {
 		List<Cliente> listClientes = new ArrayList<Cliente>();
-		
-			/*
-			 * for(Proyecto p : ProyectoDAO.listProyectoByQuery(null, null)) {
-			 * if(p.getNombre().equals(proyecto)) { proy = p; break; } }
-			 */
 			for (Importancia imp : ImportanciaDAO.listImportanciaByQuery(null, null)) {
 				if (imp.getProyecto().getNombre().equals(proyecto)) {
 					listClientes.add(ClienteDAO.getClienteByORMID(imp.getCliente().getID()));
@@ -25,5 +20,14 @@ public class BD_Importancia {
 			}
 		return listClientes;
 	}
-
+	
+	public List<Proyecto> cargarProyectosCliente(String cliente) throws PersistentException  {
+		List<Proyecto> listProyectos = new ArrayList<Proyecto>();
+			for (Importancia imp : ImportanciaDAO.listImportanciaByQuery(null, null)) {
+				if (imp.getCliente().getNombre().equals(cliente)) {
+					listProyectos.add(ProyectoDAO.getProyectoByORMID(imp.getProyecto().getID()));
+				}
+			}
+		return listProyectos;
+	}
 }

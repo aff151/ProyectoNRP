@@ -81,12 +81,10 @@ public class ConsultarClientes extends JFrame {
 					JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente", "MENSAJE",
 							JOptionPane.WARNING_MESSAGE);
 				} else {
+					cliSeleccionado = listClientes.getSelectedValue().toString();
 					ConsultarCliente consultarCliente = new ConsultarCliente();
 					consultarCliente.setVisible(true);
 					consultarCliente.procedencia = "ConsultarClientes";
-					Object selectedValue=listClientes.getSelectedValue();
-					System.out.println("NOMBREEEEEEE ANTES: "+selectedValue.toString());
-					consultarCliente.nombreCliente=selectedValue.toString();
 					dispose();
 				}
 			}
