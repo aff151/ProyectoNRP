@@ -10,13 +10,17 @@ import javax.swing.border.EmptyBorder;
 
 import org.orm.PersistentException;
 
+import database.BD_Importancia;
 import database.BD_Proyectos;
+import database.Cliente;
 import database.Proyecto;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.Color;
@@ -29,7 +33,14 @@ public class ConsultarProyecto extends JFrame {
 	public static String procedencia="";
 	ConsultarProyectos cons = new ConsultarProyectos();
 	BD_Proyectos bdproy = new BD_Proyectos();
+	BD_Importancia bdimp = new BD_Importancia();
 	private JTextField textFieldDescripcion;
+	private List<Cliente> listCli;
+	private DefaultListModel modelo;
+	private JList listClientes;
+	Proyecto consproy = null;
+
+
 
 	/**
 	 * Launch the application.
@@ -54,7 +65,6 @@ public class ConsultarProyecto extends JFrame {
 		
 		inicializar();
 		
-		Proyecto consproy = null;
 		try {
 			consproy = descargarInformacion(cons.proySeleccionado);
 		} catch (PersistentException e1) {
@@ -67,9 +77,13 @@ public class ConsultarProyecto extends JFrame {
 		lblNombreProyecto.setBounds(196, 21, 174, 16);
 		contentPane.add(lblNombreProyecto);
 
-		JList listClientes = new JList();
+		listClientes = new JList();
 		listClientes.setBounds(43, 135, 170, 240);
+		cargarNombresLista();
 		contentPane.add(listClientes);
+		
+		modelo = new DefaultListModel();
+
 
 		JList listRequisitos = new JList();
 		listRequisitos.setBounds(324, 135, 170, 240);
@@ -78,6 +92,7 @@ public class ConsultarProyecto extends JFrame {
 		JLabel lblListaDeClientes = new JLabel("Lista de clientes del proyecto");
 		lblListaDeClientes.setBounds(42, 108, 217, 16);
 		contentPane.add(lblListaDeClientes);
+		
 
 		JLabel lblListaDeRequisitos = new JLabel("Lista de requisitos del proyecto");
 		lblListaDeRequisitos.setBounds(324, 108, 217, 16);
@@ -112,6 +127,19 @@ public class ConsultarProyecto extends JFrame {
 		contentPane.add(lblDescripcin);
 	}
 	
+	private void cargarNombresLista() {
+		try {
+			listCli = bdimp.cargarClientesProyecto(cons.proySeleccionado);
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(Cliente c : listCli) {
+			modelo.addElement(c.getNombre());
+			listClientes.setModel(modelo);
+		}
+	}
+
 	public void inicializar() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
