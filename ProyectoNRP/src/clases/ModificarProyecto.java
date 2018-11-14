@@ -13,6 +13,7 @@ import javax.swing.border.EmptyBorder;
 import org.orm.PersistentException;
 
 import database.BD_Importancia;
+import database.BD_ProyReq;
 import database.BD_Proyectos;
 import database.BD_Requisitos;
 import database.Cliente;
@@ -40,6 +41,7 @@ public class ModificarProyecto extends JFrame {
 	BD_Proyectos bdproy = new BD_Proyectos();
 	BD_Importancia bdimp = new BD_Importancia();
 	BD_Requisitos bdreq = new BD_Requisitos();
+	BD_ProyReq bdproyreq = new BD_ProyReq();
 	ConsultarProyectos cons = new ConsultarProyectos();
 	private JList listClientes;
 	private JList listRequisitos;
@@ -186,12 +188,12 @@ public class ModificarProyecto extends JFrame {
 	}
 	
 	private void cargarRequisitos() {
-		try {
-			listReq = bdreq.cargarRequisitosProyecto(cons.proySeleccionado);
-		} catch (PersistentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			try {
+				listReq = bdproyreq.cargarRequisitosProyecto(cons.proySeleccionado);
+			} catch (PersistentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		for(Requisito c : listReq) {
 			modelo2.addElement(c.getNombre());
 			listRequisitos.setModel(modelo2);
