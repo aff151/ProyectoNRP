@@ -29,5 +29,12 @@ public class BD_Requisitos {
 			listRequisitos = RequisitoDAO.queryRequisito(null, null);
 		return listRequisitos;
 	}
+	public List<Requisito> cargarRequisitos() throws PersistentException {
+		PersistentTransaction t = database.BasededatosPersistentManager.instance().getSession().beginTransaction();
+		List<Requisito> listaRequisitos = new ArrayList<Requisito>();
+			listaRequisitos = RequisitoDAO.queryRequisito(null, null);
+		
+		return listaRequisitos;
+	}
 	
 }

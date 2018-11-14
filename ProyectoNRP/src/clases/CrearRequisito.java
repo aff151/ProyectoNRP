@@ -12,15 +12,22 @@ import javax.swing.border.EmptyBorder;
 
 import org.orm.PersistentException;
 
+import database.BD_Clientes;
 import database.BD_ProyReq;
 import database.BD_Requisitos;
+import database.Cliente;
+import database.Requisito;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.AbstractButton;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JSeparator;
@@ -35,7 +42,11 @@ public class CrearRequisito extends JFrame {
 	BD_Requisitos bd_req = new BD_Requisitos();
 	BD_ProyReq bdpr = new BD_ProyReq();
 	ConsultarProyectos cons = new ConsultarProyectos();
+	
 	private JTextField esfuerzoReq;
+	private JList listRequisitos;
+	private List<Requisito> listaRequisito;
+	private DefaultListModel<String> modelo;
 	
 
 	/**
@@ -127,18 +138,12 @@ public class CrearRequisito extends JFrame {
 		JLabel lblIntroduceElEsfuerzo = new JLabel("Introduce el esfuerzo");
 		lblIntroduceElEsfuerzo.setBounds(285, 85, 149, 14);
 		contentPane.add(lblIntroduceElEsfuerzo);
-		
-		/*
-		 * PONER AQUI QUE META UN VALOR PARA LA bD PARA INTRODUCIR EL ESFUERZO
-		 * 
-		 */
+
 		esfuerzoReq = new JTextField();
 		esfuerzoReq.setBounds(295, 110, 86, 20);
 		contentPane.add(esfuerzoReq);
 		esfuerzoReq.setColumns(10);
-		/*
-		 * fin de la modificacion
-		 */
+
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
 		separator.setBounds(444, 16, 50, 200);
@@ -147,6 +152,16 @@ public class CrearRequisito extends JFrame {
 		JLabel lblListaDeRequisitos = new JLabel("Lista de Requisitos");
 		lblListaDeRequisitos.setBounds(504, 22, 108, 14);
 		contentPane.add(lblListaDeRequisitos);
+		
+		modelo = new DefaultListModel<String>();
+		listRequisitos = new JList();
+		listRequisitos.setBounds(504, 57, 125, 133);
+		listRequisitos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		contentPane.add(listRequisitos);
+		
+		JButton btnAsignar = new JButton("Asignar");
+		btnAsignar.setBounds(655, 183, 90, 29);
+		contentPane.add(btnAsignar);
 		
 	}
 	
@@ -161,6 +176,7 @@ public class CrearRequisito extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		cargarRequisitos();
 		
 	}
 	
@@ -191,6 +207,19 @@ public class CrearRequisito extends JFrame {
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	public void cargarRequisitos() {
+		try {
+			listaRequisito = bd_req.cargarRequisitos();
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (Requisito r : listaRequisito) {
+			String nombre = r.getNombre();
+			modelo.addElement(nombre);
+			listRequisitos.setModel(modelo);
 		}
 	}
 }
