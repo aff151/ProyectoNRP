@@ -8,7 +8,7 @@
  */
 
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -20,36 +20,30 @@ import org.orm.criteria.*;
 
 public class PesoDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression ID;
+	public final IntegerExpression peso;
 	public final IntegerExpression clienteId;
 	public final AssociationExpression cliente;
 	public final IntegerExpression proyectoId;
 	public final AssociationExpression proyecto;
-	public final IntegerExpression requisitoId;
-	public final AssociationExpression requisito;
-	public final IntegerExpression peso;
 	
 	public PesoDetachedCriteria() {
 		super(database.Peso.class, database.PesoCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
-		clienteId = new IntegerExpression("cliente.ID", this.getDetachedCriteria());
-		cliente = new AssociationExpression("cliente", this.getDetachedCriteria());
-		proyectoId = new IntegerExpression("proyecto.ID", this.getDetachedCriteria());
-		proyecto = new AssociationExpression("proyecto", this.getDetachedCriteria());
-		requisitoId = new IntegerExpression("requisito.ID", this.getDetachedCriteria());
-		requisito = new AssociationExpression("requisito", this.getDetachedCriteria());
 		peso = new IntegerExpression("peso", this.getDetachedCriteria());
+		clienteId = new IntegerExpression("ORM_Cliente.null", this.getDetachedCriteria());
+		cliente = new AssociationExpression("ORM_Cliente", this.getDetachedCriteria());
+		proyectoId = new IntegerExpression("ORM_Proyecto.null", this.getDetachedCriteria());
+		proyecto = new AssociationExpression("ORM_Proyecto", this.getDetachedCriteria());
 	}
 	
 	public PesoDetachedCriteria(DetachedCriteria aDetachedCriteria) {
 		super(aDetachedCriteria, database.PesoCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
-		clienteId = new IntegerExpression("cliente.ID", this.getDetachedCriteria());
-		cliente = new AssociationExpression("cliente", this.getDetachedCriteria());
-		proyectoId = new IntegerExpression("proyecto.ID", this.getDetachedCriteria());
-		proyecto = new AssociationExpression("proyecto", this.getDetachedCriteria());
-		requisitoId = new IntegerExpression("requisito.ID", this.getDetachedCriteria());
-		requisito = new AssociationExpression("requisito", this.getDetachedCriteria());
 		peso = new IntegerExpression("peso", this.getDetachedCriteria());
+		clienteId = new IntegerExpression("ORM_Cliente.null", this.getDetachedCriteria());
+		cliente = new AssociationExpression("ORM_Cliente", this.getDetachedCriteria());
+		proyectoId = new IntegerExpression("ORM_Proyecto.null", this.getDetachedCriteria());
+		proyecto = new AssociationExpression("ORM_Proyecto", this.getDetachedCriteria());
 	}
 	
 	public ClienteDetachedCriteria createClienteCriteria() {
@@ -58,10 +52,6 @@ public class PesoDetachedCriteria extends AbstractORMDetachedCriteria {
 	
 	public ProyectoDetachedCriteria createProyectoCriteria() {
 		return new ProyectoDetachedCriteria(createCriteria("proyecto"));
-	}
-	
-	public RequisitoDetachedCriteria createRequisitoCriteria() {
-		return new RequisitoDetachedCriteria(createCriteria("requisito"));
 	}
 	
 	public Peso uniquePeso(PersistentSession session) {

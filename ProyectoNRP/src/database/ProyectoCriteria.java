@@ -8,7 +8,7 @@
  */
 
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -23,8 +23,8 @@ public class ProyectoCriteria extends AbstractORMCriteria {
 	public final StringExpression nombre;
 	public final StringExpression descripcion;
 	public final CollectionExpression proyReqs;
-	public final CollectionExpression importancias;
 	public final CollectionExpression pesos;
+	public final CollectionExpression valors;
 	
 	public ProyectoCriteria(Criteria criteria) {
 		super(criteria);
@@ -32,8 +32,8 @@ public class ProyectoCriteria extends AbstractORMCriteria {
 		nombre = new StringExpression("nombre", this);
 		descripcion = new StringExpression("descripcion", this);
 		proyReqs = new CollectionExpression("ORM_proyReqs", this);
-		importancias = new CollectionExpression("ORM_importancias", this);
 		pesos = new CollectionExpression("ORM_pesos", this);
+		valors = new CollectionExpression("ORM_valors", this);
 	}
 	
 	public ProyectoCriteria(PersistentSession session) {
@@ -48,12 +48,12 @@ public class ProyectoCriteria extends AbstractORMCriteria {
 		return new ProyReqCriteria(createCriteria("ORM_proyReqs"));
 	}
 	
-	public ImportanciaCriteria createImportanciasCriteria() {
-		return new ImportanciaCriteria(createCriteria("ORM_importancias"));
-	}
-	
 	public PesoCriteria createPesosCriteria() {
 		return new PesoCriteria(createCriteria("ORM_pesos"));
+	}
+	
+	public ValorCriteria createValorsCriteria() {
+		return new ValorCriteria(createCriteria("ORM_valors"));
 	}
 	
 	public Proyecto uniqueProyecto() {

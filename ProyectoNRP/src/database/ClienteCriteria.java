@@ -8,7 +8,7 @@
  */
 
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -21,15 +21,15 @@ import org.orm.criteria.*;
 public class ClienteCriteria extends AbstractORMCriteria {
 	public final IntegerExpression ID;
 	public final StringExpression nombre;
-	public final CollectionExpression importancias;
 	public final CollectionExpression pesos;
+	public final CollectionExpression valors;
 	
 	public ClienteCriteria(Criteria criteria) {
 		super(criteria);
 		ID = new IntegerExpression("ID", this);
 		nombre = new StringExpression("nombre", this);
-		importancias = new CollectionExpression("ORM_importancias", this);
 		pesos = new CollectionExpression("ORM_pesos", this);
+		valors = new CollectionExpression("ORM_valors", this);
 	}
 	
 	public ClienteCriteria(PersistentSession session) {
@@ -40,12 +40,12 @@ public class ClienteCriteria extends AbstractORMCriteria {
 		this(BasededatosPersistentManager.instance().getSession());
 	}
 	
-	public ImportanciaCriteria createImportanciasCriteria() {
-		return new ImportanciaCriteria(createCriteria("ORM_importancias"));
-	}
-	
 	public PesoCriteria createPesosCriteria() {
 		return new PesoCriteria(createCriteria("ORM_pesos"));
+	}
+	
+	public ValorCriteria createValorsCriteria() {
+		return new ValorCriteria(createCriteria("ORM_valors"));
 	}
 	
 	public Cliente uniqueCliente() {

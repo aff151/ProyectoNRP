@@ -8,7 +8,7 @@
  */
 
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -22,7 +22,7 @@ public class RequisitoDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression ID;
 	public final StringExpression nombre;
 	public final StringExpression descripcion;
-	public final CollectionExpression pesos;
+	public final CollectionExpression valors;
 	public final CollectionExpression proyReqs;
 	
 	public RequisitoDetachedCriteria() {
@@ -30,7 +30,7 @@ public class RequisitoDetachedCriteria extends AbstractORMDetachedCriteria {
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		nombre = new StringExpression("nombre", this.getDetachedCriteria());
 		descripcion = new StringExpression("descripcion", this.getDetachedCriteria());
-		pesos = new CollectionExpression("ORM_pesos", this.getDetachedCriteria());
+		valors = new CollectionExpression("ORM_valors", this.getDetachedCriteria());
 		proyReqs = new CollectionExpression("ORM_proyReqs", this.getDetachedCriteria());
 	}
 	
@@ -39,12 +39,12 @@ public class RequisitoDetachedCriteria extends AbstractORMDetachedCriteria {
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		nombre = new StringExpression("nombre", this.getDetachedCriteria());
 		descripcion = new StringExpression("descripcion", this.getDetachedCriteria());
-		pesos = new CollectionExpression("ORM_pesos", this.getDetachedCriteria());
+		valors = new CollectionExpression("ORM_valors", this.getDetachedCriteria());
 		proyReqs = new CollectionExpression("ORM_proyReqs", this.getDetachedCriteria());
 	}
 	
-	public PesoDetachedCriteria createPesosCriteria() {
-		return new PesoDetachedCriteria(createCriteria("ORM_pesos"));
+	public ValorDetachedCriteria createValorsCriteria() {
+		return new ValorDetachedCriteria(createCriteria("ORM_valors"));
 	}
 	
 	public ProyReqDetachedCriteria createProyReqsCriteria() {

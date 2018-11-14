@@ -8,7 +8,7 @@
  */
 
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -21,31 +21,31 @@ import org.orm.criteria.*;
 public class ClienteDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression ID;
 	public final StringExpression nombre;
-	public final CollectionExpression importancias;
 	public final CollectionExpression pesos;
+	public final CollectionExpression valors;
 	
 	public ClienteDetachedCriteria() {
 		super(database.Cliente.class, database.ClienteCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		nombre = new StringExpression("nombre", this.getDetachedCriteria());
-		importancias = new CollectionExpression("ORM_importancias", this.getDetachedCriteria());
 		pesos = new CollectionExpression("ORM_pesos", this.getDetachedCriteria());
+		valors = new CollectionExpression("ORM_valors", this.getDetachedCriteria());
 	}
 	
 	public ClienteDetachedCriteria(DetachedCriteria aDetachedCriteria) {
 		super(aDetachedCriteria, database.ClienteCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		nombre = new StringExpression("nombre", this.getDetachedCriteria());
-		importancias = new CollectionExpression("ORM_importancias", this.getDetachedCriteria());
 		pesos = new CollectionExpression("ORM_pesos", this.getDetachedCriteria());
-	}
-	
-	public ImportanciaDetachedCriteria createImportanciasCriteria() {
-		return new ImportanciaDetachedCriteria(createCriteria("ORM_importancias"));
+		valors = new CollectionExpression("ORM_valors", this.getDetachedCriteria());
 	}
 	
 	public PesoDetachedCriteria createPesosCriteria() {
 		return new PesoDetachedCriteria(createCriteria("ORM_pesos"));
+	}
+	
+	public ValorDetachedCriteria createValorsCriteria() {
+		return new ValorDetachedCriteria(createCriteria("ORM_valors"));
 	}
 	
 	public Cliente uniqueCliente(PersistentSession session) {

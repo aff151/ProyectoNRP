@@ -42,7 +42,8 @@ public class BD_Clientes {
 		Cliente clien = null;
 		Proyecto proy = null;
 		try {
-			Importancia imp = ImportanciaDAO.createImportancia();
+			
+			Peso imp = PesoDAO.createPeso();
 			
 			for(Cliente c : ClienteDAO.listClienteByQuery(null, null))
 			{
@@ -57,9 +58,9 @@ public class BD_Clientes {
 			
 			imp.setCliente(clien);
 			imp.setProyecto(proy);
-			imp.setImportancia(Integer.parseInt(importancia));
+			imp.setPeso(Integer.parseInt(importancia));
 			
-			ImportanciaDAO.save(imp);
+			PesoDAO.save(imp);
 			
 			t.commit();
 		} catch (PersistentException e) {

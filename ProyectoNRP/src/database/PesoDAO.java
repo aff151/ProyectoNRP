@@ -8,7 +8,7 @@
  */
 
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -331,10 +331,6 @@ public class PesoDAO {
 				peso.getProyecto().pesos.remove(peso);
 			}
 			
-			if (peso.getRequisito() != null) {
-				peso.getRequisito().pesos.remove(peso);
-			}
-			
 			return delete(peso);
 		}
 		catch(Exception e) {
@@ -351,10 +347,6 @@ public class PesoDAO {
 			
 			if (peso.getProyecto() != null) {
 				peso.getProyecto().pesos.remove(peso);
-			}
-			
-			if (peso.getRequisito() != null) {
-				peso.getRequisito().pesos.remove(peso);
 			}
 			
 			try {

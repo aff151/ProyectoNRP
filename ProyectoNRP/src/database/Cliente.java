@@ -8,7 +8,7 @@
  */
 
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -23,11 +23,11 @@ public class Cliente implements Serializable {
 	}
 	
 	private java.util.Set this_getSet (int key) {
-		if (key == ORMConstants.KEY_CLIENTE_IMPORTANCIAS) {
-			return ORM_importancias;
-		}
-		else if (key == ORMConstants.KEY_CLIENTE_PESOS) {
+		if (key == ORMConstants.KEY_CLIENTE_PESOS) {
 			return ORM_pesos;
+		}
+		else if (key == ORMConstants.KEY_CLIENTE_VALORS) {
+			return ORM_valors;
 		}
 		
 		return null;
@@ -50,15 +50,15 @@ public class Cliente implements Serializable {
 	@Column(name="Nombre", nullable=true, length=255)	
 	private String nombre;
 	
-	@OneToMany(mappedBy="cliente", targetEntity=database.Importancia.class)	
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
-	private java.util.Set ORM_importancias = new java.util.HashSet();
-	
 	@OneToMany(mappedBy="cliente", targetEntity=database.Peso.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.Set ORM_pesos = new java.util.HashSet();
+	
+	@OneToMany(mappedBy="cliente", targetEntity=database.Valor.class)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
+	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
+	private java.util.Set ORM_valors = new java.util.HashSet();
 	
 	private void setID(int value) {
 		this.ID = value;
@@ -82,46 +82,35 @@ public class Cliente implements Serializable {
 	
 	public database.Proyecto[] getProyectos() {
 		java.util.ArrayList lValues = new java.util.ArrayList(5);
-		for(java.util.Iterator lIter = importancias.getIterator();lIter.hasNext();) {
-			lValues.add(((database.Importancia)lIter.next()).getProyecto());
+		for(java.util.Iterator lIter = pesos.getIterator();lIter.hasNext();) {
+			lValues.add(((database.Peso)lIter.next()).getProyecto());
 		}
 		return (database.Proyecto[])lValues.toArray(new database.Proyecto[lValues.size()]);
 	}
 	
 	public void removeProyecto(database.Proyecto aProyecto) {
-		database.Importancia[] lImportancias = importancias.toArray();
-		for(int i = 0; i < lImportancias.length; i++) {
-			if(lImportancias[i].getProyecto().equals(aProyecto)) {
-				importancias.remove(lImportancias[i]);
+		database.Peso[] lPesos = pesos.toArray();
+		for(int i = 0; i < lPesos.length; i++) {
+			if(lPesos[i].getProyecto().equals(aProyecto)) {
+				pesos.remove(lPesos[i]);
 			}
 		}
 	}
 	
-	public void addProyecto(database.Importancia aImportancia, database.Proyecto aProyecto) {
-		aImportancia.setProyecto(aProyecto);
-		importancias.add(aImportancia);
+	public void addProyecto(database.Peso aPeso, database.Proyecto aProyecto) {
+		aPeso.setProyecto(aProyecto);
+		pesos.add(aPeso);
 	}
 	
-	public database.Importancia getImportanciaByProyecto(database.Proyecto aProyecto) {
-		database.Importancia[] lImportancias = importancias.toArray();
-		for(int i = 0; i < lImportancias.length; i++) {
-			if(lImportancias[i].getProyecto().equals(aProyecto)) {
-				return lImportancias[i];
+	public database.Peso getPesoByProyecto(database.Proyecto aProyecto) {
+		database.Peso[] lPesos = pesos.toArray();
+		for(int i = 0; i < lPesos.length; i++) {
+			if(lPesos[i].getProyecto().equals(aProyecto)) {
+				return lPesos[i];
 			}
 		}
 		return null;
 	}
-	
-	private void setORM_Importancias(java.util.Set value) {
-		this.ORM_importancias = value;
-	}
-	
-	private java.util.Set getORM_Importancias() {
-		return ORM_importancias;
-	}
-	
-	@Transient	
-	public final database.ImportanciaSetCollection importancias = new database.ImportanciaSetCollection(this, _ormAdapter, ORMConstants.KEY_CLIENTE_IMPORTANCIAS, ORMConstants.KEY_IMPORTANCIA_CLIENTE, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
 	private void setORM_Pesos(java.util.Set value) {
 		this.ORM_pesos = value;
@@ -133,6 +122,17 @@ public class Cliente implements Serializable {
 	
 	@Transient	
 	public final database.PesoSetCollection pesos = new database.PesoSetCollection(this, _ormAdapter, ORMConstants.KEY_CLIENTE_PESOS, ORMConstants.KEY_PESO_CLIENTE, ORMConstants.KEY_MUL_ONE_TO_MANY);
+	
+	private void setORM_Valors(java.util.Set value) {
+		this.ORM_valors = value;
+	}
+	
+	private java.util.Set getORM_Valors() {
+		return ORM_valors;
+	}
+	
+	@Transient	
+	public final database.ValorSetCollection valors = new database.ValorSetCollection(this, _ormAdapter, ORMConstants.KEY_CLIENTE_VALORS, ORMConstants.KEY_VALOR_CLIENTE, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
 	public String toString() {
 		return String.valueOf(getID());

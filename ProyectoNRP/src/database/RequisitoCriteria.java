@@ -8,7 +8,7 @@
  */
 
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -22,7 +22,7 @@ public class RequisitoCriteria extends AbstractORMCriteria {
 	public final IntegerExpression ID;
 	public final StringExpression nombre;
 	public final StringExpression descripcion;
-	public final CollectionExpression pesos;
+	public final CollectionExpression valors;
 	public final CollectionExpression proyReqs;
 	
 	public RequisitoCriteria(Criteria criteria) {
@@ -30,7 +30,7 @@ public class RequisitoCriteria extends AbstractORMCriteria {
 		ID = new IntegerExpression("ID", this);
 		nombre = new StringExpression("nombre", this);
 		descripcion = new StringExpression("descripcion", this);
-		pesos = new CollectionExpression("ORM_pesos", this);
+		valors = new CollectionExpression("ORM_valors", this);
 		proyReqs = new CollectionExpression("ORM_proyReqs", this);
 	}
 	
@@ -42,8 +42,8 @@ public class RequisitoCriteria extends AbstractORMCriteria {
 		this(BasededatosPersistentManager.instance().getSession());
 	}
 	
-	public PesoCriteria createPesosCriteria() {
-		return new PesoCriteria(createCriteria("ORM_pesos"));
+	public ValorCriteria createValorsCriteria() {
+		return new ValorCriteria(createCriteria("ORM_valors"));
 	}
 	
 	public ProyReqCriteria createProyReqsCriteria() {

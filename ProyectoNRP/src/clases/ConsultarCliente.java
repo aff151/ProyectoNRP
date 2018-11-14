@@ -11,7 +11,8 @@ import javax.swing.border.EmptyBorder;
 
 import org.orm.PersistentException;
 
-import database.BD_Importancia;
+
+import database.BD_Peso;
 import database.BD_ProyReq;
 import database.BD_Proyectos;
 import database.Cliente;
@@ -37,7 +38,8 @@ public class ConsultarCliente extends JFrame {
 	private JPanel contentPane;
 	public static String procedencia="";
 	BD_Proyectos bdproy = new BD_Proyectos();
-	BD_Importancia bdimp = new BD_Importancia();
+	BD_Peso bdimp = new BD_Peso();
+	
 	BD_ProyReq bdproyreq = new BD_ProyReq();
 	private JTextField textFieldDescripcion;
 	private List<Proyecto> listProy;

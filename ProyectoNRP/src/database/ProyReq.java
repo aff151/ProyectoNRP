@@ -8,7 +8,7 @@
  */
 
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -56,6 +56,9 @@ public class ProyReq implements Serializable {
 	@JoinColumns({ @JoinColumn(name="RequisitoID", referencedColumnName="ID", nullable=false) })	
 	private database.Requisito requisito;
 	
+	@Column(name="Esfuerzo", nullable=false, length=10)	
+	private int esfuerzo;
+	
 	private void setID(int value) {
 		this.ID = value;
 	}
@@ -66,6 +69,14 @@ public class ProyReq implements Serializable {
 	
 	public int getORMID() {
 		return getID();
+	}
+	
+	public void setEsfuerzo(int value) {
+		this.esfuerzo = value;
+	}
+	
+	public int getEsfuerzo() {
+		return esfuerzo;
 	}
 	
 	public void setRequisito(database.Requisito value) {

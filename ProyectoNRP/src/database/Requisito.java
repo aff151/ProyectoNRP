@@ -8,7 +8,7 @@
  */
 
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -23,8 +23,8 @@ public class Requisito implements Serializable {
 	}
 	
 	private java.util.Set this_getSet (int key) {
-		if (key == ORMConstants.KEY_REQUISITO_PESOS) {
-			return ORM_pesos;
+		if (key == ORMConstants.KEY_REQUISITO_VALORS) {
+			return ORM_valors;
 		}
 		else if (key == ORMConstants.KEY_REQUISITO_PROYREQS) {
 			return ORM_proyReqs;
@@ -53,10 +53,10 @@ public class Requisito implements Serializable {
 	@Column(name="Descripcion", nullable=true, length=255)	
 	private String descripcion;
 	
-	@OneToMany(mappedBy="requisito", targetEntity=database.Peso.class)	
+	@OneToMany(mappedBy="requisito", targetEntity=database.Valor.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
-	private java.util.Set ORM_pesos = new java.util.HashSet();
+	private java.util.Set ORM_valors = new java.util.HashSet();
 	
 	@OneToMany(mappedBy="requisito", targetEntity=database.ProyReq.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
@@ -91,16 +91,16 @@ public class Requisito implements Serializable {
 		return descripcion;
 	}
 	
-	private void setORM_Pesos(java.util.Set value) {
-		this.ORM_pesos = value;
+	private void setORM_Valors(java.util.Set value) {
+		this.ORM_valors = value;
 	}
 	
-	private java.util.Set getORM_Pesos() {
-		return ORM_pesos;
+	private java.util.Set getORM_Valors() {
+		return ORM_valors;
 	}
 	
 	@Transient	
-	public final database.PesoSetCollection pesos = new database.PesoSetCollection(this, _ormAdapter, ORMConstants.KEY_REQUISITO_PESOS, ORMConstants.KEY_PESO_REQUISITO, ORMConstants.KEY_MUL_ONE_TO_MANY);
+	public final database.ValorSetCollection valors = new database.ValorSetCollection(this, _ormAdapter, ORMConstants.KEY_REQUISITO_VALORS, ORMConstants.KEY_VALOR_REQUISITO, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
 	public database.Proyecto[] getProyectos() {
 		java.util.ArrayList lValues = new java.util.ArrayList(5);

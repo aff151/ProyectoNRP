@@ -8,7 +8,7 @@
  */
 
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -20,24 +20,20 @@ import org.orm.criteria.*;
 
 public class PesoCriteria extends AbstractORMCriteria {
 	public final IntegerExpression ID;
+	public final IntegerExpression peso;
 	public final IntegerExpression clienteId;
 	public final AssociationExpression cliente;
 	public final IntegerExpression proyectoId;
 	public final AssociationExpression proyecto;
-	public final IntegerExpression requisitoId;
-	public final AssociationExpression requisito;
-	public final IntegerExpression peso;
 	
 	public PesoCriteria(Criteria criteria) {
 		super(criteria);
 		ID = new IntegerExpression("ID", this);
-		clienteId = new IntegerExpression("cliente.ID", this);
-		cliente = new AssociationExpression("cliente", this);
-		proyectoId = new IntegerExpression("proyecto.ID", this);
-		proyecto = new AssociationExpression("proyecto", this);
-		requisitoId = new IntegerExpression("requisito.ID", this);
-		requisito = new AssociationExpression("requisito", this);
 		peso = new IntegerExpression("peso", this);
+		clienteId = new IntegerExpression("ORM_Cliente.null", this);
+		cliente = new AssociationExpression("ORM_Cliente", this);
+		proyectoId = new IntegerExpression("ORM_Proyecto.null", this);
+		proyecto = new AssociationExpression("ORM_Proyecto", this);
 	}
 	
 	public PesoCriteria(PersistentSession session) {
@@ -49,15 +45,11 @@ public class PesoCriteria extends AbstractORMCriteria {
 	}
 	
 	public ClienteCriteria createClienteCriteria() {
-		return new ClienteCriteria(createCriteria("cliente"));
+		return new ClienteCriteria(createCriteria("ORM_Cliente"));
 	}
 	
 	public ProyectoCriteria createProyectoCriteria() {
-		return new ProyectoCriteria(createCriteria("proyecto"));
-	}
-	
-	public RequisitoCriteria createRequisitoCriteria() {
-		return new RequisitoCriteria(createCriteria("requisito"));
+		return new ProyectoCriteria(createCriteria("ORM_Proyecto"));
 	}
 	
 	public Peso uniquePeso() {

@@ -14,7 +14,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.orm.PersistentException;
 
-import database.BD_Importancia;
+import database.BD_Peso;
 import database.BD_ProyReq;
 import database.BD_Proyectos;
 import database.BD_Requisitos;
@@ -43,7 +43,7 @@ public class ModificarProyecto extends JFrame {
 	private DefaultListModel modelo;
 	private DefaultListModel modelo2;
 	BD_Proyectos bdproy = new BD_Proyectos();
-	BD_Importancia bdimp = new BD_Importancia();
+	BD_Peso bdimp = new BD_Peso();
 	BD_Requisitos bdreq = new BD_Requisitos();
 	BD_ProyReq bdproyreq = new BD_ProyReq();
 	ConsultarProyectos cons = new ConsultarProyectos();

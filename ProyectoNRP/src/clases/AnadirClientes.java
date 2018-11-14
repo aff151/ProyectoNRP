@@ -11,7 +11,7 @@ import javax.swing.border.EmptyBorder;
 import org.orm.PersistentException;
 
 import database.BD_Clientes;
-import database.BD_Importancia;
+import database.BD_Peso;
 import database.Cliente;
 
 import javax.swing.JLabel;
@@ -36,7 +36,7 @@ public class AnadirClientes extends JFrame {
 
 	private DefaultListModel<String> modelo;
 	BD_Clientes bdCliente = new BD_Clientes();
-	BD_Importancia bdimp = new BD_Importancia();
+	BD_Peso bdimp = new BD_Peso();
 	private List<Cliente> listaClientes;
 	private JList listClientes;
 	public static String cliSeleccionado = "";

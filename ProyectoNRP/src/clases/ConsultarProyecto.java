@@ -10,7 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.orm.PersistentException;
 
-import database.BD_Importancia;
+import database.BD_Peso;
 import database.BD_ProyReq;
 import database.BD_Proyectos;
 import database.BD_Requisitos;
@@ -39,7 +39,7 @@ public class ConsultarProyecto extends JFrame {
 	public static String procedencia="";
 	ConsultarProyectos cons = new ConsultarProyectos();
 	BD_Proyectos bdproy = new BD_Proyectos();
-	BD_Importancia bdimp = new BD_Importancia();
+	BD_Peso bdimp = new BD_Peso();
 	BD_ProyReq bdreq = new BD_ProyReq();
 	private List<Cliente> listCli;
 	private List<Requisito> listReq;

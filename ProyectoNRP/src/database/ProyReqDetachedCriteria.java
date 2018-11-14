@@ -8,7 +8,7 @@
  */
 
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -24,6 +24,7 @@ public class ProyReqDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final AssociationExpression proyecto;
 	public final IntegerExpression requisitoId;
 	public final AssociationExpression requisito;
+	public final IntegerExpression esfuerzo;
 	
 	public ProyReqDetachedCriteria() {
 		super(database.ProyReq.class, database.ProyReqCriteria.class);
@@ -32,6 +33,7 @@ public class ProyReqDetachedCriteria extends AbstractORMDetachedCriteria {
 		proyecto = new AssociationExpression("ORM_Proyecto", this.getDetachedCriteria());
 		requisitoId = new IntegerExpression("ORM_Requisito.null", this.getDetachedCriteria());
 		requisito = new AssociationExpression("ORM_Requisito", this.getDetachedCriteria());
+		esfuerzo = new IntegerExpression("esfuerzo", this.getDetachedCriteria());
 	}
 	
 	public ProyReqDetachedCriteria(DetachedCriteria aDetachedCriteria) {
@@ -41,6 +43,7 @@ public class ProyReqDetachedCriteria extends AbstractORMDetachedCriteria {
 		proyecto = new AssociationExpression("ORM_Proyecto", this.getDetachedCriteria());
 		requisitoId = new IntegerExpression("ORM_Requisito.null", this.getDetachedCriteria());
 		requisito = new AssociationExpression("ORM_Requisito", this.getDetachedCriteria());
+		esfuerzo = new IntegerExpression("esfuerzo", this.getDetachedCriteria());
 	}
 	
 	public ProyectoDetachedCriteria createProyectoCriteria() {
