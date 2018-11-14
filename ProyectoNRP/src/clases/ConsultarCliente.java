@@ -71,6 +71,23 @@ public class ConsultarCliente extends JFrame {
 		
 		inicializar();
 		
+				JButton btnAtrs = new JButton("Atrás");
+				btnAtrs.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if (procedencia == "ConsultarRequisito") {
+							ConsultarRequisito consultarRequisito = new ConsultarRequisito();
+							consultarRequisito.setVisible(true);
+						} else if (procedencia == "ConsultarClientes") {
+							ConsultarClientes consultarClientes = new ConsultarClientes();
+							consultarClientes.setVisible(true);
+						}
+
+						dispose();
+					}
+				});
+				btnAtrs.setBounds(194, 359, 117, 29);
+				contentPane.add(btnAtrs);
+		
 		JLabel lblNombreCliente = new JLabel(ConsultarClientes.cliSeleccionado);
 		lblNombreCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreCliente.setBounds(160, 21, 174, 16);
@@ -96,24 +113,6 @@ public class ConsultarCliente extends JFrame {
 		JLabel lblListaDeRequisitos = new JLabel("Lista de requisitos del proyecto");
 		lblListaDeRequisitos.setBounds(324, 60, 217, 16);
 		contentPane.add(lblListaDeRequisitos);
-
-		JButton btnAtrs = new JButton("Atrás");
-		btnAtrs.setBackground(Color.RED);
-		btnAtrs.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (procedencia == "ConsultarRequisito") {
-					ConsultarRequisito consultarRequisito = new ConsultarRequisito();
-					consultarRequisito.setVisible(true);
-				} else if (procedencia == "ConsultarClientes") {
-					ConsultarClientes consultarClientes = new ConsultarClientes();
-					consultarClientes.setVisible(true);
-				}
-
-				dispose();
-			}
-		});
-		btnAtrs.setBounds(172, 360, 157, 29);
-		contentPane.add(btnAtrs);
 		
 		JButton btnVerRequisitos = new JButton("Ver\r\n requisitos");
 		btnVerRequisitos.addActionListener(new ActionListener() {

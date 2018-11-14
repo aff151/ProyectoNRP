@@ -89,7 +89,6 @@ public class ConsultarClientes extends JFrame {
 				}
 			}
 		});
-		btnConsultar.setBackground(new Color(50, 205, 50));
 		btnConsultar.setBounds(46, 217, 117, 29);
 		contentPane.add(btnConsultar);
 
