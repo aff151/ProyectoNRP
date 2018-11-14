@@ -132,10 +132,10 @@ public class ModificarProyecto extends JFrame {
 		JButton btnAadirMsClientes_1 = new JButton("Añadir más Clientes");
 		btnAadirMsClientes_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AnadirClientes anadirClientes = new AnadirClientes();
+				AnadirClientes anadirClientes = new AnadirClientes();				
 				anadirClientes.setVisible(true);
 				anadirClientes.procedencia="ModificarProyecto";
-				dispose();
+				//dispose();
 			}
 		});
 		btnAadirMsClientes_1.setBounds(10, 396, 166, 29);

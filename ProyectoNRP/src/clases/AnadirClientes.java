@@ -155,6 +155,19 @@ public class AnadirClientes extends JFrame {
 		txtImportancia.setBounds(33, 303, 86, 26);
 		contentPane.add(txtImportancia);
 		txtImportancia.setColumns(10);
+		
+		JButton btnCrearCliente = new JButton("Crear Cliente");
+		btnCrearCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				CrearCliente crearCliente = new CrearCliente();
+				crearCliente.setVisible(true);
+				crearCliente.procedencia = "AnadirClientes";
+				//dispose();
+			}
+		});
+		btnCrearCliente.setBounds(18, 340, 117, 29);
+		contentPane.add(btnCrearCliente);
 		cargarClientes();
 	}
 
@@ -183,5 +196,4 @@ public class AnadirClientes extends JFrame {
 			listClientes.setModel(modelo);
 		}
 	}
-
 }
