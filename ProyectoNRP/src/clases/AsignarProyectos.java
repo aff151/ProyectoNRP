@@ -1,6 +1,7 @@
 package clases;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -38,13 +39,7 @@ public class AsignarProyectos extends JFrame {
 	 */
 	public AsignarProyectos() {
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 223, 336);
-		setLocationRelativeTo(null);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		inicializar();
 		
 		JLabel lblSeleccionarProyectos = new JLabel("Seleccionar Proyectos");
 		lblSeleccionarProyectos.setBounds(39, 26, 186, 16);
@@ -78,6 +73,19 @@ public class AsignarProyectos extends JFrame {
 		});
 		button.setBounds(130, 279, 69, 29);
 		contentPane.add(button);
+	}
+	
+	public void inicializar() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
+		setResizable(false);
+		setBounds(100, 100, 223, 336);
+		setLocationRelativeTo(null);
+		//setTitle("Programa para gestión de requisitos");
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 	}
 
 }

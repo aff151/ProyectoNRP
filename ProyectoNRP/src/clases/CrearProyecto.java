@@ -61,7 +61,6 @@ public class CrearProyecto extends JFrame {
 	 * Create the frame.
 	 */
 	public CrearProyecto() {
-		setTitle("Crear Proyecto");
 		inicializar();
 		
 		
@@ -129,6 +128,7 @@ public class CrearProyecto extends JFrame {
 	}
 	
 	public void inicializar() {
+		setTitle("Crear Proyecto");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);

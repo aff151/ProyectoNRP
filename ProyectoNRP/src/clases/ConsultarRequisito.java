@@ -2,6 +2,7 @@ package clases;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -38,13 +39,7 @@ public class ConsultarRequisito extends JFrame {
 	 */
 	public ConsultarRequisito() {
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 500);
-		setLocationRelativeTo(null);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		inicializar();
 
 		JLabel lblConsultaDelRequisito = new JLabel("Consulta del requisito");
 		lblConsultaDelRequisito.setBounds(214, 17, 170, 14);
@@ -102,6 +97,19 @@ public class ConsultarRequisito extends JFrame {
 		});
 		btnAtrs.setBounds(491, 434, 83, 23);
 		contentPane.add(btnAtrs);
+	}
+	
+	public void inicializar() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
+		setResizable(false);
+		setBounds(100, 100, 600, 500);
+		setLocationRelativeTo(null);
+		setTitle("Programa para gestión de requisitos");
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 	}
 
 }
