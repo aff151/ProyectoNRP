@@ -2,6 +2,7 @@ package clases;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import org.orm.PersistentException;
 
 import database.BD_Clientes;
+import database.BD_Importancia;
 import database.Cliente;
 
 import javax.swing.JLabel;
@@ -31,9 +33,10 @@ public class AnadirClientes extends JFrame {
 	public static String procedencia = "";
 	public static String proySeleccionado = "";
 	ConsultarProyectos cp = new ConsultarProyectos();
-	
+
 	private DefaultListModel<String> modelo;
 	BD_Clientes bdCliente = new BD_Clientes();
+	BD_Importancia bdimp = new BD_Importancia();
 	private List<Cliente> listaClientes;
 	private JList listClientes;
 	public static String cliSeleccionado = "";
@@ -58,16 +61,8 @@ public class AnadirClientes extends JFrame {
 	 * Create the frame.
 	 */
 	public AnadirClientes() {
+		inicializar();
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 236, 398);
-		setLocationRelativeTo(null);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-
-		
 		JLabel lblSeleccionarProyecto = new JLabel("Seleccionar Cliente");
 		lblSeleccionarProyecto.setBounds(52, 37, 141, 16);
 		contentPane.add(lblSeleccionarProyecto);
@@ -80,36 +75,61 @@ public class AnadirClientes extends JFrame {
 		listClientes = new JList();
 		listClientes.setBounds(52, 65, 141, 226);
 		listClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
-		
-		
+
 		contentPane.add(listClientes);
 		/////////////////////////////////////////////////////////////
 		JButton btnAgregar = new JButton("Agregar ");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				//HAY QUE DARLE UNA REVISION A ESTO QUE NO TENGO GNAS DE PENSAR Q ES TARDE
-				if(listClientes.isSelectionEmpty() && txtImportancia.getText().isEmpty())
-				{
-					JOptionPane.showMessageDialog(null, "Debe de seleccionar un cliente e introducir su importancia", "MENSAJE", JOptionPane.WARNING_MESSAGE);
+
+				// HAY QUE DARLE UNA REVISION A ESTO QUE NO TENGO GNAS DE PENSAR Q ES TARDE
+				if (listClientes.isSelectionEmpty() || txtImportancia.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Debe de seleccionar un cliente e introducir su importancia",
+							"MENSAJE", JOptionPane.WARNING_MESSAGE);
+				} else {
+					try {
+
+						if (bdimp.comprobarCliente(listClientes.getSelectedValue().toString(), ConsultarProyectos.proySeleccionado) == true) {
+							JOptionPane.showMessageDialog(null, "El Cliente ya está en el proyecto", "MENSAJE",
+									JOptionPane.WARNING_MESSAGE);
+						} else {
+							String cadena = txtImportancia.getText();
+
+							boolean isDigit = true;
+							for (int i = 0; i < cadena.length(); i++) {
+								if (Character.isDigit(cadena.charAt(i)) == false) {
+									isDigit = false;
+									break;
+								}
+							}
+
+							if (isDigit == false) {
+								JOptionPane.showMessageDialog(null,
+										"La importancia debe ser un número entero positivo o cero", "MENSAJE",
+										JOptionPane.WARNING_MESSAGE);
+							} else {
+								int importancia = Integer.parseInt(txtImportancia.getText());
+								if (importancia < 0) {
+									JOptionPane.showMessageDialog(null,
+											"La importancia debe ser un número entero positivo o cero", "MENSAJE",
+											JOptionPane.WARNING_MESSAGE);
+								} else {
+									bdCliente.asignaClienteProyecto(listClientes.getSelectedValue().toString(),
+											txtImportancia.getText(), cp.proySeleccionado);
+									ModificarProyecto modificarProyecto = new ModificarProyecto();
+									modificarProyecto.setVisible(true);
+									dispose();
+								}
+							}
+						}
+
+						
+					} catch (PersistentException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
-				if(listClientes.isSelectionEmpty())
-				{
-					JOptionPane.showMessageDialog(null, "Debe de seleccionar un cliente", "MENSAJE", JOptionPane.WARNING_MESSAGE);
-				}
-				if(txtImportancia.getText().isEmpty())
-				{
-					JOptionPane.showMessageDialog(null, "Debe de introducir numericamente la importancia del cliente en el proyecto", "MENSAJE", JOptionPane.WARNING_MESSAGE);
-				}
-				try {
-					bdCliente.asignaClienteProyecto(listClientes.getSelectedValue().toString(), txtImportancia.getText(), cp.proySeleccionado);
-				} catch (PersistentException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				ModificarProyecto modificarProyecto = new ModificarProyecto();
-				modificarProyecto.setVisible(true);
+
 			}
 		});
 		btnAgregar.setBounds(119, 303, 86, 29);
@@ -137,17 +157,28 @@ public class AnadirClientes extends JFrame {
 		txtImportancia.setColumns(10);
 		cargarClientes();
 	}
-	
-	public void cargarClientes()
-	{
+
+	public void inicializar() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
+		setResizable(false);
+		setBounds(100, 100, 236, 398);
+		setLocationRelativeTo(null);
+		setTitle("Añadir Clientes");
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+	}
+
+	public void cargarClientes() {
 		try {
 			listaClientes = bdCliente.cargarClientes();
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for(Cliente c : listaClientes)
-		{
+		for (Cliente c : listaClientes) {
 			modelo.addElement(c.getNombre());
 			System.out.println(c.getNombre());
 			listClientes.setModel(modelo);

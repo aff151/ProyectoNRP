@@ -30,4 +30,20 @@ public class BD_Importancia {
 			}
 		return listProyectos;
 	}
+
+	public boolean comprobarCliente(String cliente, String proySeleccionado) throws PersistentException {
+		boolean resultado = false;
+		List<Importancia> listImportancia = new ArrayList<Importancia>();
+		listImportancia = ImportanciaDAO.queryImportancia(null, null);
+		for (Importancia imp : listImportancia) {
+			if(imp.getProyecto().getNombre().equals(proySeleccionado)) {
+				if(imp.getCliente().getNombre().equals(cliente)){
+					resultado = true;
+					break;
+				}
+			}
+		}
+		return resultado;
+		
+	}
 }
