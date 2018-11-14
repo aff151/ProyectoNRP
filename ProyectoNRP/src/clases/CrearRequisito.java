@@ -47,6 +47,7 @@ public class CrearRequisito extends JFrame {
 	private JList listRequisitos;
 	private List<Requisito> listaRequisito;
 	private DefaultListModel<String> modelo;
+	private JTextField esfuerzoReqV;
 	
 
 	/**
@@ -154,15 +155,52 @@ public class CrearRequisito extends JFrame {
 		contentPane.add(lblListaDeRequisitos);
 		
 		listRequisitos = new JList();
-		listRequisitos.setBounds(504, 57, 125, 133);
+		listRequisitos.setBounds(462, 57, 125, 133);
 		listRequisitos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		modelo = new DefaultListModel<String>();
 		cargarRequisitos();
 		contentPane.add(listRequisitos);
 		
 		JButton btnAsignar = new JButton("Asignar");
+		btnAsignar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//COGER EL PARAMETRO DE LA LISTA
+				boolean esDigito = false;
+				if(esfuerzoReqV.getText().equals(""))
+				{
+					JOptionPane.showMessageDialog(null, "Debe introducir el essfuerzo al requisito", "MENSAJE",
+							JOptionPane.WARNING_MESSAGE);
+				}
+				else
+				{
+					for(Character s : esfuerzoReqV.getText().toCharArray())
+					{
+						if(Character.isDigit(s))
+							esDigito = true;
+					}
+				}
+				if(esDigito)
+				{
+				try {
+					bdpr.asignarRequisitoProyecto(listRequisitos.getSelectedValue().toString(), cons.proySeleccionado, esfuerzoReqV.getText());
+				} catch (PersistentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				}
+			}
+		});
 		btnAsignar.setBounds(655, 183, 90, 29);
 		contentPane.add(btnAsignar);
+		
+		JLabel lblIntroduceEsfuerzo = new JLabel("Introduce esfuerzo");
+		lblIntroduceEsfuerzo.setBounds(615, 58, 130, 14);
+		contentPane.add(lblIntroduceEsfuerzo);
+		
+		esfuerzoReqV = new JTextField();
+		esfuerzoReqV.setBounds(625, 82, 86, 20);
+		contentPane.add(esfuerzoReqV);
+		esfuerzoReqV.setColumns(10);
 		
 	}
 	
