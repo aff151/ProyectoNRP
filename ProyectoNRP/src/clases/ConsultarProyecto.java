@@ -30,6 +30,8 @@ import java.awt.Color;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.JTextField;
+import javax.swing.JTextArea;
+import java.awt.SystemColor;
 
 public class ConsultarProyecto extends JFrame {
 
@@ -39,7 +41,6 @@ public class ConsultarProyecto extends JFrame {
 	BD_Proyectos bdproy = new BD_Proyectos();
 	BD_Importancia bdimp = new BD_Importancia();
 	BD_ProyReq bdreq = new BD_ProyReq();
-	private JTextField textFieldDescripcion;
 	private List<Cliente> listCli;
 	private List<Requisito> listReq;
 	private DefaultListModel modelo;
@@ -110,7 +111,7 @@ public class ConsultarProyecto extends JFrame {
 		contentPane.add(lblListaDeRequisitos);
 
 		JButton btnAtrs = new JButton("Atrás");
-		btnAtrs.setBackground(Color.RED);
+		btnAtrs.setBackground(SystemColor.inactiveCaption);
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (procedencia == "ConsultarCliente") {
@@ -127,15 +128,17 @@ public class ConsultarProyecto extends JFrame {
 		btnAtrs.setBounds(197, 386, 157, 29);
 		contentPane.add(btnAtrs);
 		
-		textFieldDescripcion = new JTextField(consproy.getDescripcion());
-		textFieldDescripcion.setBounds(112, 43, 382, 54);
-		textFieldDescripcion.setEditable(false);
-		contentPane.add(textFieldDescripcion);
-		textFieldDescripcion.setColumns(10);
-		
 		JLabel lblDescripcin = new JLabel("Descripción");
-		lblDescripcin.setBounds(30, 59, 87, 22);
+		lblDescripcin.setBounds(30, 48, 87, 16);
 		contentPane.add(lblDescripcin);
+		
+		JTextArea textArea = new JTextArea(consproy.getDescripcion());
+		textArea.setBounds(110, 48, 384, 49);
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
+		textArea.setEditable(false);
+		textArea.setBackground(getForeground());
+		contentPane.add(textArea);
 	}
 	
 	private void cargarNombresLista() {
