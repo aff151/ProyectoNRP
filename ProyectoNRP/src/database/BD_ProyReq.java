@@ -13,7 +13,7 @@ public class BD_ProyReq {
 	public BD_Principal _c_bd_proyreq;
 	public Vector<ProyReq> _cont_proyreq = new Vector<ProyReq>();
 
-	public void asignarRequisitoProyecto(String nombreReq, String proySeleccionado) throws PersistentException {
+	public void asignarRequisitoProyecto(String nombreReq, String proySeleccionado,String esfuerzo) throws PersistentException {
 		int idReq = -1;
 		int idPro = -1;
 		Proyecto profin = null;
@@ -37,6 +37,7 @@ public class BD_ProyReq {
 			ProyReq prore = ProyReqDAO.createProyReq();
 			prore.setProyecto(profin);
 			prore.setRequisito(reqfin);
+			prore.setEsfuerzo(Integer.parseInt(esfuerzo));
 			ProyReqDAO.save(prore);
 			
 			t.commit();
