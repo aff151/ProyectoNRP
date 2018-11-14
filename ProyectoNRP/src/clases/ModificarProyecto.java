@@ -3,6 +3,7 @@ package clases;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.TextField;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -30,12 +31,12 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.JTextArea;
 
 public class ModificarProyecto extends JFrame {
 
 	private JPanel contentPane;
 	public static String procedencia="";
-	private JTextField textFieldDescripcion;
 	private DefaultListModel modelo;
 	private DefaultListModel modelo2;
 	BD_Proyectos bdproy = new BD_Proyectos();
@@ -80,31 +81,30 @@ public class ModificarProyecto extends JFrame {
 			e1.printStackTrace();
 		}
 		
-		JLabel lblNombreProyecto = new JLabel(consproy.getNombre());
-		lblNombreProyecto.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNombreProyecto.setBounds(169, 22, 174, 16);
-		contentPane.add(lblNombreProyecto);
+		TextField txtNombreProyecto = new TextField(consproy.getNombre());
+		txtNombreProyecto.setBounds(131, 10, 285, 25);
+		contentPane.add(txtNombreProyecto);
 
 		listClientes = new JList();
-		listClientes.setBounds(68, 154, 124, 199);
+		listClientes.setBounds(10, 154, 166, 199);
 		modelo = new DefaultListModel();
 		cargarNombresLista();
 		listClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		contentPane.add(listClientes);
 
 		listRequisitos = new JList();
-		listRequisitos.setBounds(353, 154, 124, 199);
+		listRequisitos.setBounds(250, 154, 166, 199);
 		modelo2 = new DefaultListModel();
 		cargarRequisitos();
 		listClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		contentPane.add(listRequisitos);
 
 		JLabel lblListaDeClientes = new JLabel("Lista de clientes del proyecto");
-		lblListaDeClientes.setBounds(31, 126, 217, 16);
+		lblListaDeClientes.setBounds(10, 126, 217, 16);
 		contentPane.add(lblListaDeClientes);
 
 		JLabel lblListaDeRequisitos = new JLabel("Lista de requisitos del proyecto");
-		lblListaDeRequisitos.setBounds(313, 126, 217, 16);
+		lblListaDeRequisitos.setBounds(246, 127, 217, 16);
 		contentPane.add(lblListaDeRequisitos);
 
 		JButton btnAtrs = new JButton("Atrás");
@@ -117,7 +117,7 @@ public class ModificarProyecto extends JFrame {
 				dispose();
 			}
 		});
-		btnAtrs.setBounds(234, 395, 77, 29);
+		btnAtrs.setBounds(177, 404, 73, 29);
 		contentPane.add(btnAtrs);
 
 		JButton btnAadirMsClientes_1 = new JButton("Añadir más Clientes");
@@ -129,7 +129,7 @@ public class ModificarProyecto extends JFrame {
 				dispose();
 			}
 		});
-		btnAadirMsClientes_1.setBounds(44, 364, 170, 29);
+		btnAadirMsClientes_1.setBounds(10, 364, 166, 29);
 		contentPane.add(btnAadirMsClientes_1);
 
 		JButton btnAadirMsRequisitos_1 = new JButton("Añadir más Requisitos");
@@ -141,19 +141,23 @@ public class ModificarProyecto extends JFrame {
 				dispose();
 			}
 		});
-		btnAadirMsRequisitos_1.setBounds(330, 364, 170, 29);
+		btnAadirMsRequisitos_1.setBounds(250, 364, 166, 29);
 		contentPane.add(btnAadirMsRequisitos_1);
 		
 		JLabel lblDescripcin = new JLabel("Descripción");
-		lblDescripcin.setBounds(31, 67, 109, 21);
+		lblDescripcin.setBounds(31, 51, 73, 21);
 		contentPane.add(lblDescripcin);
 		
-		textFieldDescripcion = new JTextField(consproy.getDescripcion());
-		textFieldDescripcion.setBounds(127, 53, 393, 48);
-		textFieldDescripcion.setEditable(false);
-		contentPane.add(textFieldDescripcion);
-		textFieldDescripcion.setColumns(10);
-	
+		JTextArea tAreaDesc = new JTextArea(consproy.getDescripcion());
+		tAreaDesc.setBounds(131, 49, 285, 66);
+		tAreaDesc.setColumns(10);
+		tAreaDesc.setLineWrap(true);
+		tAreaDesc.setWrapStyleWord(true);
+		contentPane.add(tAreaDesc);
+		
+		JLabel lblNombre = new JLabel("Nombre");
+		lblNombre.setBounds(51, 10, 46, 14);
+		contentPane.add(lblNombre);
 
 	}
 	
@@ -162,7 +166,7 @@ public class ModificarProyecto extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 560, 473);
+		setBounds(100, 100, 439, 473);
 		setLocationRelativeTo(null);
 		setTitle("Modificar Proyecto");
 		contentPane = new JPanel();
