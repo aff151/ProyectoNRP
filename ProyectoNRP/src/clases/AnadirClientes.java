@@ -180,7 +180,6 @@ public class AnadirClientes extends JFrame {
 		}
 		for (Cliente c : listaClientes) {
 			modelo.addElement(c.getNombre());
-			System.out.println(c.getNombre());
 			listClientes.setModel(modelo);
 		}
 	}

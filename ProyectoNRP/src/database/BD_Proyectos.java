@@ -66,8 +66,30 @@ public class BD_Proyectos {
 				return proyecto;
 			}
 		}
-
 		return null;
 	}
 
+	public boolean comprobarProyecto(String proySeleccionado, String nuevoNombre) throws PersistentException {
+		if(proySeleccionado.equals(nuevoNombre)) {
+			return false;
+		}
+		for(Proyecto p : ProyectoDAO.listProyectoByQuery(null, null)) {
+			if(p.getNombre().equals(nuevoNombre)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean modificarProyecto(String proySeleccionado, String nuevoNombre, String descripcion) throws PersistentException {
+		for(Proyecto p : ProyectoDAO.listProyectoByQuery(null, null)) {
+			if(p.getNombre().equals(proySeleccionado)) {
+				p.setNombre(nuevoNombre);
+				p.setDescripcion(descripcion);
+				ProyectoDAO.save(p);
+				return true;
+			}
+		}
+		return false;
+	}
 }
