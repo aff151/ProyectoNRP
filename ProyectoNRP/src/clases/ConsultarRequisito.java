@@ -41,7 +41,7 @@ public class ConsultarRequisito extends JFrame {
 
 		inicializar();
 
-		JLabel lblConsultaDelRequisito = new JLabel("Consulta del requisito");
+		JLabel lblConsultaDelRequisito = new JLabel("Consultar requisitos");
 		lblConsultaDelRequisito.setBounds(214, 17, 170, 14);
 		contentPane.add(lblConsultaDelRequisito);
 
@@ -77,7 +77,7 @@ public class ConsultarRequisito extends JFrame {
 		btnConsultarCliente.setBounds(383, 377, 133, 23);
 		contentPane.add(btnConsultarCliente);
 
-		JLabel lblListaDeProyectos = new JLabel("Lista de Proyectos Asociados");
+		JLabel lblListaDeProyectos = new JLabel("Lista de todos los requisitos");
 		lblListaDeProyectos.setBounds(37, 59, 196, 14);
 		contentPane.add(lblListaDeProyectos);
 
