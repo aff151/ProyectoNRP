@@ -153,10 +153,11 @@ public class CrearRequisito extends JFrame {
 		lblListaDeRequisitos.setBounds(504, 22, 108, 14);
 		contentPane.add(lblListaDeRequisitos);
 		
-		modelo = new DefaultListModel<String>();
 		listRequisitos = new JList();
 		listRequisitos.setBounds(504, 57, 125, 133);
 		listRequisitos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		modelo = new DefaultListModel<String>();
+		cargarRequisitos();
 		contentPane.add(listRequisitos);
 		
 		JButton btnAsignar = new JButton("Asignar");
@@ -176,7 +177,6 @@ public class CrearRequisito extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		cargarRequisitos();
 		
 	}
 	
