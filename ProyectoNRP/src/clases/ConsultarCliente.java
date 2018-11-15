@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import org.orm.PersistentException;
@@ -15,6 +16,7 @@ import org.orm.PersistentException;
 import database.BD_Peso;
 import database.BD_ProyReq;
 import database.BD_Proyectos;
+import database.BD_Valor;
 import database.Cliente;
 import database.Proyecto;
 import database.Requisito;
@@ -41,6 +43,7 @@ public class ConsultarCliente extends JFrame {
 	BD_Peso bdimp = new BD_Peso();
 	
 	BD_ProyReq bdproyreq = new BD_ProyReq();
+	BD_Valor bdvalor = new BD_Valor();
 	private JTextField textFieldDescripcion;
 	private List<Proyecto> listProy;
 	private List<Requisito> listReq;
@@ -48,6 +51,8 @@ public class ConsultarCliente extends JFrame {
 	private DefaultListModel modelo1;
 	private JList listProyectos;
 	private JList listRequisitos;
+	private JScrollPane scrollLista;
+	private JScrollPane scrollLista2;
 
 
 	/**
@@ -96,16 +101,20 @@ public class ConsultarCliente extends JFrame {
 		contentPane.add(lblNombreCliente);
 
 		listProyectos = new JList();
-		listProyectos.setBounds(10, 99, 170, 240);
 		listProyectos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		modelo = new DefaultListModel();
+		scrollLista = new JScrollPane();
+		scrollLista.setBounds(10, 99, 170, 240);
+	    scrollLista.setViewportView(listProyectos);
 		cargarProyectosCliente();
-		contentPane.add(listProyectos);
+		contentPane.add(scrollLista);
 		
 		listRequisitos = new JList();
-		listRequisitos.setBounds(324, 99, 170, 240);
 		modelo1 = new DefaultListModel();
-		contentPane.add(listRequisitos);
+		scrollLista2 = new JScrollPane();
+		scrollLista2.setBounds(324, 99, 170, 240);
+	    scrollLista2.setViewportView(listRequisitos);
+		contentPane.add(scrollLista2);
 
 		JLabel lblListaDeProyectos = new JLabel("Lista de proyectos del cliente");
 		lblListaDeProyectos.setBounds(10, 60, 217, 16);
@@ -125,7 +134,8 @@ public class ConsultarCliente extends JFrame {
 				} else {
 					modelo1.clear();
 					listRequisitos.setModel(modelo1);
-					cargarRequisitosProyecto(listProyectos.getSelectedValue().toString());
+					cargarRequisitosClienteProyecto(listProyectos.getSelectedValue().toString(),
+							ConsultarClientes.cliSeleccionado);
 				}
 			}
 		});
@@ -159,9 +169,9 @@ public class ConsultarCliente extends JFrame {
 		contentPane.setLayout(null);
 	}
 	
-	public void cargarRequisitosProyecto(String proyecto) {
+	public void cargarRequisitosClienteProyecto(String proyecto, String cliente) {
 		try {
-			listReq = bdproyreq.cargarRequisitosProyecto(proyecto);
+			listReq = bdvalor.cargarRequisitosClienteProyecto(proyecto, cliente);
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
