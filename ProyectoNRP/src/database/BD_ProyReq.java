@@ -55,4 +55,21 @@ public class BD_ProyReq {
 		}
 		return listRequisitos;
 	}
+	
+/*	public List<Requisito> asignarOtroRequisitoProyecto(String nombreReq, String proySeleccionado,String esfuerzo)
+	{
+		List<Requisito> listaRequisitos = new ArrayList<Requisito>();
+		
+		try {
+			for(ProyReq pr : ProyReqDAO.listProyReqByQuery(null, null))
+			{
+				
+			}
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ProyReq pr = ProyReqDAO.createProyReq();
+		
+	}*/
 }

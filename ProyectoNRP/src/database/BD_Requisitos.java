@@ -36,4 +36,36 @@ public class BD_Requisitos {
 		return listaRequisitos;
 	}
 
+	public List<Requisito> cargarRequisitosOtros(String nombreProyecto) throws PersistentException
+	{
+		List<Requisito> listTodosRequisitos = new ArrayList<Requisito>();
+		listTodosRequisitos = RequisitoDAO.queryRequisito(null, null);
+		boolean borrar = false;
+		List<Requisito> listRequisitosEliminar = new ArrayList<Requisito>();
+		List<Requisito> listaFinal = new ArrayList<Requisito>();
+		
+			for(ProyReq pr : ProyReqDAO.listProyReqByQuery(null, null))
+			{
+				if(nombreProyecto.equals(pr.getProyecto().getNombre().toString()))
+				{
+					listRequisitosEliminar.add(pr.getRequisito());
+				}
+			}
+			//HASTA AQUI TODO PERFECTO
+			
+			//YA TENEMOS LOS REQUISITOS QUE DEBEMOS DE EVITAR
+			for(Requisito r1 : listTodosRequisitos)
+			{
+				borrar = false;
+				for(Requisito r2 : listRequisitosEliminar)
+				{
+					if(r1.getNombre().equals(r2.getNombre()))
+						borrar = true;
+				}
+				if(!borrar)
+					listaFinal.add(r1);
+			}
+
+		return listaFinal;
+	}
 }

@@ -162,7 +162,7 @@ public class CrearRequisito extends JFrame {
 		scrollLista = new JScrollPane();
 		scrollLista.setBounds(462, 57, 125, 133);
 	    scrollLista.setViewportView(listRequisitos);
-		cargarRequisitos();
+		cargarRequisitosExternos();
 		contentPane.add(scrollLista);
 		
 		JButton btnAsignar = new JButton("Asignar");
@@ -187,6 +187,10 @@ public class CrearRequisito extends JFrame {
 				{
 				try {
 					bdpr.asignarRequisitoProyecto(listRequisitos.getSelectedValue().toString(), cons.proySeleccionado, esfuerzoReqV.getText());
+					ModificarProyecto modificarProyecto = new ModificarProyecto();
+					modificarProyecto.setVisible(true);
+					dispose();
+					
 				} catch (PersistentException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -251,9 +255,9 @@ public class CrearRequisito extends JFrame {
 			e.printStackTrace();
 		}
 	}
-	public void cargarRequisitos() {
+	public void cargarRequisitosExternos() {
 		try {
-			listaRequisito = bd_req.cargarRequisitos();
+			listaRequisito = bd_req.cargarRequisitosOtros(cons.proySeleccionado);
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -264,4 +268,5 @@ public class CrearRequisito extends JFrame {
 			listRequisitos.setModel(modelo);
 		}
 	}
+
 }
