@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import org.orm.PersistentException;
@@ -48,6 +49,7 @@ public class CrearRequisito extends JFrame {
 	private List<Requisito> listaRequisito;
 	private DefaultListModel<String> modelo;
 	private JTextField esfuerzoReqV;
+	private JScrollPane scrollLista;
 	
 
 	/**
@@ -155,11 +157,13 @@ public class CrearRequisito extends JFrame {
 		contentPane.add(lblListaDeRequisitos);
 		
 		listRequisitos = new JList();
-		listRequisitos.setBounds(462, 57, 125, 133);
 		listRequisitos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		modelo = new DefaultListModel<String>();
+		scrollLista = new JScrollPane();
+		scrollLista.setBounds(462, 57, 125, 133);
+	    scrollLista.setViewportView(listRequisitos);
 		cargarRequisitos();
-		contentPane.add(listRequisitos);
+		contentPane.add(scrollLista);
 		
 		JButton btnAsignar = new JButton("Asignar");
 		btnAsignar.addActionListener(new ActionListener() {

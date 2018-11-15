@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import org.orm.PersistentException;
@@ -38,6 +39,8 @@ public class ConsultarClientes extends JFrame {
 	public static String cliSeleccionado = "";
 	private JList listClientes;
 	BD_Clientes bd_Cli = new BD_Clientes();
+	private JScrollPane scrollLista;
+
 
 	/**
 	 * Launch the application.
@@ -66,14 +69,17 @@ public class ConsultarClientes extends JFrame {
 		seleccionarClientes.setBounds(49, 30, 127, 16);
 		contentPane.add(seleccionarClientes);
 
-		modelo = new DefaultListModel<String>();
 
 		listClientes = new JList();
-		listClientes.setBounds(34, 60, 143, 146);
 		listClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		modelo = new DefaultListModel<String>();
+		scrollLista = new JScrollPane();
+		scrollLista.setBounds(34, 60, 143, 146);
+	    scrollLista.setViewportView(listClientes);
+		contentPane.add(scrollLista);
+		cargarClientes();
 
-		contentPane.add(listClientes);
-
+		
 		JButton btnConsultar = new JButton("Consultar");
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -102,7 +108,6 @@ public class ConsultarClientes extends JFrame {
 		});
 		btnAtrs.setBounds(46, 257, 117, 29);
 		contentPane.add(btnAtrs);
-		cargarClientes();
 	}
 
 	public void inicializar() {
