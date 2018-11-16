@@ -1,5 +1,5 @@
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -9,9 +9,9 @@ public class DeleteBasededatosData {
 	public void deleteTestData() throws PersistentException {
 		PersistentTransaction t = database.BasededatosPersistentManager.instance().getSession().beginTransaction();
 		try {
-			database.Peso ldatabasePeso = database.PesoDAO.loadPesoByQuery(null, null);
+			database.Valor ldatabaseValor = database.ValorDAO.loadValorByQuery(null, null);
 			// Delete the persistent object
-			database.PesoDAO.delete(ldatabasePeso);
+			database.ValorDAO.delete(ldatabaseValor);
 			database.Requisito ldatabaseRequisito = database.RequisitoDAO.loadRequisitoByQuery(null, null);
 			// Delete the persistent object
 			database.RequisitoDAO.delete(ldatabaseRequisito);
@@ -21,9 +21,9 @@ public class DeleteBasededatosData {
 			database.Cliente ldatabaseCliente = database.ClienteDAO.loadClienteByQuery(null, null);
 			// Delete the persistent object
 			database.ClienteDAO.delete(ldatabaseCliente);
-			database.Importancia ldatabaseImportancia = database.ImportanciaDAO.loadImportanciaByQuery(null, null);
+			database.Peso ldatabasePeso = database.PesoDAO.loadPesoByQuery(null, null);
 			// Delete the persistent object
-			database.ImportanciaDAO.delete(ldatabaseImportancia);
+			database.PesoDAO.delete(ldatabasePeso);
 			database.ProyReq ldatabaseProyReq = database.ProyReqDAO.loadProyReqByQuery(null, null);
 			// Delete the persistent object
 			database.ProyReqDAO.delete(ldatabaseProyReq);

@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SingleSelectionModel;
 import javax.swing.border.EmptyBorder;
@@ -35,7 +36,7 @@ public class ConsultarProyectos extends JFrame {
 	private List<Proyecto> listPro;
 	private DefaultListModel<String> modelo;
 	private JList listProyectos;
-
+	private JScrollPane scrollLista;
 	BD_Proyectos bdProy = new BD_Proyectos();
 
 	/**
@@ -68,10 +69,11 @@ public class ConsultarProyectos extends JFrame {
 		modelo = new DefaultListModel<String>();
 
 		listProyectos = new JList();
-		listProyectos.setBounds(30, 36, 125, 147);
 		listProyectos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-		contentPane.add(listProyectos);
+		scrollLista = new JScrollPane();
+		scrollLista.setBounds(21, 36, 148, 147);
+	    scrollLista.setViewportView(listProyectos);
+		contentPane.add(scrollLista);
 
 		JButton btnConsultarProyecto = new JButton("Consultar Proyecto");
 		btnConsultarProyecto.addActionListener(new ActionListener() {
@@ -108,7 +110,7 @@ public class ConsultarProyectos extends JFrame {
 				}
 			}
 		});
-		btnModificarProyecto.setBounds(19, 220, 147, 23);
+		btnModificarProyecto.setBounds(19, 220, 150, 23);
 		contentPane.add(btnModificarProyecto);
 
 		JButton btnAtrs = new JButton("Atrás");

@@ -8,7 +8,7 @@
  */
 
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -323,13 +323,13 @@ public class ClienteDAO {
 	
 	public static boolean deleteAndDissociate(database.Cliente cliente)throws PersistentException {
 		try {
-			database.Importancia[] lImportanciass = cliente.importancias.toArray();
-			for(int i = 0; i < lImportanciass.length; i++) {
-				lImportanciass[i].setCliente(null);
-			}
 			database.Peso[] lPesoss = cliente.pesos.toArray();
 			for(int i = 0; i < lPesoss.length; i++) {
 				lPesoss[i].setCliente(null);
+			}
+			database.Valor[] lValorss = cliente.valors.toArray();
+			for(int i = 0; i < lValorss.length; i++) {
+				lValorss[i].setCliente(null);
 			}
 			return delete(cliente);
 		}
@@ -341,13 +341,13 @@ public class ClienteDAO {
 	
 	public static boolean deleteAndDissociate(database.Cliente cliente, org.orm.PersistentSession session)throws PersistentException {
 		try {
-			database.Importancia[] lImportanciass = cliente.importancias.toArray();
-			for(int i = 0; i < lImportanciass.length; i++) {
-				lImportanciass[i].setCliente(null);
-			}
 			database.Peso[] lPesoss = cliente.pesos.toArray();
 			for(int i = 0; i < lPesoss.length; i++) {
 				lPesoss[i].setCliente(null);
+			}
+			database.Valor[] lValorss = cliente.valors.toArray();
+			for(int i = 0; i < lValorss.length; i++) {
+				lValorss[i].setCliente(null);
 			}
 			try {
 				session.delete(cliente);

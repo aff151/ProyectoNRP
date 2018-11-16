@@ -6,12 +6,13 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import org.orm.PersistentException;
 
 import database.BD_Clientes;
-import database.BD_Importancia;
+import database.BD_Peso;
 import database.Cliente;
 
 import javax.swing.JLabel;
@@ -36,10 +37,12 @@ public class AnadirClientes extends JFrame {
 
 	private DefaultListModel<String> modelo;
 	BD_Clientes bdCliente = new BD_Clientes();
-	BD_Importancia bdimp = new BD_Importancia();
+	BD_Peso bdimp = new BD_Peso();
 	private List<Cliente> listaClientes;
 	private JList listClientes;
 	public static String cliSeleccionado = "";
+	private JScrollPane scrollLista;
+
 
 	/**
 	 * Launch the application.
@@ -73,10 +76,12 @@ public class AnadirClientes extends JFrame {
 		 */
 		modelo = new DefaultListModel<String>();
 		listClientes = new JList();
-		listClientes.setBounds(52, 65, 141, 226);
 		listClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollLista = new JScrollPane();
+		scrollLista.setBounds(52, 65, 141, 226);
+	    scrollLista.setViewportView(listClientes);
 
-		contentPane.add(listClientes);
+		contentPane.add(scrollLista);
 		/////////////////////////////////////////////////////////////
 		JButton btnAgregar = new JButton("Agregar ");
 		btnAgregar.addActionListener(new ActionListener() {

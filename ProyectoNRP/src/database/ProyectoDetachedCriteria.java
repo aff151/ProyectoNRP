@@ -8,7 +8,7 @@
  */
 
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -23,8 +23,8 @@ public class ProyectoDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final StringExpression nombre;
 	public final StringExpression descripcion;
 	public final CollectionExpression proyReqs;
-	public final CollectionExpression importancias;
 	public final CollectionExpression pesos;
+	public final CollectionExpression valors;
 	
 	public ProyectoDetachedCriteria() {
 		super(database.Proyecto.class, database.ProyectoCriteria.class);
@@ -32,8 +32,8 @@ public class ProyectoDetachedCriteria extends AbstractORMDetachedCriteria {
 		nombre = new StringExpression("nombre", this.getDetachedCriteria());
 		descripcion = new StringExpression("descripcion", this.getDetachedCriteria());
 		proyReqs = new CollectionExpression("ORM_proyReqs", this.getDetachedCriteria());
-		importancias = new CollectionExpression("ORM_importancias", this.getDetachedCriteria());
 		pesos = new CollectionExpression("ORM_pesos", this.getDetachedCriteria());
+		valors = new CollectionExpression("ORM_valors", this.getDetachedCriteria());
 	}
 	
 	public ProyectoDetachedCriteria(DetachedCriteria aDetachedCriteria) {
@@ -42,20 +42,20 @@ public class ProyectoDetachedCriteria extends AbstractORMDetachedCriteria {
 		nombre = new StringExpression("nombre", this.getDetachedCriteria());
 		descripcion = new StringExpression("descripcion", this.getDetachedCriteria());
 		proyReqs = new CollectionExpression("ORM_proyReqs", this.getDetachedCriteria());
-		importancias = new CollectionExpression("ORM_importancias", this.getDetachedCriteria());
 		pesos = new CollectionExpression("ORM_pesos", this.getDetachedCriteria());
+		valors = new CollectionExpression("ORM_valors", this.getDetachedCriteria());
 	}
 	
 	public ProyReqDetachedCriteria createProyReqsCriteria() {
 		return new ProyReqDetachedCriteria(createCriteria("ORM_proyReqs"));
 	}
 	
-	public ImportanciaDetachedCriteria createImportanciasCriteria() {
-		return new ImportanciaDetachedCriteria(createCriteria("ORM_importancias"));
-	}
-	
 	public PesoDetachedCriteria createPesosCriteria() {
 		return new PesoDetachedCriteria(createCriteria("ORM_pesos"));
+	}
+	
+	public ValorDetachedCriteria createValorsCriteria() {
+		return new ValorDetachedCriteria(createCriteria("ORM_valors"));
 	}
 	
 	public Proyecto uniqueProyecto(PersistentSession session) {

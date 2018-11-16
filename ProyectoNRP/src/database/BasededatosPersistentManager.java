@@ -8,7 +8,7 @@
  */
 
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -36,11 +36,11 @@ public class BasededatosPersistentManager extends PersistentManager {
 	@Override
 	public Configuration createConfiguration() {
 		Configuration configuration = new Configuration();
-		configuration.addAnnotatedClass(database.Peso.class);
+		configuration.addAnnotatedClass(database.Valor.class);
 		configuration.addAnnotatedClass(database.Requisito.class);
 		configuration.addAnnotatedClass(database.Proyecto.class);
 		configuration.addAnnotatedClass(database.Cliente.class);
-		configuration.addAnnotatedClass(database.Importancia.class);
+		configuration.addAnnotatedClass(database.Peso.class);
 		configuration.addAnnotatedClass(database.ProyReq.class);
 		configuration.buildMappings();
 		return configuration;

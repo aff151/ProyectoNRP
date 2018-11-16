@@ -8,7 +8,7 @@
  */
 
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -323,9 +323,9 @@ public class RequisitoDAO {
 	
 	public static boolean deleteAndDissociate(database.Requisito requisito)throws PersistentException {
 		try {
-			database.Peso[] lPesoss = requisito.pesos.toArray();
-			for(int i = 0; i < lPesoss.length; i++) {
-				lPesoss[i].setRequisito(null);
+			database.Valor[] lValorss = requisito.valors.toArray();
+			for(int i = 0; i < lValorss.length; i++) {
+				lValorss[i].setRequisito(null);
 			}
 			database.ProyReq[] lProyReqss = requisito.proyReqs.toArray();
 			for(int i = 0; i < lProyReqss.length; i++) {
@@ -341,9 +341,9 @@ public class RequisitoDAO {
 	
 	public static boolean deleteAndDissociate(database.Requisito requisito, org.orm.PersistentSession session)throws PersistentException {
 		try {
-			database.Peso[] lPesoss = requisito.pesos.toArray();
-			for(int i = 0; i < lPesoss.length; i++) {
-				lPesoss[i].setRequisito(null);
+			database.Valor[] lValorss = requisito.valors.toArray();
+			for(int i = 0; i < lValorss.length; i++) {
+				lValorss[i].setRequisito(null);
 			}
 			database.ProyReq[] lProyReqss = requisito.proyReqs.toArray();
 			for(int i = 0; i < lProyReqss.length; i++) {

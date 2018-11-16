@@ -8,7 +8,7 @@
  */
 
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -24,6 +24,7 @@ public class ProyReqCriteria extends AbstractORMCriteria {
 	public final AssociationExpression proyecto;
 	public final IntegerExpression requisitoId;
 	public final AssociationExpression requisito;
+	public final IntegerExpression esfuerzo;
 	
 	public ProyReqCriteria(Criteria criteria) {
 		super(criteria);
@@ -32,6 +33,7 @@ public class ProyReqCriteria extends AbstractORMCriteria {
 		proyecto = new AssociationExpression("ORM_Proyecto", this);
 		requisitoId = new IntegerExpression("ORM_Requisito.null", this);
 		requisito = new AssociationExpression("ORM_Requisito", this);
+		esfuerzo = new IntegerExpression("esfuerzo", this);
 	}
 	
 	public ProyReqCriteria(PersistentSession session) {

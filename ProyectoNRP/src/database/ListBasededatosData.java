@@ -1,5 +1,5 @@
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -9,11 +9,11 @@ public class ListBasededatosData {
 	private static final int ROW_COUNT = 100;
 	
 	public void listTestData() throws PersistentException {
-		System.out.println("Listing Peso...");
-		database.Peso[] databasePesos = database.PesoDAO.listPesoByQuery(null, null);
-		int length = Math.min(databasePesos.length, ROW_COUNT);
+		System.out.println("Listing Valor...");
+		database.Valor[] databaseValors = database.ValorDAO.listValorByQuery(null, null);
+		int length = Math.min(databaseValors.length, ROW_COUNT);
 		for (int i = 0; i < length; i++) {
-			System.out.println(databasePesos[i]);
+			System.out.println(databaseValors[i]);
 		}
 		System.out.println(length + " record(s) retrieved.");
 		
@@ -41,11 +41,11 @@ public class ListBasededatosData {
 		}
 		System.out.println(length + " record(s) retrieved.");
 		
-		System.out.println("Listing Importancia...");
-		database.Importancia[] databaseImportancias = database.ImportanciaDAO.listImportanciaByQuery(null, null);
-		length = Math.min(databaseImportancias.length, ROW_COUNT);
+		System.out.println("Listing Peso...");
+		database.Peso[] databasePesos = database.PesoDAO.listPesoByQuery(null, null);
+		length = Math.min(databasePesos.length, ROW_COUNT);
 		for (int i = 0; i < length; i++) {
-			System.out.println(databaseImportancias[i]);
+			System.out.println(databasePesos[i]);
 		}
 		System.out.println(length + " record(s) retrieved.");
 		
@@ -60,17 +60,17 @@ public class ListBasededatosData {
 	}
 	
 	public void listByCriteria() throws PersistentException {
-		System.out.println("Listing Peso by Criteria...");
-		database.PesoCriteria ldatabasePesoCriteria = new database.PesoCriteria();
+		System.out.println("Listing Valor by Criteria...");
+		database.ValorCriteria ldatabaseValorCriteria = new database.ValorCriteria();
 		// Please uncomment the follow line and fill in parameter(s) 
-		//ldatabasePesoCriteria.ID.eq();
-		ldatabasePesoCriteria.setMaxResults(ROW_COUNT);
-		database.Peso[] databasePesos = ldatabasePesoCriteria.listPeso();
-		int length =databasePesos== null ? 0 : Math.min(databasePesos.length, ROW_COUNT); 
+		//ldatabaseValorCriteria.ID.eq();
+		ldatabaseValorCriteria.setMaxResults(ROW_COUNT);
+		database.Valor[] databaseValors = ldatabaseValorCriteria.listValor();
+		int length =databaseValors== null ? 0 : Math.min(databaseValors.length, ROW_COUNT); 
 		for (int i = 0; i < length; i++) {
-			 System.out.println(databasePesos[i]);
+			 System.out.println(databaseValors[i]);
 		}
-		System.out.println(length + " Peso record(s) retrieved."); 
+		System.out.println(length + " Valor record(s) retrieved."); 
 		
 		System.out.println("Listing Requisito by Criteria...");
 		database.RequisitoCriteria ldatabaseRequisitoCriteria = new database.RequisitoCriteria();
@@ -108,17 +108,17 @@ public class ListBasededatosData {
 		}
 		System.out.println(length + " Cliente record(s) retrieved."); 
 		
-		System.out.println("Listing Importancia by Criteria...");
-		database.ImportanciaCriteria ldatabaseImportanciaCriteria = new database.ImportanciaCriteria();
+		System.out.println("Listing Peso by Criteria...");
+		database.PesoCriteria ldatabasePesoCriteria = new database.PesoCriteria();
 		// Please uncomment the follow line and fill in parameter(s) 
-		//ldatabaseImportanciaCriteria.ID.eq();
-		ldatabaseImportanciaCriteria.setMaxResults(ROW_COUNT);
-		database.Importancia[] databaseImportancias = ldatabaseImportanciaCriteria.listImportancia();
-		length =databaseImportancias== null ? 0 : Math.min(databaseImportancias.length, ROW_COUNT); 
+		//ldatabasePesoCriteria.ID.eq();
+		ldatabasePesoCriteria.setMaxResults(ROW_COUNT);
+		database.Peso[] databasePesos = ldatabasePesoCriteria.listPeso();
+		length =databasePesos== null ? 0 : Math.min(databasePesos.length, ROW_COUNT); 
 		for (int i = 0; i < length; i++) {
-			 System.out.println(databaseImportancias[i]);
+			 System.out.println(databasePesos[i]);
 		}
-		System.out.println(length + " Importancia record(s) retrieved."); 
+		System.out.println(length + " Peso record(s) retrieved."); 
 		
 		System.out.println("Listing ProyReq by Criteria...");
 		database.ProyReqCriteria ldatabaseProyReqCriteria = new database.ProyReqCriteria();

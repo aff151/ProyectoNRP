@@ -9,12 +9,13 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.orm.PersistentException;
 
-import database.BD_Importancia;
+import database.BD_Peso;
 import database.BD_ProyReq;
 import database.BD_Proyectos;
 import database.BD_Requisitos;
@@ -43,7 +44,7 @@ public class ModificarProyecto extends JFrame {
 	private DefaultListModel modelo;
 	private DefaultListModel modelo2;
 	BD_Proyectos bdproy = new BD_Proyectos();
-	BD_Importancia bdimp = new BD_Importancia();
+	BD_Peso bdimp = new BD_Peso();
 	BD_Requisitos bdreq = new BD_Requisitos();
 	BD_ProyReq bdproyreq = new BD_ProyReq();
 	ConsultarProyectos cons = new ConsultarProyectos();
@@ -54,6 +55,8 @@ public class ModificarProyecto extends JFrame {
 	private List<Requisito> listReq;
 	private TextField txtNombreProyecto;
 	private JTextArea tAreaDesc;
+	private JScrollPane scrollLista;
+	private JScrollPane scrollLista2;
 	/**
 	 * Launch the application.
 	 */
@@ -95,18 +98,22 @@ public class ModificarProyecto extends JFrame {
 		contentPane.add(txtNombreProyecto);
 
 		listClientes = new JList();
-		listClientes.setBounds(10, 186, 166, 199);
 		modelo = new DefaultListModel();
+		scrollLista = new JScrollPane();
+		scrollLista.setBounds(10, 186, 166, 199);
+	    scrollLista.setViewportView(listClientes);
 		cargarNombresLista();
 		listClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		contentPane.add(listClientes);
+		contentPane.add(scrollLista);
 
 		listRequisitos = new JList();
-		listRequisitos.setBounds(250, 186, 166, 199);
 		modelo2 = new DefaultListModel();
+		scrollLista2 = new JScrollPane();
+		scrollLista2.setBounds(250, 186, 166, 199);
+	    scrollLista2.setViewportView(listRequisitos);
 		cargarRequisitos();
 		listClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		contentPane.add(listRequisitos);
+		contentPane.add(scrollLista2);
 
 		JLabel lblListaDeClientes = new JLabel("Lista de clientes del proyecto");
 		lblListaDeClientes.setBounds(10, 159, 217, 16);

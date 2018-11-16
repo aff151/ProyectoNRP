@@ -8,7 +8,7 @@
  */
 
 /**
- * Licensee: usuario(University of Almeria)
+ * Licensee: Alfonso(University of Almeria)
  * License Type: Academic
  */
 package database;
@@ -327,13 +327,13 @@ public class ProyectoDAO {
 			for(int i = 0; i < lProyReqss.length; i++) {
 				lProyReqss[i].setProyecto(null);
 			}
-			database.Importancia[] lImportanciass = proyecto.importancias.toArray();
-			for(int i = 0; i < lImportanciass.length; i++) {
-				lImportanciass[i].setProyecto(null);
-			}
 			database.Peso[] lPesoss = proyecto.pesos.toArray();
 			for(int i = 0; i < lPesoss.length; i++) {
 				lPesoss[i].setProyecto(null);
+			}
+			database.Valor[] lValorss = proyecto.valors.toArray();
+			for(int i = 0; i < lValorss.length; i++) {
+				lValorss[i].setProyecto(null);
 			}
 			return delete(proyecto);
 		}
@@ -349,13 +349,13 @@ public class ProyectoDAO {
 			for(int i = 0; i < lProyReqss.length; i++) {
 				lProyReqss[i].setProyecto(null);
 			}
-			database.Importancia[] lImportanciass = proyecto.importancias.toArray();
-			for(int i = 0; i < lImportanciass.length; i++) {
-				lImportanciass[i].setProyecto(null);
-			}
 			database.Peso[] lPesoss = proyecto.pesos.toArray();
 			for(int i = 0; i < lPesoss.length; i++) {
 				lPesoss[i].setProyecto(null);
+			}
+			database.Valor[] lValorss = proyecto.valors.toArray();
+			for(int i = 0; i < lValorss.length; i++) {
+				lValorss[i].setProyecto(null);
 			}
 			try {
 				session.delete(proyecto);

@@ -6,11 +6,12 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import org.orm.PersistentException;
 
-import database.BD_Importancia;
+import database.BD_Peso;
 import database.BD_ProyReq;
 import database.BD_Proyectos;
 import database.BD_Requisitos;
@@ -39,7 +40,7 @@ public class ConsultarProyecto extends JFrame {
 	public static String procedencia="";
 	ConsultarProyectos cons = new ConsultarProyectos();
 	BD_Proyectos bdproy = new BD_Proyectos();
-	BD_Importancia bdimp = new BD_Importancia();
+	BD_Peso bdimp = new BD_Peso();
 	BD_ProyReq bdreq = new BD_ProyReq();
 	private List<Cliente> listCli;
 	private List<Requisito> listReq;
@@ -48,6 +49,9 @@ public class ConsultarProyecto extends JFrame {
 	private JList listClientes;
 	private JList listRequisitos;
 	Proyecto consproy = null;
+	private JScrollPane scrollLista;
+	private JScrollPane scrollLista2;
+
 
 
 
@@ -87,19 +91,23 @@ public class ConsultarProyecto extends JFrame {
 		contentPane.add(lblNombreProyecto);
 
 		listClientes = new JList();
-		listClientes.setBounds(43, 135, 170, 240);
 		modelo = new DefaultListModel();
+		scrollLista = new JScrollPane();
+		scrollLista.setBounds(43, 135, 170, 240);
+	    scrollLista.setViewportView(listClientes);
 		cargarNombresLista();
-		contentPane.add(listClientes);
+		contentPane.add(scrollLista);
 		
 		
 
 
 		listRequisitos = new JList();
-		listRequisitos.setBounds(324, 135, 170, 240);
 		modelo2 = new DefaultListModel();
+		scrollLista2 = new JScrollPane();
+		scrollLista2.setBounds(324, 135, 170, 240);
+	    scrollLista2.setViewportView(listRequisitos);
 		cargarRequisitos();
-		contentPane.add(listRequisitos);
+		contentPane.add(scrollLista2);
 
 		JLabel lblListaDeClientes = new JLabel("Lista de clientes del proyecto");
 		lblListaDeClientes.setBounds(42, 108, 217, 16);

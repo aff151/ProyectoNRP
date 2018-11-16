@@ -7,14 +7,18 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
 import org.orm.PersistentException;
 
-import database.BD_Importancia;
+import database.BD_Peso;
 import database.BD_ProyReq;
 import database.BD_Proyectos;
+import database.BD_Valor;
 import database.Cliente;
+import database.Peso;
 import database.Proyecto;
 import database.Requisito;
 
@@ -35,18 +39,29 @@ import javax.swing.JTextField;
 public class ConsultarCliente extends JFrame {
 
 	private JPanel contentPane;
-	public static String procedencia="";
+	public static String procedencia = "";
 	BD_Proyectos bdproy = new BD_Proyectos();
-	BD_Importancia bdimp = new BD_Importancia();
+	BD_Peso bdimp = new BD_Peso();
+
 	BD_ProyReq bdproyreq = new BD_ProyReq();
+	BD_Valor bdvalor = new BD_Valor();
 	private JTextField textFieldDescripcion;
-	private List<Proyecto> listProy;
 	private List<Requisito> listReq;
 	private DefaultListModel modelo;
 	private DefaultListModel modelo1;
 	private JList listProyectos;
 	private JList listRequisitos;
-
+	private JScrollPane scrollLista;
+	private JScrollPane scrollLista2;
+	////////////////////////////////////////
+	// TABLA
+	///////////////////////////////////////
+	private JTable tabla;
+	private JScrollPane panelScroll;
+	private String titColumna[];
+	private String datoColumna[][];
+	private List<Peso> listPeso;
+	private List<Proyecto> listProy;
 
 	/**
 	 * Launch the application.
@@ -65,55 +80,71 @@ public class ConsultarCliente extends JFrame {
 	}
 
 	/**
-	 * Create the frame. 
+	 * Create the frame.
 	 */
 	public ConsultarCliente() {
-		
-		inicializar();
-		
-				JButton btnAtrs = new JButton("Atrás");
-				btnAtrs.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						if (procedencia == "ConsultarRequisito") {
-							ConsultarRequisito consultarRequisito = new ConsultarRequisito();
-							consultarRequisito.setVisible(true);
-						} else if (procedencia == "ConsultarClientes") {
-							ConsultarClientes consultarClientes = new ConsultarClientes();
-							consultarClientes.setVisible(true);
-						}
 
-						dispose();
-					}
-				});
-				btnAtrs.setBounds(194, 359, 117, 29);
-				contentPane.add(btnAtrs);
-		
+		inicializar();
+
+		JButton btnAtrs = new JButton("Atrás");
+		btnAtrs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (procedencia == "ConsultarRequisito") {
+					ConsultarRequisito consultarRequisito = new ConsultarRequisito();
+					consultarRequisito.setVisible(true);
+				} else if (procedencia == "ConsultarClientes") {
+					ConsultarClientes consultarClientes = new ConsultarClientes();
+					consultarClientes.setVisible(true);
+				}
+
+				dispose();
+			}
+		});
+		btnAtrs.setBounds(194, 359, 117, 29);
+		contentPane.add(btnAtrs);
+
 		JLabel lblNombreCliente = new JLabel(ConsultarClientes.cliSeleccionado);
 		lblNombreCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreCliente.setBounds(160, 21, 174, 16);
 		contentPane.add(lblNombreCliente);
 
-		listProyectos = new JList();
-		listProyectos.setBounds(10, 99, 170, 240);
-		listProyectos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		modelo = new DefaultListModel();
-		cargarProyectosCliente();
-		contentPane.add(listProyectos);
-		
+		///////////////////////////////////////////////////
+		//// TABLA
+		///////////////////////////////////////////////////
+		// Creamos las columnas y las cargamos con los datos que van a
+		// aparecer en la pantalla
+		CreaColumnas();
+		CargaDatos();
+		// Creamos una instancia del componente Swing
+		tabla = new JTable(datoColumna, titColumna);
+		// Aquí se configuran algunos de los parámetros que permite
+		// variar la JTable
+		tabla.setRowSelectionAllowed(true);
+		tabla.setColumnSelectionAllowed(true);
+		// Incorporamos la tabla a un panel que incorpora ya una barra
+		// de desplazamiento, para que la visibilidad de la tabla sea
+		// automática
+		panelScroll = new JScrollPane(tabla);
+		panelScroll.setSize(170, 240);
+		panelScroll.setLocation(10, 99);
+		getContentPane().add(panelScroll, BorderLayout.CENTER);
+		contentPane.add(panelScroll);
+
 		listRequisitos = new JList();
-		listRequisitos.setBounds(324, 99, 170, 240);
 		modelo1 = new DefaultListModel();
-		contentPane.add(listRequisitos);
+		scrollLista2 = new JScrollPane();
+		scrollLista2.setBounds(324, 99, 170, 240);
+		scrollLista2.setViewportView(listRequisitos);
+		contentPane.add(scrollLista2);
 
 		JLabel lblListaDeProyectos = new JLabel("Lista de proyectos del cliente");
 		lblListaDeProyectos.setBounds(10, 60, 217, 16);
 		contentPane.add(lblListaDeProyectos);
-		
 
 		JLabel lblListaDeRequisitos = new JLabel("Lista de requisitos del proyecto");
 		lblListaDeRequisitos.setBounds(324, 60, 217, 16);
 		contentPane.add(lblListaDeRequisitos);
-		
+
 		JButton btnVerRequisitos = new JButton("Ver\r\n requisitos");
 		btnVerRequisitos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -123,25 +154,42 @@ public class ConsultarCliente extends JFrame {
 				} else {
 					modelo1.clear();
 					listRequisitos.setModel(modelo1);
-					cargarRequisitosProyecto(listProyectos.getSelectedValue().toString());
+					cargarRequisitosClienteProyecto(listProyectos.getSelectedValue().toString(),
+							ConsultarClientes.cliSeleccionado);
 				}
 			}
 		});
 		btnVerRequisitos.setBounds(193, 197, 118, 29);
 		contentPane.add(btnVerRequisitos);
 	}
-	
-	private void cargarProyectosCliente() {
+
+	// Creamos las etiquetas que sirven de título a cada una de
+	// las columnas de la tabla
+	public void CreaColumnas() {
+		titColumna = new String[2];
+		titColumna[0] = "Nombre";
+		titColumna[1] = "Peso";
+
+	}
+
+	// Creamos los datos para cada uno de los elementos de la tabla
+	public void CargaDatos() {
 		try {
 			listProy = bdimp.cargarProyectosCliente(ConsultarClientes.cliSeleccionado);
+			listPeso = bdimp.cargarPesosProyectosCliente(ConsultarClientes.cliSeleccionado);
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for(Proyecto p : listProy) {
-			modelo.addElement(p.getNombre());
-			listProyectos.setModel(modelo);
+		datoColumna = new String[listProy.size()][2];
+
+		for (int i = 0; i < listProy.size(); i++) {
+			datoColumna[i][0] = listProy.get(i).getNombre();
 		}
+		for (int j = 0; j < listProy.size(); j++) {
+			datoColumna[j][1] = "" + listPeso.get(j);
+		}
+
 	}
 
 	public void inicializar() {
@@ -156,10 +204,10 @@ public class ConsultarCliente extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 	}
-	
-	public void cargarRequisitosProyecto(String proyecto) {
+
+	public void cargarRequisitosClienteProyecto(String proyecto, String cliente) {
 		try {
-			listReq = bdproyreq.cargarRequisitosProyecto(proyecto);
+			listReq = bdvalor.cargarRequisitosClienteProyecto(proyecto, cliente);
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
