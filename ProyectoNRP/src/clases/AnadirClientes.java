@@ -89,7 +89,7 @@ public class AnadirClientes extends JFrame {
 
 				// HAY QUE DARLE UNA REVISION A ESTO QUE NO TENGO GNAS DE PENSAR Q ES TARDE
 				if (listClientes.isSelectionEmpty() || txtImportancia.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Debe de seleccionar un cliente e introducir su importancia",
+					JOptionPane.showMessageDialog(null, "Debe de seleccionar un cliente e introducir su peso",
 							"MENSAJE", JOptionPane.WARNING_MESSAGE);
 				} else {
 					try {
@@ -110,13 +110,13 @@ public class AnadirClientes extends JFrame {
 
 							if (isDigit == false) {
 								JOptionPane.showMessageDialog(null,
-										"La importancia debe ser un número entero positivo o cero", "MENSAJE",
+										"El peso debe ser un número entre 0 y 5", "MENSAJE",
 										JOptionPane.WARNING_MESSAGE);
 							} else {
 								int importancia = Integer.parseInt(txtImportancia.getText());
-								if (importancia < 0) {
+								if (importancia < 0||importancia>5) {
 									JOptionPane.showMessageDialog(null,
-											"La importancia debe ser un número entero positivo o cero", "MENSAJE",
+											"El peso debe ser un número entre 0 y 5", "MENSAJE",
 											JOptionPane.WARNING_MESSAGE);
 								} else {
 									bdCliente.asignaClienteProyecto(listClientes.getSelectedValue().toString(),
@@ -153,13 +153,16 @@ public class AnadirClientes extends JFrame {
 				dispose();
 			}
 		});
-		btnAtrs.setBounds(137, 340, 62, 29);
+		btnAtrs.setBounds(33, 329, 62, 29);
 		contentPane.add(btnAtrs);
 
 		txtImportancia = new JTextField();
 		txtImportancia.setBounds(33, 303, 86, 26);
 		contentPane.add(txtImportancia);
 		txtImportancia.setColumns(10);
+		
+		TextPrompt placeholder = new TextPrompt("Peso", txtImportancia);
+		placeholder.changeAlpha(0.75f);
 		
 		JButton btnCrearCliente = new JButton("Crear Cliente");
 		btnCrearCliente.addActionListener(new ActionListener() {
@@ -171,7 +174,7 @@ public class AnadirClientes extends JFrame {
 				//dispose();
 			}
 		});
-		btnCrearCliente.setBounds(18, 340, 117, 29);
+		btnCrearCliente.setBounds(88, 329, 117, 29);
 		contentPane.add(btnCrearCliente);
 		cargarClientes();
 	}

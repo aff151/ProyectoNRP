@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
 import org.orm.PersistentException;
@@ -16,6 +17,7 @@ import database.BD_ProyReq;
 import database.BD_Proyectos;
 import database.BD_Requisitos;
 import database.Cliente;
+import database.Peso;
 import database.Proyecto;
 import database.Requisito;
 
@@ -52,6 +54,14 @@ public class ConsultarProyecto extends JFrame {
 	private JScrollPane scrollLista;
 	private JScrollPane scrollLista2;
 
+////////////////////////////////////////
+// TABLA
+///////////////////////////////////////
+private JTable tabla;
+private JScrollPane panelScroll;
+private String titColumna[];
+private String datoColumna[][];
+private List<Peso> listPeso;
 
 
 
@@ -90,6 +100,31 @@ public class ConsultarProyecto extends JFrame {
 		lblNombreProyecto.setBounds(196, 21, 174, 16);
 		contentPane.add(lblNombreProyecto);
 
+/*		
+///////////////////////////////////////////////////
+//// TABLA
+///////////////////////////////////////////////////
+// Creamos las columnas y las cargamos con los datos que van a
+// aparecer en la pantalla
+CreaColumnas();
+CargaDatos();
+// Creamos una instancia del componente Swing
+tabla = new JTable(datoColumna, titColumna);
+// Aquí se configuran algunos de los parámetros que permite
+// variar la JTable
+tabla.setRowSelectionAllowed(true);
+tabla.setColumnSelectionAllowed(true);
+// Incorporamos la tabla a un panel que incorpora ya una barra
+// de desplazamiento, para que la visibilidad de la tabla sea
+// automática
+panelScroll = new JScrollPane(tabla);
+panelScroll.setSize(170, 240);
+panelScroll.setLocation(42, 136);
+getContentPane().add(panelScroll, BorderLayout.CENTER);
+contentPane.add(panelScroll);*/
+		
+		
+		
 		listClientes = new JList();
 		modelo = new DefaultListModel();
 		scrollLista = new JScrollPane();
@@ -97,6 +132,12 @@ public class ConsultarProyecto extends JFrame {
 	    scrollLista.setViewportView(listClientes);
 		cargarNombresLista();
 		contentPane.add(scrollLista);
+		
+		
+		
+		
+		
+		
 		
 		
 
@@ -148,6 +189,34 @@ public class ConsultarProyecto extends JFrame {
 		textArea.setBackground(getForeground());
 		contentPane.add(textArea);
 	}
+	// Creamos las etiquetas que sirven de título a cada una de
+		// las columnas de la tabla
+		public void CreaColumnas() {
+			titColumna = new String[2];
+			titColumna[0] = "Nombre";
+			titColumna[1] = "Peso";
+
+		}
+
+		// Creamos los datos para cada uno de los elementos de la tabla
+		public void CargaDatos() {
+			try {
+				listCli = bdimp.cargarClientesProyecto(consproy.getNombre());
+				listPeso = bdimp.cargarPesosProyectosCliente(ConsultarClientes.cliSeleccionado);
+			} catch (PersistentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			datoColumna = new String[listCli.size()][2];
+
+			for (int i = 0; i < listCli.size(); i++) {
+				datoColumna[i][0] = listCli.get(i).getNombre();
+			}
+			for (int j = 0; j < listCli.size(); j++) {
+				datoColumna[j][1] = "" + listPeso.get(j);
+			}
+
+		}
 	
 	private void cargarNombresLista() {
 		try {

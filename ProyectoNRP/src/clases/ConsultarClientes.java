@@ -81,6 +81,7 @@ public class ConsultarClientes extends JFrame {
 
 		
 		JButton btnConsultar = new JButton("Consultar");
+		btnConsultar.setBackground(new Color(30, 144, 255));
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (listClientes.isSelectionEmpty()) {
@@ -95,7 +96,7 @@ public class ConsultarClientes extends JFrame {
 				}
 			}
 		});
-		btnConsultar.setBounds(46, 217, 117, 29);
+		btnConsultar.setBounds(85, 218, 105, 29);
 		contentPane.add(btnConsultar);
 
 		JButton btnAtrs = new JButton("Atrás");
@@ -106,7 +107,7 @@ public class ConsultarClientes extends JFrame {
 				dispose();
 			}
 		});
-		btnAtrs.setBounds(46, 257, 117, 29);
+		btnAtrs.setBounds(24, 218, 67, 29);
 		contentPane.add(btnAtrs);
 	}
 
@@ -114,9 +115,9 @@ public class ConsultarClientes extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 219, 326);
+		setBounds(100, 100, 219, 283);
 		setLocationRelativeTo(null);
-		// setTitle("Programa para gestión de requisitos");
+		//setTitle("Consultar Clientes");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

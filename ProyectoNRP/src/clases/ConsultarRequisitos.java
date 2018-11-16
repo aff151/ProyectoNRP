@@ -14,8 +14,10 @@ import javax.swing.border.EmptyBorder;
 import org.orm.PersistentException;
 
 import database.BD_Proyectos;
+import database.BD_Requisitos;
 import database.Cliente;
 import database.Proyecto;
+import database.Requisito;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -28,16 +30,16 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
-public class ConsultarProyectos extends JFrame {
+public class ConsultarRequisitos extends JFrame {
 
 	private JPanel contentPane;
 	public static String procedencia = "";
 	public static String proySeleccionado = "";
-	private List<Proyecto> listPro;
+	private List<Requisito> listReq;
 	private DefaultListModel<String> modelo;
 	private JList listProyectos;
 	private JScrollPane scrollLista;
-	BD_Proyectos bdProy = new BD_Proyectos();
+	BD_Requisitos bdProy = new BD_Requisitos();
 
 	/**
 	 * Launch the application.
@@ -46,7 +48,7 @@ public class ConsultarProyectos extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ConsultarProyectos frame = new ConsultarProyectos();
+					ConsultarRequisitos frame = new ConsultarRequisitos();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -58,11 +60,11 @@ public class ConsultarProyectos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ConsultarProyectos() {
+	public ConsultarRequisitos() {
 
 		inicializar();
 
-		JLabel lblNewLabel = new JLabel("Seleccionar Proyecto");
+		JLabel lblNewLabel = new JLabel("Seleccionar Requisito");
 		lblNewLabel.setBounds(30, 10, 150, 14);
 		contentPane.add(lblNewLabel);
 
@@ -80,38 +82,22 @@ public class ConsultarProyectos extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				if (listProyectos.isSelectionEmpty()) {
-					JOptionPane.showMessageDialog(null, "Debe seleccionar un proyecto", "MENSAJE",
+					JOptionPane.showMessageDialog(null, "Debe seleccionar un requisito", "MENSAJE",
 							JOptionPane.WARNING_MESSAGE);
 				} else {
 					proySeleccionado = listProyectos.getSelectedValue().toString();
-					ConsultarProyecto consultarproyecto = new ConsultarProyecto();
-					consultarproyecto.setVisible(true);
-					ConsultarProyecto.procedencia = "ConsultarProyectos";
+					ConsultarRequisito Consultarrequisito = new ConsultarRequisito();
+					ConsultarRequisito.nombrerequisito=proySeleccionado;
+					Consultarrequisito.setVisible(true);
+					ConsultarRequisito.procedencia = "ConsultarRequisitos";
+					
 					dispose();
 				}
 
 			}
 		});
-		btnConsultarProyecto.setBounds(6, 195, 94, 23);
+		btnConsultarProyecto.setBounds(83, 198, 87, 23);
 		contentPane.add(btnConsultarProyecto);
-
-		JButton btnModificarProyecto = new JButton("Modificar");
-		btnModificarProyecto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (listProyectos.isSelectionEmpty()) {
-					JOptionPane.showMessageDialog(null, "Debe seleccionar un proyecto", "MENSAJE",
-							JOptionPane.WARNING_MESSAGE);
-				} else {
-					proySeleccionado = listProyectos.getSelectedValue().toString();
-					ModificarProyecto modificarProyecto = new ModificarProyecto();
-					modificarProyecto.setVisible(true);
-					modificarProyecto.procedencia = "ConsultarProyectos";
-					dispose();
-				}
-			}
-		});
-		btnModificarProyecto.setBounds(92, 195, 94, 23);
-		contentPane.add(btnModificarProyecto);
 
 		JButton btnAtrs = new JButton("Atrás");
 		btnAtrs.addActionListener(new ActionListener() {
@@ -119,39 +105,36 @@ public class ConsultarProyectos extends JFrame {
 				if (procedencia == "menu") {
 					Menu menu = new Menu();
 					menu.setVisible(true);
-				} else if (procedencia == "ConsultarProyecto") {
-					ConsultarProyecto consultarProyecto = new ConsultarProyecto();
-					consultarProyecto.setVisible(true);
 				}
 				dispose();
 			}
 		});
-		btnAtrs.setBounds(6, 230, 71, 29);
+		btnAtrs.setBounds(21, 195, 71, 29);
 		contentPane.add(btnAtrs);
-		cargarProyectos();
+		cargarRequisitos();
 	}
 
 	public void inicializar() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 192, 292);
+		setBounds(100, 100, 192, 258);
 		setLocationRelativeTo(null);
-		//setTitle("Consultar Proyectos");
+		//setTitle("Consultar Requisitos");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 	}
 
-	public void cargarProyectos() {
+	public void cargarRequisitos() {
 		try {
-			listPro = bdProy.cargarProyectos();
+			listReq = bdProy.cargarRequisitos();
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (Proyecto c : listPro) {
+		for (Requisito c : listReq) {
 			modelo.addElement(c.getNombre());
 			listProyectos.setModel(modelo);
 		}

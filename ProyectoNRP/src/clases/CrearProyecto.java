@@ -2,6 +2,7 @@ package clases;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +28,7 @@ import database.BD_Proyectos;
 import database.Cliente;
 
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 
 public class CrearProyecto extends JFrame {
 
@@ -74,15 +76,19 @@ public class CrearProyecto extends JFrame {
 		});
 		
 		tAreaDesc = new JTextArea();
-		tAreaDesc.setBounds(247, 69, 175, 74);
+		tAreaDesc.setBounds(10, 58, 175, 74);
 		tAreaDesc.setLineWrap(true);
 		tAreaDesc.setWrapStyleWord(true);
 		contentPane.add(tAreaDesc);
+		btnAtras.setBounds(10, 140, 62, 29);
 		
-		JLabel lblDescripcion = new JLabel("Descripción");
-		lblDescripcion.setBounds(163, 74, 74, 14);
-		contentPane.add(lblDescripcion);
-		btnAtras.setBounds(10, 182, 125, 29);
+		TextPrompt placeholder = new TextPrompt("Descripción del proyecto", tAreaDesc);
+		placeholder.setVerticalAlignment(SwingConstants.TOP);
+		placeholder.changeAlpha(0.75f);
+		
+		placeholder.changeStyle(Font.ITALIC);
+		
+		
 		contentPane.add(btnAtras);
 		
 		JButton btnCrearProyecto = new JButton("Crear Proyecto");
@@ -91,17 +97,17 @@ public class CrearProyecto extends JFrame {
 				crearProyecto();
 			}
 		});
-		btnCrearProyecto.setBounds(297, 182, 125, 29);
+		btnCrearProyecto.setBounds(73, 140, 125, 29);
 		contentPane.add(btnCrearProyecto);
 		
 		textFNombre = new JTextField();
-		textFNombre.setBounds(247, 20, 175, 26);
+		textFNombre.setBounds(10, 20, 175, 26);
 		contentPane.add(textFNombre);
 		textFNombre.setColumns(10);
+		TextPrompt placeholder1 = new TextPrompt("Nombre del proyecto", textFNombre);
+		placeholder1.changeAlpha(0.75f);
+		placeholder1.changeStyle(Font.ITALIC);
 		
-		JLabel lblIntrodProyecto = new JLabel("Introduce el nombre del nuevo proyecto");
-		lblIntrodProyecto.setBounds(10, 25, 237, 16);
-		contentPane.add(lblIntrodProyecto);
 		
 		/*listClientes = new JList();
 		listClientes.setBackground(Color.WHITE);
@@ -132,9 +138,9 @@ public class CrearProyecto extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 454, 262);
+		setBounds(100, 100, 216, 199);
 		setLocationRelativeTo(null);
-		//setTitle("Programa para gestión de requisitos");
+		setTitle("Crear Proyecto");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

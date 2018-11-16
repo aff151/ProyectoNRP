@@ -100,7 +100,7 @@ public class ConsultarCliente extends JFrame {
 				dispose();
 			}
 		});
-		btnAtrs.setBounds(194, 359, 117, 29);
+		btnAtrs.setBounds(33, 351, 69, 29);
 		contentPane.add(btnAtrs);
 
 		JLabel lblNombreCliente = new JLabel(ConsultarClientes.cliSeleccionado);

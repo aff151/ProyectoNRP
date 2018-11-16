@@ -51,16 +51,17 @@ public class AsignarProyectos extends JFrame {
 		
 		txtPeso = new JTextField();
 		txtPeso.setText("Peso");
-		txtPeso.setBounds(34, 216, 46, 26);
+		txtPeso.setBounds(34, 216, 66, 26);
 		contentPane.add(txtPeso);
 		txtPeso.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Asignar");
-		btnNewButton.setBounds(82, 216, 117, 29);
-		contentPane.add(btnNewButton);
-		
-		JButton btnAsignarProyectos = new JButton("Asignar Proyectos");
-		btnAsignarProyectos.setBounds(34, 245, 155, 29);
+		JButton btnAsignarProyectos = new JButton("Asignar");
+		btnAsignarProyectos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnAsignarProyectos.setBounds(102, 216, 75, 29);
 		contentPane.add(btnAsignarProyectos);
 		
 		JButton button = new JButton("Atrás");
@@ -71,7 +72,7 @@ public class AsignarProyectos extends JFrame {
 				dispose();
 			}
 		});
-		button.setBounds(130, 279, 69, 29);
+		button.setBounds(39, 243, 69, 29);
 		contentPane.add(button);
 	}
 	
@@ -79,9 +80,9 @@ public class AsignarProyectos extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 223, 336);
+		setBounds(100, 100, 223, 307);
 		setLocationRelativeTo(null);
-		//setTitle("Programa para gestión de requisitos");
+		setTitle("Asignar Proyectos");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

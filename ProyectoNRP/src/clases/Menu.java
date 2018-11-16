@@ -48,7 +48,7 @@ public class Menu extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 368, 323);
+		setBounds(100, 100, 368, 311);
 		setLocationRelativeTo(null);
 		setTitle("Programa para gestión de requisitos");
 		contentPane = new JPanel();
@@ -78,7 +78,7 @@ public class Menu extends JFrame {
 				dispose();
 			}
 		});
-		consultarClientes.setBounds(79, 115, 220, 29);
+		consultarClientes.setBounds(79, 88, 220, 29);
 		contentPane.add(consultarClientes);
 		
 		JButton crearProyecto = new JButton("Crear Proyecto");
@@ -90,7 +90,7 @@ public class Menu extends JFrame {
 			}
 		});
 		
-		crearProyecto.setBounds(79, 169, 220, 29);
+		crearProyecto.setBounds(79, 129, 220, 29);
 		contentPane.add(crearProyecto);
 		
 		JButton consultarProyectos = new JButton("Consultar Proyectos");
@@ -102,12 +102,32 @@ public class Menu extends JFrame {
 				dispose();
 			}
 		});
-		consultarProyectos.setBounds(79, 226, 220, 29);
+		consultarProyectos.setBounds(79, 158, 220, 29);
 		contentPane.add(consultarProyectos);
 		
 		JLabel lblInicioDeLa = new JLabel("Inicio de la Aplicación");
 		lblInicioDeLa.setBackground(Color.RED);
 		lblInicioDeLa.setBounds(128, 22, 139, 16);
 		contentPane.add(lblInicioDeLa);
+		
+		JButton btnConsultarRequisitos = new JButton("Consultar Requisitos");
+		btnConsultarRequisitos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultarRequisitos Consultarrequisitos = new ConsultarRequisitos();
+				Consultarrequisitos.setVisible(true);
+				Consultarrequisitos.procedencia="menu";
+				dispose();
+			}
+		});
+		btnConsultarRequisitos.setBounds(79, 224, 220, 29);
+		contentPane.add(btnConsultarRequisitos);
+		
+		JButton btnPlanificacin = new JButton("Planificación");
+		btnPlanificacin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnPlanificacin.setBounds(79, 196, 220, 29);
+		contentPane.add(btnPlanificacin);
 	}
 }

@@ -31,6 +31,7 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -71,7 +72,7 @@ public class CrearCliente extends JFrame {
 		modelo = new DefaultListModel();
 
 		JButton crearClienteBoton = new JButton("Crear Cliente");
-		crearClienteBoton.setBounds(150, 107, 117, 29);
+		crearClienteBoton.setBounds(104, 51, 117, 29);
 		contentPane.add(crearClienteBoton);
 
 		/////////////////////////////////////
@@ -83,7 +84,7 @@ public class CrearCliente extends JFrame {
 		//////////////////////////////
 
 		JButton volverInicio = new JButton("Atrás");
-		volverInicio.setBounds(23, 107, 117, 29);
+		volverInicio.setBounds(14, 51, 66, 29);
 		contentPane.add(volverInicio);
 
 		volverInicio.addActionListener(new ActionListener() {
@@ -103,23 +104,22 @@ public class CrearCliente extends JFrame {
 			}
 		});
 
-		JLabel lblIntroduceElNombre = new JLabel("Introduce el nombre del nuevo cliente");
-		lblIntroduceElNombre.setBounds(23, 33, 245, 16);
-		contentPane.add(lblIntroduceElNombre);
 
 		nombreTexttField = new JTextField();
-		nombreTexttField.setBounds(22, 60, 245, 26);
+		nombreTexttField.setBounds(14, 14, 200, 30);
 		contentPane.add(nombreTexttField);
 		nombreTexttField.setColumns(10);
+		TextPrompt placeholder = new TextPrompt("Nombre del cliente", nombreTexttField);
+		placeholder.changeAlpha(0.75f);
 	}
 
 	public void inicializar() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 302, 191);
+		setBounds(100, 100, 233, 117);
 		setLocationRelativeTo(null);
-		setTitle("Crear nuevo cliente");
+		setTitle("Crear Cliente");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
