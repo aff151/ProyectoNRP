@@ -113,9 +113,9 @@ public class Menu extends JFrame {
 		JButton btnConsultarRequisitos = new JButton("Consultar Requisitos");
 		btnConsultarRequisitos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ConsultarRequisitos Consultarrequisitos = new ConsultarRequisitos();
-				Consultarrequisitos.setVisible(true);
-				Consultarrequisitos.procedencia="menu";
+				ConsultarRequisito Consultarrequisito = new ConsultarRequisito();
+				Consultarrequisito.setVisible(true);
+				Consultarrequisito.procedencia="menu";
 				dispose();
 			}
 		});
@@ -125,6 +125,9 @@ public class Menu extends JFrame {
 		JButton btnPlanificacin = new JButton("Planificación");
 		btnPlanificacin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ConsultarProyectosPlanificacion consultarPlan = new ConsultarProyectosPlanificacion();
+				consultarPlan.setVisible(true);
+				dispose();
 			}
 		});
 		btnPlanificacin.setBounds(79, 196, 220, 29);

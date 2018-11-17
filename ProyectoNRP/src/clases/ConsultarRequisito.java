@@ -6,11 +6,21 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+
+import org.orm.PersistentException;
+
+import database.BD_Requisitos;
+import database.Requisito;
+
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class ConsultarRequisito extends JFrame {
@@ -18,6 +28,13 @@ public class ConsultarRequisito extends JFrame {
 	private JPanel contentPane;
 	public static String procedencia = "";
 	public static String nombrerequisito = "";
+	private JList listRequisitos_1;
+	private List<Requisito> listReq;
+	private DefaultListModel<String> modelo;
+	private JScrollPane scrollLista;
+	BD_Requisitos bdReq = new BD_Requisitos();
+	private JList listRequisitos;
+
 
 	/**
 	 * Launch the application.
@@ -42,55 +59,37 @@ public class ConsultarRequisito extends JFrame {
 
 		inicializar();
 
-		JList list = new JList();
-		list.setBounds(61, 84, 156, 216);
-		contentPane.add(list);
+		modelo = new DefaultListModel<String>();
+
+		listRequisitos_1 = new JList();
+		listRequisitos_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollLista = new JScrollPane();
+		scrollLista.setBounds(31, 83, 156, 248);
+		scrollLista.setViewportView(listRequisitos_1);
+		contentPane.add(scrollLista);
+		cargarRequisitos();
+
 
 		JList list_1 = new JList();
-		list_1.setBounds(304, 84, 143, 216);
+		list_1.setBounds(337, 84, 156, 248);
 		contentPane.add(list_1);
 
-		JButton btnConsultarProyecto = new JButton("Consultar Proyecto");
-		btnConsultarProyecto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ConsultarProyecto consultarProyecto = new ConsultarProyecto();
-				consultarProyecto.setVisible(true);
-				consultarProyecto.procedencia = "ConsultarRequisito";
-				dispose();
-			}
-		});
-		btnConsultarProyecto.setBounds(61, 318, 156, 23);
-		contentPane.add(btnConsultarProyecto);
+		
 
-		JButton btnConsultarCliente = new JButton("Consultar Cliente");
-		btnConsultarCliente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ConsultarCliente consultarCliente = new ConsultarCliente();
-				consultarCliente.setVisible(true);
-				consultarCliente.procedencia = "ConsultarRequisito";
-				dispose();
-			}
-		});
-		btnConsultarCliente.setBounds(314, 318, 133, 23);
-		contentPane.add(btnConsultarCliente);
+		JLabel lblListaDeRequisitos = new JLabel("Lista de TODOS los requisitos");
+		lblListaDeRequisitos.setBounds(21, 50, 196, 14);
+		contentPane.add(lblListaDeRequisitos);
 
-		JLabel lblListaDeProyectos = new JLabel("Lista de Proyectos Asociados");
-		lblListaDeProyectos.setBounds(52, 50, 196, 14);
+		JLabel lblListaDeProyectos = new JLabel("Lista de Proyectos que lo contienen");
+		lblListaDeProyectos.setBounds(294, 50, 231, 14);
 		contentPane.add(lblListaDeProyectos);
-
-		JLabel lblListaDeClientes = new JLabel("Lista de Clientes Asociados");
-		lblListaDeClientes.setBounds(294, 50, 189, 14);
-		contentPane.add(lblListaDeClientes);
 
 		JButton btnAtrs = new JButton("Atrás");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (procedencia == "ConsultarCliente") {
-					ConsultarCliente consultarCliente = new ConsultarCliente();
-					consultarCliente.setVisible(true);
-				}else if(procedencia=="ConsultarRequisitos") {
-					ConsultarRequisitos ConsultarRequisito = new ConsultarRequisitos();
-					ConsultarRequisito.setVisible(true);
+				if (procedencia == "menu") {
+					Menu menu = new Menu();
+					menu.setVisible(true);
 				}
 				dispose();
 			}
@@ -98,9 +97,11 @@ public class ConsultarRequisito extends JFrame {
 		btnAtrs.setBounds(32, 360, 83, 23);
 		contentPane.add(btnAtrs);
 		
-		JLabel lblNombreRequisito = new JLabel(ConsultarRequisitos.proySeleccionado);
-		lblNombreRequisito.setBounds(198, 17, 189, 14);
-		contentPane.add(lblNombreRequisito);
+		JButton btnVerProyectos = new JButton("Ver Proyectos");
+		btnVerProyectos.setBounds(197, 190, 130, 23);
+		contentPane.add(btnVerProyectos);
+		
+		
 	}
 	
 	public void inicializar() {
@@ -109,11 +110,23 @@ public class ConsultarRequisito extends JFrame {
 		setResizable(false);
 		setBounds(100, 100, 531, 422);
 		setLocationRelativeTo(null);
-		setTitle("Consultar Requisito");
+		setTitle("Consultar Requisitos");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 	}
 
+	public void cargarRequisitos() {
+		try {
+			listReq = bdReq.cargarRequisitos();
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (Requisito c : listReq) {
+			modelo.addElement(c.getNombre());
+			listRequisitos_1.setModel(modelo);
+		}
+	}
 }
