@@ -22,6 +22,7 @@ import database.Peso;
 import database.ProyReq;
 import database.Proyecto;
 import database.Requisito;
+import database.Valor;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -42,7 +43,7 @@ public class ConsultarCliente extends JFrame {
 	private JPanel contentPane;
 	public static String procedencia = "";
 	BD_Proyectos bdproy = new BD_Proyectos();
-	BD_Peso bdimp = new BD_Peso();
+	BD_Peso bdpeso = new BD_Peso();
 
 	BD_ProyReq bdproyreq = new BD_ProyReq();
 	BD_Valor bdvalor = new BD_Valor();
@@ -70,8 +71,7 @@ public class ConsultarCliente extends JFrame {
 	private JScrollPane panelScrollReq;
 	private String titColumnaReq[];
 	private String datoColumnaReq[][];
-	private List<ProyReq> listProyReq;
-	private List<Requisito> listaRequisitos;
+	private List<Valor> listValor;
 	/**
 	 * Launch the application.
 	 */
@@ -125,10 +125,15 @@ public class ConsultarCliente extends JFrame {
 		CreaColumnas();
 		CargaDatos();
 		// Creamos una instancia del componente Swing
-		tabla = new JTable(datoColumna, titColumna);
+		tabla = new JTable(datoColumna, titColumna) { 
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		// Aquí se configuran algunos de los parámetros que permite
 		// variar la JTable
 		tabla.setRowSelectionAllowed(true);
+		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		// Incorporamos la tabla a un panel que incorpora ya una barra
 		// de desplazamiento, para que la visibilidad de la tabla sea
 		// automática
@@ -144,8 +149,6 @@ public class ConsultarCliente extends JFrame {
 		CreaColumnasReq();
 		datoColumnaReq = new String[0][0];
 		tablaReq = new JTable(datoColumnaReq, titColumnaReq);
-
-		tablaReq.setRowSelectionAllowed(true);
 		panelScrollReq = new JScrollPane(tablaReq);
 		panelScrollReq.setSize(170, 240);
 		panelScrollReq.setLocation(324, 99);
@@ -167,12 +170,7 @@ public class ConsultarCliente extends JFrame {
 					JOptionPane.showMessageDialog(null, "Debe seleccionar un proyecto", "MENSAJE",
 							JOptionPane.WARNING_MESSAGE);
 				} else {
-					//CreaColumnasReq();
-					CargaDatosReq();
 					creaTablaReq();
-					/*cargarRequisitosClienteProyecto(listProyectos.getSelectedValue().toString(),
-							ConsultarClientes.cliSeleccionado);
-					System.out.println(datoColumna[tabla.getSelectedRow()][0]);*/
 				}
 			}
 		});
@@ -192,8 +190,8 @@ public class ConsultarCliente extends JFrame {
 	// Creamos los datos para cada uno de los elementos de la tabla
 	public void CargaDatos() {
 		try {
-			listProy = bdimp.cargarProyectosCliente(ConsultarClientes.cliSeleccionado);
-			listPeso = bdimp.cargarPesosProyectosCliente(ConsultarClientes.cliSeleccionado);
+			listProy = bdpeso.cargarProyectosCliente(ConsultarClientes.cliSeleccionado);
+			listPeso = bdpeso.cargarPesosProyectosCliente(ConsultarClientes.cliSeleccionado);
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -204,7 +202,7 @@ public class ConsultarCliente extends JFrame {
 			datoColumna[i][0] = listProy.get(i).getNombre();
 		}
 		for (int j = 0; j < listProy.size(); j++) {
-			datoColumna[j][1] = "" + listPeso.get(j);
+			datoColumna[j][1] = "" + listPeso.get(j).getPeso();
 		}
 
 	}
@@ -217,20 +215,22 @@ public class ConsultarCliente extends JFrame {
 	}
 	// Creamos los datos para cada uno de los elementos de la tabla
 	public void CargaDatosReq() {
+		String proyecto = "";
+		if(tabla.getSelectedRow() != -1) 
+			proyecto = datoColumna[tabla.getSelectedRow()][0];
 		try {
-			listProy = bdimp.cargarProyectosCliente(ConsultarClientes.cliSeleccionado);
-			listPeso = bdimp.cargarPesosProyectosCliente(ConsultarClientes.cliSeleccionado);
+			listValor = bdvalor.cargarValorRequisitosClienteProyecto(proyecto, ConsultarClientes.cliSeleccionado);
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		datoColumnaReq = new String[listProy.size()][2];
+		datoColumnaReq = new String[listValor.size()][2];
 
-		for (int i = 0; i < listProy.size(); i++) {
-			datoColumnaReq[i][0] = listProy.get(i).getNombre();
+		for (int i = 0; i < listValor.size(); i++) {
+			datoColumnaReq[i][0] = listValor.get(i).getRequisito().getNombre();
 		}
-		for (int j = 0; j < listProy.size(); j++) {
-			datoColumnaReq[j][1] = "" + listPeso.get(j);
+		for (int j = 0; j < listValor.size(); j++) {
+			datoColumnaReq[j][1] = "" + listValor.get(j).getValor();
 		}
 	}
 	public void creaTablaReq() {
@@ -239,8 +239,6 @@ public class ConsultarCliente extends JFrame {
 		///////////////////////////////////////////////////
 		CargaDatosReq();
 		tablaReq = new JTable(datoColumnaReq, titColumnaReq);
-
-		tablaReq.setRowSelectionAllowed(true);
 		panelScrollReq = new JScrollPane(tablaReq);
 		panelScrollReq.setSize(170, 240);
 		panelScrollReq.setLocation(324, 99);

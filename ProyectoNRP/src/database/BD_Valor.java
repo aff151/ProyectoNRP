@@ -22,4 +22,14 @@ public class BD_Valor {
 		}
 		return listRequisitos;
 	}
+	public List<Valor> cargarValorRequisitosClienteProyecto(String proyecto, String cliente) throws PersistentException {
+		List<Valor> listValor = new ArrayList<Valor>();
+		for(Valor v: ValorDAO.listValorByQuery(null, null)) {
+			if (v.getProyecto().getNombre().equals(proyecto) 
+					&& v.getCliente().getNombre().equals(cliente)) {
+				listValor.add(v);
+			}
+		}
+		return listValor;
+	}
 }
