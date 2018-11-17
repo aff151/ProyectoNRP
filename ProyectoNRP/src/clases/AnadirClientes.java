@@ -26,6 +26,7 @@ import javax.swing.ListSelectionModel;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import javax.swing.JSeparator;
 
 public class AnadirClientes extends JFrame {
 
@@ -137,7 +138,7 @@ public class AnadirClientes extends JFrame {
 
 			}
 		});
-		btnAgregar.setBounds(119, 303, 86, 29);
+		btnAgregar.setBounds(106, 303, 117, 26);
 		contentPane.add(btnAgregar);
 
 		JButton btnAtrs = new JButton("Atrás");
@@ -153,11 +154,11 @@ public class AnadirClientes extends JFrame {
 				dispose();
 			}
 		});
-		btnAtrs.setBounds(33, 329, 62, 29);
+		btnAtrs.setBounds(33, 354, 69, 29);
 		contentPane.add(btnAtrs);
 
 		txtImportancia = new JTextField();
-		txtImportancia.setBounds(33, 303, 86, 26);
+		txtImportancia.setBounds(33, 303, 69, 26);
 		contentPane.add(txtImportancia);
 		txtImportancia.setColumns(10);
 		
@@ -174,8 +175,12 @@ public class AnadirClientes extends JFrame {
 				//dispose();
 			}
 		});
-		btnCrearCliente.setBounds(88, 329, 117, 29);
+		btnCrearCliente.setBounds(106, 354, 117, 29);
 		contentPane.add(btnCrearCliente);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 340, 231, 2);
+		contentPane.add(separator);
 		cargarClientes();
 	}
 
@@ -183,7 +188,7 @@ public class AnadirClientes extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 236, 398);
+		setBounds(100, 100, 257, 429);
 		setLocationRelativeTo(null);
 		setTitle("Añadir Clientes");
 		contentPane = new JPanel();

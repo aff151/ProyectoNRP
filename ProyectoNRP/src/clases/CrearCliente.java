@@ -91,8 +91,7 @@ public class CrearCliente extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				if (procedencia == "AnadirClientes") {
-					AnadirClientes anadirClientes = new AnadirClientes();
-					anadirClientes.setVisible(true);
+					
 
 				} else {
 
