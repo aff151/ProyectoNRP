@@ -100,7 +100,7 @@ public class ConsultarCliente extends JFrame {
 				dispose();
 			}
 		});
-		btnAtrs.setBounds(33, 351, 69, 29);
+		btnAtrs.setBounds(216, 351, 69, 29);
 		contentPane.add(btnAtrs);
 
 		JLabel lblNombreCliente = new JLabel(ConsultarClientes.cliSeleccionado);
@@ -196,7 +196,7 @@ public class ConsultarCliente extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 518, 428);
+		setBounds(100, 100, 518, 419);
 		setLocationRelativeTo(null);
 		setTitle("Consultar Cliente");
 		contentPane = new JPanel();

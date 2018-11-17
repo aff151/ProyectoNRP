@@ -76,11 +76,11 @@ public class CrearProyecto extends JFrame {
 		});
 		
 		tAreaDesc = new JTextArea();
-		tAreaDesc.setBounds(10, 58, 175, 74);
+		tAreaDesc.setBounds(10, 58, 204, 74);
 		tAreaDesc.setLineWrap(true);
 		tAreaDesc.setWrapStyleWord(true);
 		contentPane.add(tAreaDesc);
-		btnAtras.setBounds(10, 140, 62, 29);
+		btnAtras.setBounds(10, 143, 70, 29);
 		
 		TextPrompt placeholder = new TextPrompt("Descripción del proyecto", tAreaDesc);
 		placeholder.setVerticalAlignment(SwingConstants.TOP);
@@ -97,11 +97,11 @@ public class CrearProyecto extends JFrame {
 				crearProyecto();
 			}
 		});
-		btnCrearProyecto.setBounds(73, 140, 125, 29);
+		btnCrearProyecto.setBounds(90, 143, 125, 29);
 		contentPane.add(btnCrearProyecto);
 		
 		textFNombre = new JTextField();
-		textFNombre.setBounds(10, 20, 175, 26);
+		textFNombre.setBounds(10, 20, 205, 26);
 		contentPane.add(textFNombre);
 		textFNombre.setColumns(10);
 		TextPrompt placeholder1 = new TextPrompt("Nombre del proyecto", textFNombre);
@@ -138,7 +138,7 @@ public class CrearProyecto extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 216, 199);
+		setBounds(100, 100, 231, 213);
 		setLocationRelativeTo(null);
 		setTitle("Crear Proyecto");
 		contentPane = new JPanel();

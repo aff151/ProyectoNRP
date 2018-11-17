@@ -97,7 +97,7 @@ private List<Peso> listPeso;
 
 		JLabel lblNombreProyecto = new JLabel(consproy.getNombre());
 		lblNombreProyecto.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNombreProyecto.setBounds(196, 21, 174, 16);
+		lblNombreProyecto.setBounds(126, 21, 174, 16);
 		contentPane.add(lblNombreProyecto);
 
 /*		
@@ -128,7 +128,7 @@ contentPane.add(panelScroll);*/
 		listClientes = new JList();
 		modelo = new DefaultListModel();
 		scrollLista = new JScrollPane();
-		scrollLista.setBounds(43, 135, 170, 240);
+		scrollLista.setBounds(15, 135, 170, 240);
 	    scrollLista.setViewportView(listClientes);
 		cargarNombresLista();
 		contentPane.add(scrollLista);
@@ -145,22 +145,21 @@ contentPane.add(panelScroll);*/
 		listRequisitos = new JList();
 		modelo2 = new DefaultListModel();
 		scrollLista2 = new JScrollPane();
-		scrollLista2.setBounds(324, 135, 170, 240);
+		scrollLista2.setBounds(254, 135, 170, 240);
 	    scrollLista2.setViewportView(listRequisitos);
 		cargarRequisitos();
 		contentPane.add(scrollLista2);
 
 		JLabel lblListaDeClientes = new JLabel("Lista de clientes del proyecto");
-		lblListaDeClientes.setBounds(42, 108, 217, 16);
+		lblListaDeClientes.setBounds(15, 108, 217, 16);
 		contentPane.add(lblListaDeClientes);
 		
 
 		JLabel lblListaDeRequisitos = new JLabel("Lista de requisitos del proyecto");
-		lblListaDeRequisitos.setBounds(324, 108, 217, 16);
+		lblListaDeRequisitos.setBounds(250, 108, 217, 16);
 		contentPane.add(lblListaDeRequisitos);
 
 		JButton btnAtrs = new JButton("Atrás");
-		btnAtrs.setBackground(SystemColor.inactiveCaption);
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (procedencia == "ConsultarCliente") {
@@ -174,15 +173,15 @@ contentPane.add(panelScroll);*/
 				dispose();
 			}
 		});
-		btnAtrs.setBounds(197, 386, 157, 29);
+		btnAtrs.setBounds(184, 386, 69, 29);
 		contentPane.add(btnAtrs);
 		
 		JLabel lblDescripcin = new JLabel("Descripción");
-		lblDescripcin.setBounds(30, 48, 87, 16);
+		lblDescripcin.setBounds(15, 52, 87, 16);
 		contentPane.add(lblDescripcin);
 		
 		JTextArea textArea = new JTextArea(consproy.getDescripcion());
-		textArea.setBounds(110, 48, 384, 49);
+		textArea.setBounds(93, 52, 331, 49);
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
 		textArea.setEditable(false);
@@ -247,7 +246,7 @@ contentPane.add(panelScroll);*/
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 551, 455);
+		setBounds(100, 100, 451, 454);
 		setLocationRelativeTo(null);
 		setTitle("Consultar Proyecto");
 		contentPane = new JPanel();

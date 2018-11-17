@@ -72,7 +72,7 @@ public class CrearCliente extends JFrame {
 		modelo = new DefaultListModel();
 
 		JButton crearClienteBoton = new JButton("Crear Cliente");
-		crearClienteBoton.setBounds(104, 51, 117, 29);
+		crearClienteBoton.setBounds(93, 51, 117, 29);
 		contentPane.add(crearClienteBoton);
 
 		/////////////////////////////////////
@@ -84,7 +84,7 @@ public class CrearCliente extends JFrame {
 		//////////////////////////////
 
 		JButton volverInicio = new JButton("Atrás");
-		volverInicio.setBounds(14, 51, 66, 29);
+		volverInicio.setBounds(10, 51, 66, 29);
 		contentPane.add(volverInicio);
 
 		volverInicio.addActionListener(new ActionListener() {
@@ -106,7 +106,7 @@ public class CrearCliente extends JFrame {
 
 
 		nombreTexttField = new JTextField();
-		nombreTexttField.setBounds(14, 14, 200, 30);
+		nombreTexttField.setBounds(10, 14, 200, 30);
 		contentPane.add(nombreTexttField);
 		nombreTexttField.setColumns(10);
 		TextPrompt placeholder = new TextPrompt("Nombre del cliente", nombreTexttField);
@@ -117,7 +117,7 @@ public class CrearCliente extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 233, 117);
+		setBounds(100, 100, 227, 117);
 		setLocationRelativeTo(null);
 		setTitle("Crear Cliente");
 		contentPane = new JPanel();

@@ -66,7 +66,7 @@ public class ConsultarClientes extends JFrame {
 		inicializar();
 
 		JLabel seleccionarClientes = new JLabel("Seleccionar Clientes");
-		seleccionarClientes.setBounds(49, 30, 127, 16);
+		seleccionarClientes.setBounds(33, 30, 127, 16);
 		contentPane.add(seleccionarClientes);
 
 
@@ -74,7 +74,7 @@ public class ConsultarClientes extends JFrame {
 		listClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		modelo = new DefaultListModel<String>();
 		scrollLista = new JScrollPane();
-		scrollLista.setBounds(34, 60, 143, 146);
+		scrollLista.setBounds(10, 60, 165, 146);
 	    scrollLista.setViewportView(listClientes);
 		contentPane.add(scrollLista);
 		cargarClientes();
@@ -96,7 +96,7 @@ public class ConsultarClientes extends JFrame {
 				}
 			}
 		});
-		btnConsultar.setBounds(85, 218, 105, 29);
+		btnConsultar.setBounds(85, 215, 89, 29);
 		contentPane.add(btnConsultar);
 
 		JButton btnAtrs = new JButton("Atrás");
@@ -107,7 +107,7 @@ public class ConsultarClientes extends JFrame {
 				dispose();
 			}
 		});
-		btnAtrs.setBounds(24, 218, 67, 29);
+		btnAtrs.setBounds(10, 215, 65, 29);
 		contentPane.add(btnAtrs);
 	}
 
@@ -115,7 +115,7 @@ public class ConsultarClientes extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 219, 283);
+		setBounds(100, 100, 189, 283);
 		setLocationRelativeTo(null);
 		//setTitle("Consultar Clientes");
 		contentPane = new JPanel();

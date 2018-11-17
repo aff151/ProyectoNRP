@@ -1,4 +1,4 @@
-package clases;
+/*package clases;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -51,11 +51,11 @@ public class AnadirRequisitos extends JFrame {
 	private JTextField esfuerzoReqV;
 	private JButton btnAtrs;
 	
-	ModificarProyecto cons = new ModificarProyecto();
+	ModificarProyecto cons = new ModificarProyecto();*/
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -66,12 +66,12 @@ public class AnadirRequisitos extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
-	public AnadirRequisitos() {
+	/*public AnadirRequisitos() {
 		
 		inicializar();
 		
@@ -196,7 +196,7 @@ public class AnadirRequisitos extends JFrame {
 
 	
 	
-	/*
+	
 	public void cargarRequisitosExternos() {
 		try {
 			System.out.println("NOMBRE PROYECTOOOO: "+cons.getProyecto());
@@ -220,5 +220,5 @@ public class AnadirRequisitos extends JFrame {
 			System.out.println("termina");
 		//}
 		System.out.println("finaliza");
-	}*/
-}
+	}
+}*/

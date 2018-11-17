@@ -63,7 +63,7 @@ public class ConsultarProyectos extends JFrame {
 		inicializar();
 
 		JLabel lblNewLabel = new JLabel("Seleccionar Proyecto");
-		lblNewLabel.setBounds(30, 10, 150, 14);
+		lblNewLabel.setBounds(33, 10, 150, 14);
 		contentPane.add(lblNewLabel);
 
 		modelo = new DefaultListModel<String>();
@@ -71,7 +71,7 @@ public class ConsultarProyectos extends JFrame {
 		listProyectos = new JList();
 		listProyectos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollLista = new JScrollPane();
-		scrollLista.setBounds(21, 36, 148, 147);
+		scrollLista.setBounds(10, 36, 179, 147);
 	    scrollLista.setViewportView(listProyectos);
 		contentPane.add(scrollLista);
 
@@ -92,7 +92,7 @@ public class ConsultarProyectos extends JFrame {
 
 			}
 		});
-		btnConsultarProyecto.setBounds(6, 195, 94, 23);
+		btnConsultarProyecto.setBounds(10, 195, 89, 23);
 		contentPane.add(btnConsultarProyecto);
 
 		JButton btnModificarProyecto = new JButton("Modificar");
@@ -110,7 +110,7 @@ public class ConsultarProyectos extends JFrame {
 				}
 			}
 		});
-		btnModificarProyecto.setBounds(92, 195, 94, 23);
+		btnModificarProyecto.setBounds(99, 195, 89, 23);
 		contentPane.add(btnModificarProyecto);
 
 		JButton btnAtrs = new JButton("Atrás");
@@ -126,7 +126,7 @@ public class ConsultarProyectos extends JFrame {
 				dispose();
 			}
 		});
-		btnAtrs.setBounds(6, 230, 71, 29);
+		btnAtrs.setBounds(64, 228, 71, 23);
 		contentPane.add(btnAtrs);
 		cargarProyectos();
 	}
@@ -135,7 +135,7 @@ public class ConsultarProyectos extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 192, 292);
+		setBounds(100, 100, 204, 288);
 		setLocationRelativeTo(null);
 		//setTitle("Consultar Proyectos");
 		contentPane = new JPanel();
