@@ -32,4 +32,17 @@ public class BD_Valor {
 		}
 		return listValor;
 	}
+	
+	public void modificarValor(String pro,String cli,String req,String valor) throws PersistentException
+	{
+		for(Valor v : ValorDAO.listValorByQuery(null, null))
+		{
+			if(pro.equals(v.getProyecto().getNombre()) && 
+					cli.equals(v.getCliente().getNombre()) && req.equals(v.getRequisito().getNombre()))
+				
+			{
+				v.setValor(Integer.parseInt(valor));
+			}
+		}
+	}
 }

@@ -92,4 +92,37 @@ public class BD_Proyectos {
 		}
 		return false;
 	}
+	
+	public List<Cliente> cargarClientesProyecto(String nombreProyecto) throws PersistentException
+	{
+		Proyecto pro = null;
+		List<Cliente> listaClientesProyecto = new ArrayList<>();
+		//Cogemos el proyecto que necesitamos
+		for(Proyecto p : ProyectoDAO.listProyectoByQuery(null, null))
+		{
+			if(nombreProyecto.equals(p.getNombre()))
+				pro = p;
+		}
+		for(Cliente c : pro.getClientes())
+		{
+			listaClientesProyecto.add(c);
+		}
+		return listaClientesProyecto;
+	}
+	
+	public List<Requisito> cargarRequisitosProyecto(String nombreProyecto) throws PersistentException
+	{
+		Proyecto pro = null;
+		List<Requisito> listaRequisitosProyecto = new ArrayList<>();
+		for(Proyecto p : ProyectoDAO.listProyectoByQuery(null, null))
+		{
+			if(nombreProyecto.equals(p.getNombre()))
+				pro = p;
+		}
+		for(Requisito r : pro.getRequisitos())
+		{
+			listaRequisitosProyecto.add(r);
+		}
+		return listaRequisitosProyecto;
+	}
 }
