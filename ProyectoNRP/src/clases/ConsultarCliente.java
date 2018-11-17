@@ -19,6 +19,7 @@ import database.BD_Proyectos;
 import database.BD_Valor;
 import database.Cliente;
 import database.Peso;
+import database.ProyReq;
 import database.Proyecto;
 import database.Requisito;
 
@@ -54,7 +55,7 @@ public class ConsultarCliente extends JFrame {
 	private JScrollPane scrollLista;
 	private JScrollPane scrollLista2;
 	////////////////////////////////////////
-	// TABLA
+	// TABLA PROYECTOS
 	///////////////////////////////////////
 	private JTable tabla;
 	private JScrollPane panelScroll;
@@ -62,7 +63,15 @@ public class ConsultarCliente extends JFrame {
 	private String datoColumna[][];
 	private List<Peso> listPeso;
 	private List<Proyecto> listProy;
-
+	////////////////////////////////////////
+	// TABLA REQUISITOS
+	///////////////////////////////////////
+	private JTable tablaReq;
+	private JScrollPane panelScrollReq;
+	private String titColumnaReq[];
+	private String datoColumnaReq[][];
+	private List<ProyReq> listProyReq;
+	private List<Requisito> listaRequisitos;
 	/**
 	 * Launch the application.
 	 */
@@ -109,7 +118,7 @@ public class ConsultarCliente extends JFrame {
 		contentPane.add(lblNombreCliente);
 
 		///////////////////////////////////////////////////
-		//// TABLA
+		//// TABLA PROYECTOS
 		///////////////////////////////////////////////////
 		// Creamos las columnas y las cargamos con los datos que van a
 		// aparecer en la pantalla
@@ -120,7 +129,6 @@ public class ConsultarCliente extends JFrame {
 		// Aquí se configuran algunos de los parámetros que permite
 		// variar la JTable
 		tabla.setRowSelectionAllowed(true);
-		tabla.setColumnSelectionAllowed(true);
 		// Incorporamos la tabla a un panel que incorpora ya una barra
 		// de desplazamiento, para que la visibilidad de la tabla sea
 		// automática
@@ -130,13 +138,20 @@ public class ConsultarCliente extends JFrame {
 		getContentPane().add(panelScroll, BorderLayout.CENTER);
 		contentPane.add(panelScroll);
 
-		listRequisitos = new JList();
-		modelo1 = new DefaultListModel();
-		scrollLista2 = new JScrollPane();
-		scrollLista2.setBounds(324, 99, 170, 240);
-		scrollLista2.setViewportView(listRequisitos);
-		contentPane.add(scrollLista2);
+		///////////////////////////////////////////////////
+		//// TABLA REQUISITOS
+		///////////////////////////////////////////////////
+		CreaColumnasReq();
+		datoColumnaReq = new String[0][0];
+		tablaReq = new JTable(datoColumnaReq, titColumnaReq);
 
+		tablaReq.setRowSelectionAllowed(true);
+		panelScrollReq = new JScrollPane(tablaReq);
+		panelScrollReq.setSize(170, 240);
+		panelScrollReq.setLocation(324, 99);
+		getContentPane().add(panelScrollReq, BorderLayout.CENTER);
+		contentPane.add(panelScrollReq);
+		
 		JLabel lblListaDeProyectos = new JLabel("Lista de proyectos del cliente");
 		lblListaDeProyectos.setBounds(10, 60, 217, 16);
 		contentPane.add(lblListaDeProyectos);
@@ -148,14 +163,16 @@ public class ConsultarCliente extends JFrame {
 		JButton btnVerRequisitos = new JButton("Ver\r\n requisitos");
 		btnVerRequisitos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (listProyectos.isSelectionEmpty()) {
+				if (tabla.getSelectedRow() == -1) {
 					JOptionPane.showMessageDialog(null, "Debe seleccionar un proyecto", "MENSAJE",
 							JOptionPane.WARNING_MESSAGE);
 				} else {
-					modelo1.clear();
-					listRequisitos.setModel(modelo1);
-					cargarRequisitosClienteProyecto(listProyectos.getSelectedValue().toString(),
+					//CreaColumnasReq();
+					CargaDatosReq();
+					creaTablaReq();
+					/*cargarRequisitosClienteProyecto(listProyectos.getSelectedValue().toString(),
 							ConsultarClientes.cliSeleccionado);
+					System.out.println(datoColumna[tabla.getSelectedRow()][0]);*/
 				}
 			}
 		});
@@ -191,7 +208,45 @@ public class ConsultarCliente extends JFrame {
 		}
 
 	}
+	// Creamos las etiquetas que sirven de título a cada una de
+	// las columnas de la tabla
+	public void CreaColumnasReq() {
+		titColumnaReq = new String[2];
+		titColumnaReq[0] = "Nombre";
+		titColumnaReq[1] = "Esfuerzo";
+	}
+	// Creamos los datos para cada uno de los elementos de la tabla
+	public void CargaDatosReq() {
+		try {
+			listProy = bdimp.cargarProyectosCliente(ConsultarClientes.cliSeleccionado);
+			listPeso = bdimp.cargarPesosProyectosCliente(ConsultarClientes.cliSeleccionado);
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		datoColumnaReq = new String[listProy.size()][2];
 
+		for (int i = 0; i < listProy.size(); i++) {
+			datoColumnaReq[i][0] = listProy.get(i).getNombre();
+		}
+		for (int j = 0; j < listProy.size(); j++) {
+			datoColumnaReq[j][1] = "" + listPeso.get(j);
+		}
+	}
+	public void creaTablaReq() {
+		///////////////////////////////////////////////////
+		//// TABLA REQUISITOS
+		///////////////////////////////////////////////////
+		CargaDatosReq();
+		tablaReq = new JTable(datoColumnaReq, titColumnaReq);
+
+		tablaReq.setRowSelectionAllowed(true);
+		panelScrollReq = new JScrollPane(tablaReq);
+		panelScrollReq.setSize(170, 240);
+		panelScrollReq.setLocation(324, 99);
+		getContentPane().add(panelScrollReq, BorderLayout.CENTER);
+		contentPane.add(panelScrollReq);
+	}
 	public void inicializar() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
