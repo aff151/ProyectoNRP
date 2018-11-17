@@ -50,7 +50,17 @@ public class BD_Peso {
 		List<Peso> listPesos = new ArrayList<Peso>();
 		for (Peso imp : PesoDAO.listPesoByQuery(null, null)) {
 			if (imp.getCliente().getNombre().equals(cliSeleccionado)) {
-				listPesos.add(PesoDAO.getPesoByORMID(imp.getPeso()));
+				listPesos.add(imp);
+			}
+		}
+		return listPesos;
+	}
+
+	public List<Peso> cargarPesosProyecto(String nombre) throws PersistentException {
+		List<Peso> listPesos = new ArrayList<Peso>();
+		for (Peso imp : PesoDAO.listPesoByQuery(null, null)) {
+			if (imp.getProyecto().getNombre().equals(nombre)) {
+				listPesos.add(imp);
 			}
 		}
 		return listPesos;

@@ -18,8 +18,10 @@ import database.BD_Proyectos;
 import database.BD_Requisitos;
 import database.Cliente;
 import database.Peso;
+import database.ProyReq;
 import database.Proyecto;
 import database.Requisito;
+import database.Valor;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -39,7 +41,7 @@ import java.awt.SystemColor;
 public class ConsultarProyecto extends JFrame {
 
 	private JPanel contentPane;
-	public static String procedencia="";
+	public static String procedencia = "";
 	ConsultarProyectos cons = new ConsultarProyectos();
 	BD_Proyectos bdproy = new BD_Proyectos();
 	BD_Peso bdimp = new BD_Peso();
@@ -54,16 +56,23 @@ public class ConsultarProyecto extends JFrame {
 	private JScrollPane scrollLista;
 	private JScrollPane scrollLista2;
 
-////////////////////////////////////////
-// TABLA
-///////////////////////////////////////
-private JTable tabla;
-private JScrollPane panelScroll;
-private String titColumna[];
-private String datoColumna[][];
-private List<Peso> listPeso;
-
-
+	////////////////////////////////////////
+	// TABLA PROYECTOS
+	///////////////////////////////////////
+	private JTable tabla;
+	private JScrollPane panelScroll;
+	private String titColumna[];
+	private String datoColumna[][];
+	private List<Peso> listPeso;
+	private List<Proyecto> listProy;
+	////////////////////////////////////////
+	// TABLA REQUISITOS
+	///////////////////////////////////////
+	private JTable tablaEsf;
+	private JScrollPane panelScrollEsf;
+	private String titColumnaEsf[];
+	private String datoColumnaEsf[][];
+	private List<ProyReq> listEsfuerzo;
 
 	/**
 	 * Launch the application.
@@ -82,12 +91,12 @@ private List<Peso> listPeso;
 	}
 
 	/**
-	 * Create the frame. 
+	 * Create the frame.
 	 */
 	public ConsultarProyecto() {
-		
+
 		inicializar();
-		
+
 		try {
 			consproy = descargarInformacion(cons.proySeleccionado);
 		} catch (PersistentException e1) {
@@ -100,60 +109,47 @@ private List<Peso> listPeso;
 		lblNombreProyecto.setBounds(126, 21, 174, 16);
 		contentPane.add(lblNombreProyecto);
 
-/*		
-///////////////////////////////////////////////////
-//// TABLA
-///////////////////////////////////////////////////
-// Creamos las columnas y las cargamos con los datos que van a
-// aparecer en la pantalla
-CreaColumnas();
-CargaDatos();
-// Creamos una instancia del componente Swing
-tabla = new JTable(datoColumna, titColumna);
-// Aquí se configuran algunos de los parámetros que permite
-// variar la JTable
-tabla.setRowSelectionAllowed(true);
-tabla.setColumnSelectionAllowed(true);
-// Incorporamos la tabla a un panel que incorpora ya una barra
-// de desplazamiento, para que la visibilidad de la tabla sea
-// automática
-panelScroll = new JScrollPane(tabla);
-panelScroll.setSize(170, 240);
-panelScroll.setLocation(42, 136);
-getContentPane().add(panelScroll, BorderLayout.CENTER);
-contentPane.add(panelScroll);*/
-		
-		
-		
-		listClientes = new JList();
-		modelo = new DefaultListModel();
-		scrollLista = new JScrollPane();
-		scrollLista.setBounds(15, 135, 170, 240);
-	    scrollLista.setViewportView(listClientes);
-		cargarNombresLista();
-		contentPane.add(scrollLista);
-		
-		
-		
-		
-		
-		
-		
-		
+		///////////////////////////////////////////////////
+		//// TABLA PROYECTOS
+		///////////////////////////////////////////////////
+		// Creamos las columnas y las cargamos con los datos que van a
+		// aparecer en la pantalla
+		CreaColumnas();
+		CargaDatos();
+		// Creamos una instancia del componente Swing
+		tabla = new JTable(datoColumna, titColumna) {
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		// Aquí se configuran algunos de los parámetros que permite
+		// variar la JTable
+		tabla.setRowSelectionAllowed(true);
+		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		// Incorporamos la tabla a un panel que incorpora ya una barra
+		// de desplazamiento, para que la visibilidad de la tabla sea
+		// automática
+		panelScroll = new JScrollPane(tabla);
+		panelScroll.setSize(170, 240);
+		panelScroll.setLocation(10, 136);
+		getContentPane().add(panelScroll, BorderLayout.CENTER);
+		contentPane.add(panelScroll);
 
-
-		listRequisitos = new JList();
-		modelo2 = new DefaultListModel();
-		scrollLista2 = new JScrollPane();
-		scrollLista2.setBounds(254, 135, 170, 240);
-	    scrollLista2.setViewportView(listRequisitos);
-		cargarRequisitos();
-		contentPane.add(scrollLista2);
+		///////////////////////////////////////////////////
+		//// TABLA REQUISITOS
+		///////////////////////////////////////////////////
+		CreaColumnasEsf();
+		CargaDatosEsf();
+		tablaEsf= new JTable(datoColumnaEsf, titColumnaEsf);
+		panelScrollEsf = new JScrollPane(tablaEsf);
+		panelScrollEsf.setSize(170, 240);
+		panelScrollEsf.setLocation(250, 136);
+		getContentPane().add(panelScrollEsf, BorderLayout.CENTER);
+		contentPane.add(panelScrollEsf);
 
 		JLabel lblListaDeClientes = new JLabel("Lista de clientes del proyecto");
 		lblListaDeClientes.setBounds(15, 108, 217, 16);
 		contentPane.add(lblListaDeClientes);
-		
 
 		JLabel lblListaDeRequisitos = new JLabel("Lista de requisitos del proyecto");
 		lblListaDeRequisitos.setBounds(250, 108, 217, 16);
@@ -175,11 +171,11 @@ contentPane.add(panelScroll);*/
 		});
 		btnAtrs.setBounds(184, 386, 69, 29);
 		contentPane.add(btnAtrs);
-		
+
 		JLabel lblDescripcin = new JLabel("Descripción");
 		lblDescripcin.setBounds(15, 52, 87, 16);
 		contentPane.add(lblDescripcin);
-		
+
 		JTextArea textArea = new JTextArea(consproy.getDescripcion());
 		textArea.setBounds(93, 52, 331, 49);
 		textArea.setLineWrap(true);
@@ -188,59 +184,60 @@ contentPane.add(panelScroll);*/
 		textArea.setBackground(getForeground());
 		contentPane.add(textArea);
 	}
-	// Creamos las etiquetas que sirven de título a cada una de
-		// las columnas de la tabla
-		public void CreaColumnas() {
-			titColumna = new String[2];
-			titColumna[0] = "Nombre";
-			titColumna[1] = "Peso";
 
-		}
-
-		// Creamos los datos para cada uno de los elementos de la tabla
-		public void CargaDatos() {
-			try {
-				listCli = bdimp.cargarClientesProyecto(consproy.getNombre());
-				listPeso = bdimp.cargarPesosProyectosCliente(ConsultarClientes.cliSeleccionado);
-			} catch (PersistentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			datoColumna = new String[listCli.size()][2];
-
-			for (int i = 0; i < listCli.size(); i++) {
-				datoColumna[i][0] = listCli.get(i).getNombre();
-			}
-			for (int j = 0; j < listCli.size(); j++) {
-				datoColumna[j][1] = "" + listPeso.get(j);
-			}
-
-		}
-	
-	private void cargarNombresLista() {
+	private void CargaDatosEsf() {
 		try {
-			listCli = bdimp.cargarClientesProyecto(cons.proySeleccionado);
+			listReq = bdreq.cargarRequisitosProyecto(cons.proySeleccionado);
+			listEsfuerzo = bdreq.cargarEsfuerzo(cons.proySeleccionado);
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for(Cliente c : listCli) {
-			modelo.addElement(c.getNombre());
-			listClientes.setModel(modelo);
+		datoColumnaEsf = new String[listReq.size()][2];
+
+		for (int i = 0; i < listReq.size(); i++) {
+			datoColumnaEsf[i][0] = listReq.get(i).getNombre();
+		}
+		for (int j = 0; j < listReq.size(); j++) {
+			datoColumnaEsf[j][1] = "" + listEsfuerzo.get(j).getEsfuerzo();
 		}
 	}
-	
-	private void cargarRequisitos() {
+
+	private void CreaColumnasEsf() {
+		titColumnaEsf = new String[2];
+		titColumnaEsf[0] = "Nombre";
+		titColumnaEsf[1] = "Esfuerzo";
+	}
+
+	// Creamos las etiquetas que sirven de título a cada una de
+	// las columnas de la tabla
+	public void CreaColumnas() {
+		titColumna = new String[2];
+		titColumna[0] = "Nombre";
+		titColumna[1] = "Peso";
+
+	}
+
+	// Creamos los datos para cada uno de los elementos de la tabla
+	public void CargaDatos() {
 		try {
-			listReq = bdreq.cargarRequisitosProyecto(cons.proySeleccionado);
+			listCli = bdimp.cargarClientesProyecto(consproy.getNombre());
+			listPeso = bdimp.cargarPesosProyecto(consproy.getNombre());
 		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for(Requisito c : listReq) {
-			modelo2.addElement(c.getNombre());
-			listRequisitos.setModel(modelo2);
+		datoColumna = new String[listCli.size()][2];
+
+		for (int i = 0; i < listCli.size(); i++) {
+			datoColumna[i][0] = listCli.get(i).getNombre();
 		}
+		for (int j = 0; j < listCli.size(); j++) {
+			datoColumna[j][1] = "" + listPeso.get(j).getPeso();
+		}
+
 	}
+
 
 	public void inicializar() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -254,7 +251,7 @@ contentPane.add(panelScroll);*/
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 	}
-	
+
 	public Proyecto descargarInformacion(String proySeleccionado) throws PersistentException {
 		return bdproy.descargarInformacion(proySeleccionado);
 	}

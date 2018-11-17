@@ -44,6 +44,7 @@ public class ConsultarCliente extends JFrame {
 	public static String procedencia = "";
 	BD_Proyectos bdproy = new BD_Proyectos();
 	BD_Peso bdpeso = new BD_Peso();
+	JLabel lblProyecto;
 
 	BD_ProyReq bdproyreq = new BD_ProyReq();
 	BD_Valor bdvalor = new BD_Valor();
@@ -176,6 +177,10 @@ public class ConsultarCliente extends JFrame {
 		});
 		btnVerRequisitos.setBounds(193, 197, 118, 29);
 		contentPane.add(btnVerRequisitos);
+		lblProyecto = new JLabel();
+		lblProyecto.setBounds(369, 79, 69, 16);
+		contentPane.add(lblProyecto);
+		
 	}
 
 	// Creamos las etiquetas que sirven de título a cada una de
@@ -224,6 +229,7 @@ public class ConsultarCliente extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		lblProyecto.setText(proyecto);
 		datoColumnaReq = new String[listValor.size()][2];
 
 		for (int i = 0; i < listValor.size(); i++) {

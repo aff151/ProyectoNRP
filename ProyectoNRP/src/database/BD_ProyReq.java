@@ -55,6 +55,16 @@ public class BD_ProyReq {
 		}
 		return listRequisitos;
 	}
+
+	public List<ProyReq> cargarEsfuerzo(String nombre) throws PersistentException {
+		List<ProyReq> listEsfuerzo = new ArrayList<ProyReq>();
+		for(ProyReq req: ProyReqDAO.listProyReqByQuery(null, null)) {
+			if(req.getProyecto().getNombre().equals(nombre)) {
+				listEsfuerzo.add(req);
+			}
+		}
+		return listEsfuerzo;
+	}
 	
 /*	public List<Requisito> asignarOtroRequisitoProyecto(String nombreReq, String proySeleccionado,String esfuerzo)
 	{
