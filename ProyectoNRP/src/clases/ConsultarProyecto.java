@@ -136,7 +136,7 @@ public class ConsultarProyecto extends JFrame {
 		contentPane.add(panelScroll);
 
 		///////////////////////////////////////////////////
-		//// TABLA REQUISITOS
+		//// TABLA ESFUERZO
 		///////////////////////////////////////////////////
 		CreaColumnasEsf();
 		CargaDatosEsf();

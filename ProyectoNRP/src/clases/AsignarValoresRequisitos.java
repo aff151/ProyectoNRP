@@ -17,6 +17,7 @@ public class AsignarValoresRequisitos extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
+	protected String procedencia;
 
 	/**
 	 * Launch the application.
