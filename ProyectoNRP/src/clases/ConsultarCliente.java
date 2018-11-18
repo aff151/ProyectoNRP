@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 import org.orm.PersistentException;
 
@@ -135,6 +137,11 @@ public class ConsultarCliente extends JFrame {
 		// variar la JTable
 		tabla.setRowSelectionAllowed(true);
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		TableColumnModel columnModel = tabla.getColumnModel();
+		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+		tcr.setHorizontalAlignment(SwingConstants.CENTER);
+		columnModel.getColumn(1).setPreferredWidth(0);
+		columnModel.getColumn(1).setCellRenderer(tcr);
 		// Incorporamos la tabla a un panel que incorpora ya una barra
 		// de desplazamiento, para que la visibilidad de la tabla sea
 		// automática
@@ -246,6 +253,11 @@ public class ConsultarCliente extends JFrame {
 		CargaDatosReq();
 		tablaReq = new JTable(datoColumnaReq, titColumnaReq);
 		panelScrollReq = new JScrollPane(tablaReq);
+		TableColumnModel columnModel2 = tablaReq.getColumnModel();
+		DefaultTableCellRenderer tcr2 = new DefaultTableCellRenderer();
+		tcr2.setHorizontalAlignment(SwingConstants.CENTER);
+		columnModel2.getColumn(1).setPreferredWidth(0);
+		columnModel2.getColumn(1).setCellRenderer(tcr2);
 		panelScrollReq.setSize(170, 240);
 		panelScrollReq.setLocation(324, 99);
 		getContentPane().add(panelScrollReq, BorderLayout.CENTER);
