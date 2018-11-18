@@ -19,6 +19,7 @@ import database.BD_ProyReq;
 import database.BD_Requisitos;
 import database.BD_Valor;
 import database.Peso;
+import database.ProyReq;
 import database.Proyecto;
 import database.Requisito;
 import database.Valor;
@@ -43,6 +44,7 @@ public class Planificacion extends JFrame {
 	private String titColumna[];
 	private String datoColumna[][];
 	private List<Peso> listPeso;
+	private List<ProyReq> listProyReq;
 	private List<Requisito> listReq;
 	private List<Valor> listValor;
 	/**
@@ -133,6 +135,7 @@ public class Planificacion extends JFrame {
 	public void CreaColumnas() {
 		try {
 			listReq = bdProyreq.cargarRequisitosProyecto(ConsultarProyectosPlanificacion.proySeleccionado);
+			listProyReq = bdProyreq.cargarEsfuerzo(ConsultarProyectosPlanificacion.proySeleccionado);
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -147,7 +150,7 @@ public class Planificacion extends JFrame {
 
 	// Creamos los datos para cada uno de los elementos de la tabla
 	public void CargaDatos() {
-		int k = 0;
+		int k = 1;
 		try {
 			listPeso = bdPeso.cargarPesosProyecto(ConsultarProyectosPlanificacion.proySeleccionado);
 			listValor = bdValor.cargarValorProyecto(ConsultarProyectosPlanificacion.proySeleccionado);
@@ -155,29 +158,28 @@ public class Planificacion extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		datoColumna = new String[listPeso.size()][titColumna.length];
+		datoColumna = new String[listPeso.size()+1][titColumna.length];
 		//Columna de clientes
 		for(int i = 0; i < listPeso.size(); i++)
 			datoColumna[i][0] = listPeso.get(i).getCliente().getNombre();
 		for(int i = 0; i < listPeso.size(); i++) {
+			k = 1;
 			for(int j = 0; j < listValor.size(); j++) {
-
+				if(datoColumna[i][0].equals(listValor.get(j).getCliente().getNombre())){
+					//System.out.println("if" + i + "-" + j + "-" + k);
+					datoColumna[i][k] = String.valueOf(listValor.get(j).getValor());
+				} else {
+					//System.out.println("else" + i + "-" + j + "-" + k);
+					datoColumna[i][k] = "0";
+				}
 			}
 		}
 		for(int i = 0; i < listPeso.size(); i++) {
 			datoColumna[i][listReq.size() + 1] = String.valueOf(listPeso.get(i).getPeso());
 		}
-		/*for(int i = 0; i < listPeso.size(); i++)
-			datoColumna[i][0] = "";
-		for(int i = 0; i < listPeso.size(); i++) {
-			for(int j = 0; j < listValor.size(); j++) {
-				if(listPeso.get(i).getCliente().getNombre().equals(listValor.get(j).getCliente().getNombre()))
-						datoColumna[i][j+1] = "";
-				datoColumna[i][j+1] = "";
-			}
+		datoColumna[datoColumna.length-1][0] = "Esfuerzo";
+		for(int i = 1; i <= listProyReq.size(); i++) {
+			datoColumna[datoColumna.length-1][i] = String.valueOf(listProyReq.get(i-1).getEsfuerzo());
 		}
-		for(int i = 0; i < listPeso.size(); i++) {
-			datoColumna[i][listReq.size() + 1] = "";
-		}*/
 	}
 }
