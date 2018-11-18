@@ -32,7 +32,14 @@ public class BD_Valor {
 		}
 		return listValor;
 	}
-	
+	public List<Valor> cargarValorProyecto(String proyecto) throws PersistentException {
+		List<Valor> listValor = new ArrayList<Valor>();
+		for(Valor v: ValorDAO.listValorByQuery(null, null)) {
+			if (v.getProyecto().getNombre().equals(proyecto)) 
+				listValor.add(v);
+		}
+		return listValor;
+	}
 	public void modificarValor(String pro,String cli,String req,String valor) throws PersistentException
 	{
 		for(Valor v : ValorDAO.listValorByQuery(null, null))
