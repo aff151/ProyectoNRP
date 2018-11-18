@@ -65,6 +65,26 @@ public class BD_ProyReq {
 		}
 		return listEsfuerzo;
 	}
+
+	public List<ProyReq> cargarProyectosRequisito(String reqselec) throws PersistentException {
+		List<ProyReq> listProyectos = new ArrayList<ProyReq>();
+		for(ProyReq req: ProyReqDAO.listProyReqByQuery(null, null)) {
+			if(req.getRequisito().getNombre().equals(reqselec)) {
+				listProyectos.add(req);
+			}
+		}
+		return listProyectos;
+	}
+
+	public List<ProyReq> cargarEsfuerzoRequisito(String reqselec) throws PersistentException {
+		List<ProyReq> listEsfuerzo = new ArrayList<ProyReq>();
+		for(ProyReq req: ProyReqDAO.listProyReqByQuery(null, null)) {
+			if(req.getRequisito().getNombre().equals(reqselec)) {
+				listEsfuerzo.add(req);
+			}
+		}
+		return listEsfuerzo;
+	}
 	
 /*	public List<Requisito> asignarOtroRequisitoProyecto(String nombreReq, String proySeleccionado,String esfuerzo)
 	{
