@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.BorderUIResource.TitledBorderUIResource;
 
 import org.orm.PersistentException;
 
@@ -162,21 +163,32 @@ public class Planificacion extends JFrame {
 		//Columna de clientes
 		for(int i = 0; i < listPeso.size(); i++)
 			datoColumna[i][0] = listPeso.get(i).getCliente().getNombre();
+		//Rellenar la tabla con los valores de cada cliente en cada requisito
 		for(int i = 0; i < listPeso.size(); i++) {
-			k = 1;
-			for(int j = 0; j < listValor.size(); j++) {
-				if(datoColumna[i][0].equals(listValor.get(j).getCliente().getNombre())){
-					//System.out.println("if" + i + "-" + j + "-" + k);
-					datoColumna[i][k] = String.valueOf(listValor.get(j).getValor());
-				} else {
-					//System.out.println("else" + i + "-" + j + "-" + k);
-					datoColumna[i][k] = "0";
+			for(int j = 0; j < listReq.size(); j++) {
+				for(Valor v : listValor) {
+					if(datoColumna[i][0].equals(v.getCliente().getNombre()) &&
+							titColumna[j+1].equals(v.getRequisito().getNombre())){
+						datoColumna[i][j+1] = String.valueOf(v.getValor()); continue;
+					}
 				}
 			}
 		}
+		//Poner a 0 los campos vacios de la tabla
+		for(int i = 0; i < listPeso.size()+1; i++) {
+			for(int j = 0; j < titColumna.length; j++) {
+				if(datoColumna[i][j] == null) {
+					datoColumna[i][j] = "0";
+				}
+			}
+		}
+		//Poner ultimo campo de la tabla vacio
+		datoColumna[listPeso.size()][titColumna.length-1] = "";
+		//Cargar la columna de pesos
 		for(int i = 0; i < listPeso.size(); i++) {
 			datoColumna[i][listReq.size() + 1] = String.valueOf(listPeso.get(i).getPeso());
 		}
+		//Cargar los esfuerzos
 		datoColumna[datoColumna.length-1][0] = "Esfuerzo";
 		for(int i = 1; i <= listProyReq.size(); i++) {
 			datoColumna[datoColumna.length-1][i] = String.valueOf(listProyReq.get(i-1).getEsfuerzo());

@@ -98,10 +98,8 @@ public class ConsultarProyectosPlanificacion extends JFrame {
 		JButton btnAtrs = new JButton("Atrás");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (procedencia == "menu") {
-					Menu menu = new Menu();
-					menu.setVisible(true);
-				}
+				Menu menu = new Menu();
+				menu.setVisible(true);
 				dispose();
 			}
 		});
