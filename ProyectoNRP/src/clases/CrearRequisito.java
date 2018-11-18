@@ -75,7 +75,7 @@ public class CrearRequisito extends JFrame {
 		inicializar();
 		
 		txtNombreDelRequisito = new JTextField();
-		txtNombreDelRequisito.setBounds(52, 16, 199, 26);
+		txtNombreDelRequisito.setBounds(22, 16, 199, 26);
 		contentPane.add(txtNombreDelRequisito);
 		txtNombreDelRequisito.setColumns(10);
 		TextPrompt placeholder = new TextPrompt("Nombre del Requisito", txtNombreDelRequisito);
@@ -84,17 +84,18 @@ public class CrearRequisito extends JFrame {
 
 		
 		txtAdescripcion = new JTextArea();
-		txtAdescripcion.setBounds(80, 53, 174, 93);
+		txtAdescripcion.setBounds(27, 53, 190, 93);
 		txtAdescripcion.setLineWrap(true);
 		txtAdescripcion.setWrapStyleWord(true);
-
+		TextPrompt placeholder1 = new TextPrompt("Descripción", txtAdescripcion);
+		placeholder1.setVerticalAlignment(SwingConstants.TOP);
+		placeholder1.changeAlpha(0.75f);
+		placeholder1.changeStyle(Font.ITALIC);
+		
+		
 		contentPane.add(txtAdescripcion);
 		
-		JLabel label = new JLabel("Descripción");
-		label.setBounds(10, 53, 99, 14);
-		contentPane.add(label);
-		
-		JButton btnCrearRequisitos = new JButton("Crear Requisito");
+		JButton btnCrearRequisitos = new JButton("Crear");
 		btnCrearRequisitos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String cadena = esfuerzoReq.getText();
@@ -107,18 +108,23 @@ public class CrearRequisito extends JFrame {
 				}
 				if(esDigito == false)
 				{
-					JOptionPane.showMessageDialog(null, "Debe introducir el esfuerzo con valores numericos", "MENSAJE",
+					JOptionPane.showMessageDialog(null, "Debe introducir el esfuerzo con valores numéricos.", "MENSAJE",
 							JOptionPane.WARNING_MESSAGE);
 				}
 				else 
 				{
+					int esfuerzo=Integer.parseInt(esfuerzoReq.getText());
+					if(esfuerzo<0||esfuerzo>10) {
+						JOptionPane.showMessageDialog(null, "El esfuerzo es un número entre 0 y 10.", "MENSAJE",
+								JOptionPane.WARNING_MESSAGE);
+					}
 					crearRequisito();
 				}
 				
 			}
 		});
 		
-		btnCrearRequisitos.setBounds(266, 180, 139, 29);
+		btnCrearRequisitos.setBounds(120, 152, 77, 29);
 		contentPane.add(btnCrearRequisitos);
 		
 		JButton button = new JButton("Atrás");
@@ -135,44 +141,42 @@ public class CrearRequisito extends JFrame {
 				}
 			
 		});
-		button.setBounds(10, 180, 125, 29);
+		button.setBounds(22, 206, 77, 29);
 		contentPane.add(button);
-		
-		JLabel lblIntroduceElEsfuerzo = new JLabel("Introduce el esfuerzo");
-		lblIntroduceElEsfuerzo.setBounds(285, 85, 149, 14);
-		contentPane.add(lblIntroduceElEsfuerzo);
 
 		esfuerzoReq = new JTextField();
-		esfuerzoReq.setBounds(295, 110, 86, 20);
-		contentPane.add(esfuerzoReq);
+		esfuerzoReq.setBounds(22, 155, 86, 20);
+		
 		esfuerzoReq.setColumns(10);
+		TextPrompt placeholder2 = new TextPrompt("Esfuerzo", esfuerzoReq);
+		
+		placeholder2.changeAlpha(0.75f);
+		placeholder2.changeStyle(Font.ITALIC);
+		contentPane.add(esfuerzoReq);
 
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
-		separator.setBounds(444, 16, 50, 200);
+		separator.setBounds(233, 16, 50, 200);
 		contentPane.add(separator);
 		
 		JLabel lblListaDeRequisitos = new JLabel("Lista de Requisitos");
-		lblListaDeRequisitos.setBounds(504, 22, 108, 14);
+		lblListaDeRequisitos.setBounds(286, 22, 133, 14);
 		contentPane.add(lblListaDeRequisitos);
-		
-		listRequisitos = new JList();
-		listRequisitos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		modelo = new DefaultListModel<String>();
-		scrollLista = new JScrollPane();
-		scrollLista.setBounds(462, 57, 125, 133);
-	    scrollLista.setViewportView(listRequisitos);
-		cargarRequisitosExternos();
-		contentPane.add(scrollLista);
+		
 		
 		JButton btnAsignar = new JButton("Asignar");
 		btnAsignar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//COGER EL PARAMETRO DE LA LISTA
 				boolean esDigito = false;
-				if(esfuerzoReqV.getText().equals(""))
+				if(listRequisitos.isSelectionEmpty()) {
+					JOptionPane.showMessageDialog(null, "Debe seleccionar un requisito.", "MENSAJE",
+							JOptionPane.WARNING_MESSAGE);
+				}
+				else if(esfuerzoReqV.getText().isEmpty())
 				{
-					JOptionPane.showMessageDialog(null, "Debe introducir el essfuerzo al requisito", "MENSAJE",
+					JOptionPane.showMessageDialog(null, "Debe introducir el esfuerzo al requisito.", "MENSAJE",
 							JOptionPane.WARNING_MESSAGE);
 				}
 				else
@@ -186,27 +190,57 @@ public class CrearRequisito extends JFrame {
 				if(esDigito)
 				{
 				try {
+					int esfuerzo=Integer.parseInt(esfuerzoReqV.getText());
+					if(esfuerzo<0||esfuerzo>10) {
+						JOptionPane.showMessageDialog(null, "El esfuerzo es un número entre 0 y 10.", "MENSAJE",
+								JOptionPane.WARNING_MESSAGE);
+					}else {
 					bdpr.asignarRequisitoProyecto(listRequisitos.getSelectedValue().toString(), cons.proySeleccionado, esfuerzoReqV.getText());
 					ModificarProyecto modificarProyecto = new ModificarProyecto();
 					modificarProyecto.setVisible(true);
 					dispose();
 					
-				} catch (PersistentException e1) {
+					}} catch (PersistentException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				}
 			}
 		});
-		btnAsignar.setBounds(655, 183, 90, 29);
+		
+		//listProyectos = new JList();
+		//listProyectos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		//scrollLista = new JScrollPane();
+		//scrollLista.setBounds(10, 36, 179, 147);
+	    //scrollLista.setViewportView(listProyectos);
+		//contentPane.add(scrollLista);
+		
+		
+		
+		/////////////////
+		listRequisitos = new JList();
+		listRequisitos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollLista = new JScrollPane();
+		scrollLista.setBounds(286, 46, 121, 129);		
+		scrollLista.setViewportView(listRequisitos);
+		cargarRequisitosExternos();
+		contentPane.add(scrollLista);
+		//////////////////
+		
+		
+		
+		//listRequisitos.setBounds(286, 46, 121, 129);
+		//contentPane.add(listRequisitos);
+		
+		btnAsignar.setBounds(349, 179, 90, 29);
 		contentPane.add(btnAsignar);
 		
-		JLabel lblIntroduceEsfuerzo = new JLabel("Introduce esfuerzo");
-		lblIntroduceEsfuerzo.setBounds(615, 58, 130, 14);
-		contentPane.add(lblIntroduceEsfuerzo);
-		
 		esfuerzoReqV = new JTextField();
-		esfuerzoReqV.setBounds(625, 82, 86, 20);
+		esfuerzoReqV.setBounds(265, 182, 86, 20);
+TextPrompt placeholder3 = new TextPrompt("Esfuerzo", esfuerzoReqV);
+		
+		placeholder3.changeAlpha(0.75f);
+		placeholder3.changeStyle(Font.ITALIC);
 		contentPane.add(esfuerzoReqV);
 		esfuerzoReqV.setColumns(10);
 		
@@ -216,9 +250,9 @@ public class CrearRequisito extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 760, 263);
+		setBounds(100, 100, 450, 263);
 		setLocationRelativeTo(null);
-		setTitle("Programa para gestión de requisitos");
+		setTitle("Crear Requisito");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -228,24 +262,26 @@ public class CrearRequisito extends JFrame {
 	
 	public void crearRequisito() {
 		try {
-			if(txtNombreDelRequisito.getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "Debe introducir el nombre del requisito", "MENSAJE",
+			if(txtNombreDelRequisito.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Debe introducir el nombre del requisito.", "MENSAJE",
 						JOptionPane.WARNING_MESSAGE);
-			} else if(esfuerzoReq.getText().equals(""))
+			} else if(esfuerzoReq.getText().isEmpty())
 			{
-				JOptionPane.showMessageDialog(null, "Debe introducir el essfuerzo al requisito", "MENSAJE",
+				JOptionPane.showMessageDialog(null, "Debe introducir el esfuerzo al requisito.", "MENSAJE",
 						JOptionPane.WARNING_MESSAGE);
 			}
 			else {
+				
+				
 				if(bd_req.crearRequisito(txtNombreDelRequisito.getText(), txtAdescripcion.getText())) {
 					bdpr.asignarRequisitoProyecto(txtNombreDelRequisito.getText(), cons.proySeleccionado,esfuerzoReq.getText());
 					txtNombreDelRequisito.setText("");
 					txtAdescripcion.setText("");
 					esfuerzoReq.setText("");
-					JOptionPane.showMessageDialog(null, "El requisito se ha creado con éxito", "MENSAJE",
+					JOptionPane.showMessageDialog(null, "El requisito se ha creado con éxito.", "MENSAJE",
 							JOptionPane.INFORMATION_MESSAGE);
 				} else {
-					JOptionPane.showMessageDialog(null, "El requisito introducido ya existe"
+					JOptionPane.showMessageDialog(null, "El requisito introducido ya existe."
 							+ "", "MENSAJE",
 							JOptionPane.WARNING_MESSAGE);
 				}
