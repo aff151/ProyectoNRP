@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Vector;
 
 import org.orm.PersistentException;
+import org.orm.PersistentTransaction;
 
 import database.Valor;
 
@@ -40,16 +41,23 @@ public class BD_Valor {
 		}
 		return listValor;
 	}
-	public void modificarValor(String pro,String cli,String req,String valor) throws PersistentException
+	
+	public void crearValor(String pro,String cli,String req,String valor) throws PersistentException
 	{
+		PersistentTransaction t = database.BasededatosPersistentManager.instance().getSession().beginTransaction();
+
+		Valor val = null;
 		for(Valor v : ValorDAO.listValorByQuery(null, null))
 		{
 			if(pro.equals(v.getProyecto().getNombre()) && 
 					cli.equals(v.getCliente().getNombre()) && req.equals(v.getRequisito().getNombre()))
 				
 			{
-				v.setValor(Integer.parseInt(valor));
+				val = v;
+				
+				val.setValor(Integer.parseInt(valor));
 			}
 		}
+		ValorDAO.save(val);
 	}
 }
