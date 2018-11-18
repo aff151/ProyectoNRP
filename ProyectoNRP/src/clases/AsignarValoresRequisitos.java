@@ -2,6 +2,7 @@ package clases;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +24,8 @@ import database.Requisito;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -128,9 +131,27 @@ public class AsignarValoresRequisitos extends JFrame {
 		
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
-				modificarValores();
+				
+				try {
+					if(bdValor.modificarValor(cons.proySeleccionado, listClientes.getSelectedValue().toString(), listRequisitos.getSelectedValue().toString(), textValor.getText()))
+					{
+						JOptionPane.showMessageDialog(null, "Se ha modificado el valor correctamente", "MENSAJE",
+								JOptionPane.WARNING_MESSAGE);
+					}
+					else 
+					{
+						bdValor.crearValor(cons.proySeleccionado, listClientes.getSelectedValue().toString(), listRequisitos.getSelectedValue().toString(), textValor.getText());
+						JOptionPane.showMessageDialog(null, "Se ha creadp el valor correctamente", "MENSAJE",
+								JOptionPane.WARNING_MESSAGE);
+					}
+				} catch (HeadlessException | PersistentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				ModificarProyecto mp = new ModificarProyecto();
+				mp.setVisible(true);
+				dispose();
 				
 			}
 		});
@@ -178,22 +199,4 @@ public class AsignarValoresRequisitos extends JFrame {
 		}
 	}
 
-	public boolean modificarValores()
-	{
-		
-		String nProyecto = cons.proySeleccionado;
-		String nCliente = listClientes.getSelectedValue().toString();
-		String valor = textValor.getText();
-		String nReq = listRequisitos.getSelectedValue().toString();
-		
-		try {
-			bdValor.crearValor(nProyecto, nCliente, nReq, valor);
-		} catch (PersistentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return true;
-	}
-	
 }

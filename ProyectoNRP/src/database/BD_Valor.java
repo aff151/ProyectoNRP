@@ -44,20 +44,58 @@ public class BD_Valor {
 	
 	public void crearValor(String pro,String cli,String req,String valor) throws PersistentException
 	{
-		PersistentTransaction t = database.BasededatosPersistentManager.instance().getSession().beginTransaction();
 
+
+		Valor v = ValorDAO.createValor();
+		Cliente client = null;
+		Proyecto proyec = null;
+		Requisito requi = null;
+		//coger Cliente
+		for(Cliente c : ClienteDAO.listClienteByQuery(null, null))
+		{
+			if(cli.equals(c.getNombre()))
+				client = c;
+		}
+		//Cogemos proyecto
+		for(Proyecto p : ProyectoDAO.listProyectoByQuery(null, null))
+		{
+			if(pro.equals(p.getNombre()))
+				proyec = p;
+		}
+		//Cogemos Requisito
+		for(Requisito r : RequisitoDAO.listRequisitoByQuery(null, null))
+		{
+			if(req.equals(r.getNombre()))
+				requi = r;
+		}
+		//Añadimos los valores al valor
+		v.setCliente(client);
+		v.setProyecto(proyec);
+		v.setRequisito(requi);
+		v.setValor(Integer.parseInt(valor));
+		
+		ValorDAO.save(v);
+	
+	}
+	
+	public boolean modificarValor(String pro,String cli,String req,String valor) throws PersistentException
+	{
+		boolean existe = false;
 		Valor val = null;
 		for(Valor v : ValorDAO.listValorByQuery(null, null))
 		{
-			if(pro.equals(v.getProyecto().getNombre()) && 
-					cli.equals(v.getCliente().getNombre()) && req.equals(v.getRequisito().getNombre()))
-				
+			if(pro.equals(v.getProyecto().getNombre()) && cli.equals(v.getCliente().getNombre()) && req.equals(v.getRequisito().getNombre()))
 			{
 				val = v;
-				
-				val.setValor(Integer.parseInt(valor));
+				existe = true;
 			}
+				
 		}
-		ValorDAO.save(val);
+		if(existe == true)
+		{
+			val.setValor(Integer.parseInt(valor));
+		}
+		
+		return (existe == true) ? true : false;
 	}
 }
