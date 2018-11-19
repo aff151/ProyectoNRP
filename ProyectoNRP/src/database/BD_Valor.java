@@ -92,10 +92,14 @@ public class BD_Valor {
 		return (existe == true) ? true : false;
 	}
 
-	public boolean modificarMatrizValores(ArrayList<String> valoresMatriz, ArrayList<String> requisitos, String proySeleccionado) throws PersistentException {
+	public boolean modificarMatrizValores(String[] valoresMatriz, String[] requisitos, String proySeleccionado) throws PersistentException {
 		PersistentTransaction t = database.BasededatosPersistentManager.instance().getSession().beginTransaction();
 		Cliente cli = new Cliente();
 		Requisito req = new Requisito();
+		cli.setNombre(valoresMatriz[0]);
+		for(int i = 1; i < valoresMatriz.length; i++) {
+			req.setNombre(requisitos[i]);
+		}
 		
 
 		return false;
