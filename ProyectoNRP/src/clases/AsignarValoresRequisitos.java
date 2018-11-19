@@ -153,6 +153,7 @@ public class AsignarValoresRequisitos extends JFrame {
 										listRequisitos.getSelectedValue().toString(), textValor.getText())) {
 									JOptionPane.showMessageDialog(null, "Se ha modificado el valor correctamente.",
 											"MENSAJE", JOptionPane.WARNING_MESSAGE);
+									
 								} else {
 									bdValor.crearValor(cons.proySeleccionado,
 											listClientes.getSelectedValue().toString(),
@@ -160,6 +161,7 @@ public class AsignarValoresRequisitos extends JFrame {
 									JOptionPane.showMessageDialog(null, "Se ha creado el valor correctamente.",
 											"MENSAJE", JOptionPane.WARNING_MESSAGE);
 								}
+								dispose();
 							}
 						}
 					}
@@ -169,7 +171,7 @@ public class AsignarValoresRequisitos extends JFrame {
 				}
 				ModificarProyecto mp = new ModificarProyecto();
 				mp.setVisible(true);
-				dispose();
+				
 
 			}
 		});
@@ -220,7 +222,7 @@ public void inicializar() {
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 	setResizable(false);
-	setBounds(100, 100, 368, 334);
+	setBounds(100, 100, 336, 334);
 	setLocationRelativeTo(null);
 	setTitle("Asignar Valor a Requisito");
 	contentPane = new JPanel();
