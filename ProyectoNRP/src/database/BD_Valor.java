@@ -92,16 +92,24 @@ public class BD_Valor {
 		return (existe == true) ? true : false;
 	}
 
-	public boolean modificarMatrizValores(String[] valoresMatriz, String[] requisitos, String proySeleccionado) throws PersistentException {
-		PersistentTransaction t = database.BasededatosPersistentManager.instance().getSession().beginTransaction();
-		Cliente cli = new Cliente();
-		Requisito req = new Requisito();
-		cli.setNombre(valoresMatriz[0]);
-		for(int i = 1; i < valoresMatriz.length; i++) {
-			req.setNombre(requisitos[i]);
+	public boolean modificarMatrizValores(String[] valoresMatriz, String[] requisitos, String proySeleccionado)
+			throws PersistentException {
+		// Cliente cli = new Cliente();
+		// Requisito req = new Requisito();
+		String nombreCliente = "";
+		String nombreRequisito = "";
+		nombreCliente = valoresMatriz[0];
+		for (int i = 1; i < valoresMatriz.length; i++) {
+			nombreRequisito = requisitos[i];
+			for (Valor v : ValorDAO.listValorByQuery(null, null)) {
+				if (v.getProyecto().getNombre().equals(proySeleccionado)
+						&& v.getCliente().getNombre().equals(nombreCliente)
+						&& v.getRequisito().getNombre().equals(nombreRequisito)) {
+					v.setValor(Integer.parseInt(valoresMatriz[i]));
+				}
+			}
 		}
-		
 
-		return false;
+		return true;
 	}
 }
