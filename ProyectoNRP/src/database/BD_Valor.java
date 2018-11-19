@@ -92,7 +92,7 @@ public class BD_Valor {
 		return (existe == true) ? true : false;
 	}
 
-	public boolean modificarMatrizValores(String[] valoresMatriz, String[] requisitos, String proySeleccionado)
+	public boolean modificarMatrizValores(String[] valoresMatriz, List<Requisito> requisitos, String proySeleccionado)
 			throws PersistentException {
 		// Cliente cli = new Cliente();
 		// Requisito req = new Requisito();
@@ -100,12 +100,13 @@ public class BD_Valor {
 		String nombreRequisito = "";
 		nombreCliente = valoresMatriz[0];
 		for (int i = 1; i < valoresMatriz.length; i++) {
-			nombreRequisito = requisitos[i];
+			nombreRequisito = requisitos.get(i-1).getNombre();
 			for (Valor v : ValorDAO.listValorByQuery(null, null)) {
 				if (v.getProyecto().getNombre().equals(proySeleccionado)
 						&& v.getCliente().getNombre().equals(nombreCliente)
 						&& v.getRequisito().getNombre().equals(nombreRequisito)) {
 					v.setValor(Integer.parseInt(valoresMatriz[i]));
+					ValorDAO.save(v);
 				}
 			}
 		}

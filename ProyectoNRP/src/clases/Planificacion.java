@@ -3,6 +3,8 @@ package clases;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -48,6 +50,8 @@ public class Planificacion extends JFrame {
 	private List<ProyReq> listProyReq;
 	private List<Requisito> listReq;
 	private List<Valor> listValor;
+	//Array bidimensional con datos de la tabla de interfaz
+	private String datosTabla[][];
 	/**
 	 * Launch the application.
 	 */
@@ -110,10 +114,20 @@ public class Planificacion extends JFrame {
 		contentPane.add(btnAtrs);
 		
 		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				guardar();
+			}
+		});
 		btnGuardar.setBounds(464, 308, 89, 23);
 		contentPane.add(btnGuardar);
 		
 		JButton btnPlanificar = new JButton("Planificar");
+		btnPlanificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				planificar();
+			}
+		});
 		btnPlanificar.setBounds(464, 342, 89, 23);
 		contentPane.add(btnPlanificar);
 	}
@@ -192,6 +206,45 @@ public class Planificacion extends JFrame {
 		datoColumna[datoColumna.length-1][0] = "Esfuerzo";
 		for(int i = 1; i <= listProyReq.size(); i++) {
 			datoColumna[datoColumna.length-1][i] = String.valueOf(listProyReq.get(i-1).getEsfuerzo());
+		}
+	}
+	
+	public void planificar() {
+		RequisitoSat r1 = new RequisitoSat("juan", 5, 8);
+		RequisitoSat r2 = new RequisitoSat("medina", 8, 5);
+		RequisitoSat r3 = new RequisitoSat("alberto", 2, 5);
+		List<RequisitoSat> lista = new ArrayList<RequisitoSat>();
+		lista.add(r1);
+		lista.add(r2);
+		lista.add(r3);
+		System.out.println(lista.get(0).getNombre());
+		System.out.println(lista.get(1).getNombre());
+		System.out.println(lista.get(2).getNombre());
+		Collections.sort(lista);
+		System.out.println(lista.get(0).getNombre());
+		System.out.println(lista.get(1).getNombre());
+		System.out.println(lista.get(2).getNombre());
+	}
+	public void guardar() {
+		datosTabla = new String[listPeso.size()+1][titColumna.length-1];
+		/*Recorro la tabla de la interfaz para asignar los nuevos valores 
+		 * al nuevo array quitando la fila de esfuerzo y la columna de peso*/
+		for(int i = 0; i < titColumna.length-1; i++) {
+			for(int j = 0; j < listPeso.size()+1; j++) {
+				datosTabla[i][j] = tabla.getValueAt(i, j).toString();
+			}
+		}
+		String [] arrayTabla = new String[titColumna.length-1];
+		for(int i = 0; i < datosTabla.length-1; i++) {
+			for(int j = 0; j < titColumna.length-1; j++) {
+				arrayTabla[j] = datosTabla[i][j];
+			}
+			try {
+				bdValor.modificarMatrizValores(arrayTabla, listReq, ConsultarProyectosPlanificacion.proySeleccionado);
+			} catch (PersistentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }
