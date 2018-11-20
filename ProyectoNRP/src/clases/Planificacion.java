@@ -52,6 +52,8 @@ public class Planificacion extends JFrame {
 	private List<Valor> listValor;
 	//Array bidimensional con datos de la tabla de interfaz
 	private String datosTabla[][];
+	//lista de requisitos ordenados por satisfaccion
+	public static List<RequisitoSat> listReqSat;
 	/**
 	 * Launch the application.
 	 */
@@ -210,37 +212,29 @@ public class Planificacion extends JFrame {
 	}
 	
 	public void planificar() {
+		//me quedo con los valores y la columna de pesos
 		String [][] datosCalculo = new String[listPeso.size()][titColumna.length-1];
 		for(int i = 0; i < datosCalculo.length; i++) {
 			for(int j = 0; j < titColumna.length-1; j++) {
 				datosCalculo[i][j] = tabla.getValueAt(i, j+1).toString();
 			}
 		}
-		int satisfaccion = 0, k = 0;
-		//EL MEOLLO DE LA CUESTION IS HERE!!
-		for(int i = 0; i < titColumna.length-1; i++) {
+		
+		//Calculo de satisfaccion por cada requisito y añade el requisito a la lista
+		listReqSat = new ArrayList<RequisitoSat>();
+		int satisfaccion = 0;
+		for(int i = 0; i < titColumna.length-2; i++) {
 			for(int j = 0; j < datosCalculo.length; j++) {
-				satisfaccion += Integer.parseInt(datosCalculo[i][k]) * 
-						Integer.parseInt(datosCalculo[i][titColumna.length-1]);
+				satisfaccion += Integer.parseInt(datosCalculo[j][i]) * 
+						Integer.parseInt(datosCalculo[j][titColumna.length-2]);
 			}
-			k++;
-			System.out.println(satisfaccion);
+			listReqSat.add(new RequisitoSat(listReq.get(i).getNombre(),listProyReq.get(i).getEsfuerzo(), satisfaccion));
 			satisfaccion = 0;
 		}
-		/*RequisitoSat r1 = new RequisitoSat("juan", 5, 8);
-		RequisitoSat r2 = new RequisitoSat("medina", 8, 5);
-		RequisitoSat r3 = new RequisitoSat("alberto", 2, 5);
-		List<RequisitoSat> lista = new ArrayList<RequisitoSat>();
-		lista.add(r1);
-		lista.add(r2);
-		lista.add(r3);
-		System.out.println(lista.get(0).getNombre());
-		System.out.println(lista.get(1).getNombre());
-		System.out.println(lista.get(2).getNombre());
-		Collections.sort(lista);
-		System.out.println(lista.get(0).getNombre());
-		System.out.println(lista.get(1).getNombre());
-		System.out.println(lista.get(2).getNombre());*/
+		Collections.sort(listReqSat);
+		for(int i = 0; i < listReqSat.size(); i++) {
+			System.out.println(listReqSat.get(i).getNombre());
+		}
 	}
 	public void guardar() {
 		datosTabla = new String[listPeso.size()+1][titColumna.length-1];
