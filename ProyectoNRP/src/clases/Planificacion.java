@@ -230,7 +230,8 @@ public class Planificacion extends JFrame {
 		/*Recorro la tabla de la interfaz para asignar los nuevos valores 
 		 * al nuevo array quitando la fila de esfuerzo y la columna de peso*/
 		for(int i = 0; i < titColumna.length-1; i++) {
-			for(int j = 0; j < listPeso.size()+1; j++) {
+			for(int j = 0; j < titColumna.length-1; j++) {
+				System.out.println(tabla.getValueAt(i, j).toString());
 				datosTabla[i][j] = tabla.getValueAt(i, j).toString();
 			}
 		}
