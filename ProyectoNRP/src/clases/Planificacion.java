@@ -210,7 +210,24 @@ public class Planificacion extends JFrame {
 	}
 	
 	public void planificar() {
-		RequisitoSat r1 = new RequisitoSat("juan", 5, 8);
+		String [][] datosCalculo = new String[listPeso.size()][titColumna.length-1];
+		for(int i = 0; i < datosCalculo.length; i++) {
+			for(int j = 0; j < titColumna.length-1; j++) {
+				datosCalculo[i][j] = tabla.getValueAt(i, j+1).toString();
+			}
+		}
+		int satisfaccion = 0, k = 0;
+		//EL MEOLLO DE LA CUESTION IS HERE!!
+		for(int i = 0; i < titColumna.length-1; i++) {
+			for(int j = 0; j < datosCalculo.length; j++) {
+				satisfaccion += Integer.parseInt(datosCalculo[i][k]) * 
+						Integer.parseInt(datosCalculo[i][titColumna.length-1]);
+			}
+			k++;
+			System.out.println(satisfaccion);
+			satisfaccion = 0;
+		}
+		/*RequisitoSat r1 = new RequisitoSat("juan", 5, 8);
 		RequisitoSat r2 = new RequisitoSat("medina", 8, 5);
 		RequisitoSat r3 = new RequisitoSat("alberto", 2, 5);
 		List<RequisitoSat> lista = new ArrayList<RequisitoSat>();
@@ -223,20 +240,19 @@ public class Planificacion extends JFrame {
 		Collections.sort(lista);
 		System.out.println(lista.get(0).getNombre());
 		System.out.println(lista.get(1).getNombre());
-		System.out.println(lista.get(2).getNombre());
+		System.out.println(lista.get(2).getNombre());*/
 	}
 	public void guardar() {
 		datosTabla = new String[listPeso.size()+1][titColumna.length-1];
 		/*Recorro la tabla de la interfaz para asignar los nuevos valores 
 		 * al nuevo array quitando la fila de esfuerzo y la columna de peso*/
-		for(int i = 0; i < titColumna.length-1; i++) {
+		for(int i = 0; i < datosTabla.length; i++) {
 			for(int j = 0; j < titColumna.length-1; j++) {
-				System.out.println(tabla.getValueAt(i, j).toString());
 				datosTabla[i][j] = tabla.getValueAt(i, j).toString();
 			}
 		}
 		String [] arrayTabla = new String[titColumna.length-1];
-		for(int i = 0; i < datosTabla.length-1; i++) {
+		for(int i = 0; i < datosTabla.length; i++) {
 			for(int j = 0; j < titColumna.length-1; j++) {
 				arrayTabla[j] = datosTabla[i][j];
 			}
