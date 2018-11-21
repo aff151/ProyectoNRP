@@ -115,7 +115,8 @@ public class BD_Valor {
 			}
 		}
 		for (Valor valor : listValorBorrar) {
-			ValorDAO.delete(valor);
+			ValorDAO.deleteAndDissociate(valor);
+			//ValorDAO.delete(valor);
 		}
 		// t.commit();
 		// } catch (PersistentException e) {
