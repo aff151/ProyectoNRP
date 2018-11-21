@@ -94,15 +94,11 @@ public class BD_Valor {
 
 	public boolean modificarMatrizValores(String[] valoresMatriz, List<Requisito> requisitos, String proySeleccionado)
 			throws PersistentException {
-		// PersistentTransaction t =
-		// database.BasededatosPersistentManager.instance().getSession().beginTransaction();
-		// try {
 		boolean crea = true;
 		List<Valor> listValorBorrar = new ArrayList<Valor>();
 		String nombreCliente = valoresMatriz[0];
 		String nombreRequisito = "";
 		for (int i = 1; i < valoresMatriz.length; i++) {
-			System.out.println("Soy el valor -> " + valoresMatriz[i]);
 			crea = true;
 			nombreRequisito = requisitos.get(i - 1).getNombre();
 			for (Valor v : ValorDAO.listValorByQuery(null, null)) {
@@ -110,11 +106,9 @@ public class BD_Valor {
 					if (v.getProyecto().getNombre().equals(proySeleccionado)
 							&& v.getCliente().getNombre().equals(nombreCliente)
 							&& v.getRequisito().getNombre().equals(nombreRequisito)) {
-						System.out.println("BORRO");
 						listValorBorrar.add(v);
 						crea = false;
 					}
-					System.out.println("SOY UN 0 Y NO HAGO NADA");
 					crea = false;
 				}
 				if (Integer.parseInt(valoresMatriz[i]) != 0) {
@@ -123,28 +117,18 @@ public class BD_Valor {
 							&& v.getRequisito().getNombre().equals(nombreRequisito)) {
 						v.setValor(Integer.parseInt(valoresMatriz[i]));
 						ValorDAO.save(v);
-						System.out.println("MODIFICAR");
 						crea = false;
-					}else {
-						crea = true;
-
 					}
 				}
 			}
 			if(crea) {
 				crearValor(proySeleccionado, nombreCliente, nombreRequisito, valoresMatriz[i]);
-				System.out.println("CREO EN MI APP");
 			}
 		}
 		for (Valor valor : listValorBorrar) {
 			ValorDAO.deleteAndDissociate(valor);
-			//ValorDAO.delete(valor);
 		}
-		// t.commit();
-		// } catch (PersistentException e) {
-		// TODO Auto-generated catch block
-		// t.rollback();
-		// }
+		
 		return true;
 	}
 }
