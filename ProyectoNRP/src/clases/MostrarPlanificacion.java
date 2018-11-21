@@ -11,7 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 import org.orm.PersistentException;
 
@@ -89,6 +92,13 @@ public class MostrarPlanificacion extends JFrame {
 		// variar la JTable
 		tabla.setRowSelectionAllowed(true);
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		TableColumnModel columnModel = tabla.getColumnModel();
+		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+		tcr.setHorizontalAlignment(SwingConstants.CENTER);
+		columnModel.getColumn(1).setPreferredWidth(60);
+		columnModel.getColumn(2).setPreferredWidth(40);
+		columnModel.getColumn(1).setCellRenderer(tcr);
+		columnModel.getColumn(2).setCellRenderer(tcr);
 		// Incorporamos la tabla a un panel que incorpora ya una barra
 		// de desplazamiento, para que la visibilidad de la tabla sea
 		// automática
@@ -117,6 +127,13 @@ public class MostrarPlanificacion extends JFrame {
 				// variar la JTable
 				tabla2.setRowSelectionAllowed(true);
 				tabla2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				TableColumnModel columnModel2 = tabla2.getColumnModel();
+				DefaultTableCellRenderer tcr2 = new DefaultTableCellRenderer();
+				tcr2.setHorizontalAlignment(SwingConstants.CENTER);
+				columnModel2.getColumn(1).setPreferredWidth(60);
+				columnModel2.getColumn(2).setPreferredWidth(40);
+				columnModel2.getColumn(1).setCellRenderer(tcr2);
+				columnModel2.getColumn(2).setCellRenderer(tcr2);
 				// Incorporamos la tabla a un panel que incorpora ya una barra
 				// de desplazamiento, para que la visibilidad de la tabla sea
 				// automática
@@ -130,6 +147,17 @@ public class MostrarPlanificacion extends JFrame {
 		});
 		BtnLimiteEsfuerzo.setBounds(237, 192, 117, 23);
 		contentPane.add(BtnLimiteEsfuerzo);
+		
+		JButton btnAtrs = new JButton("Atrás");
+		btnAtrs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Planificacion consProyPlanif = new Planificacion();
+				consProyPlanif.setVisible(true);
+				dispose();
+			}
+		});
+		btnAtrs.setBounds(31, 319, 89, 23);
+		contentPane.add(btnAtrs);
 
 		limitetextField = new JTextField();
 		limitetextField.setBounds(250, 161, 86, 20);
@@ -154,7 +182,7 @@ public class MostrarPlanificacion extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 632, 427);
+		setBounds(100, 100, 632, 395);
 		setLocationRelativeTo(null);
 		setTitle("Planificación del proyecto" + ConsultarProyectosPlanificacion.proySeleccionado);
 		contentPane = new JPanel();
