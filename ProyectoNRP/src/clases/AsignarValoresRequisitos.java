@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import org.orm.PersistentException;
 
 import database.BD_Clientes;
+import database.BD_ProyReq;
 import database.BD_Proyectos;
 import database.BD_Requisitos;
 import database.BD_Valor;
@@ -47,6 +48,7 @@ public class AsignarValoresRequisitos extends JFrame {
 	private JScrollPane scrollLista;
 	private JScrollPane scrollLista1;
 	BD_Requisitos bd_req = new BD_Requisitos();
+	BD_ProyReq bd_req2 = new BD_ProyReq();
 
 	// Componentes para listaClientes
 	private JList listClientes;
@@ -161,8 +163,9 @@ public class AsignarValoresRequisitos extends JFrame {
 									JOptionPane.showMessageDialog(null, "Se ha creado el valor correctamente.",
 											"MENSAJE", JOptionPane.WARNING_MESSAGE);
 								}
-								dispose();
+								
 							}
+							dispose();
 						}
 					}
 				} catch (HeadlessException | PersistentException e1) {
@@ -232,7 +235,8 @@ public void inicializar() {
 }
 	public void cargarRequisitosProyecto() {
 		try {
-			listaRequisito = bd_req.cargarRequisitosProyecto(cons.proySeleccionado);
+			
+			listaRequisito = bd_req2.cargarRequisitosProyecto(cons.proySeleccionado);
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
