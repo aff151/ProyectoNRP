@@ -97,10 +97,12 @@ public class BD_Valor {
 		// PersistentTransaction t =
 		// database.BasededatosPersistentManager.instance().getSession().beginTransaction();
 		// try {
+		boolean crea = true;
 		List<Valor> listValorBorrar = new ArrayList<Valor>();
 		String nombreCliente = valoresMatriz[0];
 		String nombreRequisito = "";
 		for (int i = 1; i < valoresMatriz.length; i++) {
+			crea = true;
 			nombreRequisito = requisitos.get(i - 1).getNombre();
 			for (Valor v : ValorDAO.listValorByQuery(null, null)) {
 				if (Integer.parseInt(valoresMatriz[i]) == 0) {
@@ -109,10 +111,20 @@ public class BD_Valor {
 							&& v.getRequisito().getNombre().equals(nombreRequisito)) {
 						listValorBorrar.add(v);
 					}
-				} /*
-					 * else { System.out.println("Siguiente iteracion"); break; }
-					 */
+					crea = false;
+				}
+				if (Integer.parseInt(valoresMatriz[i]) != 0) {
+					if (v.getProyecto().getNombre().equals(proySeleccionado)
+							&& v.getCliente().getNombre().equals(nombreCliente)
+							&& v.getRequisito().getNombre().equals(nombreRequisito)) {
+						v.setValor(Integer.parseInt(valoresMatriz[i]));
+						ValorDAO.save(v);
+					}
+					crea = false;
+				}
 			}
+			if(crea)
+				crearValor(proySeleccionado, nombreCliente, nombreRequisito, valoresMatriz[i]);
 		}
 		for (Valor valor : listValorBorrar) {
 			ValorDAO.deleteAndDissociate(valor);
