@@ -249,7 +249,7 @@ public class Planificacion extends JFrame {
 			}
 		}
 		String [] arrayTabla = new String[titColumna.length-1];
-		for(int i = 0; i < datosTabla.length; i++) {
+		for(int i = 0; i < datosTabla.length-1; i++) {
 			for(int j = 0; j < titColumna.length-1; j++) {
 				arrayTabla[j] = datosTabla[i][j];
 			}
