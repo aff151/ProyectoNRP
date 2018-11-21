@@ -124,7 +124,7 @@ public class CrearRequisito extends JFrame {
 			}
 		});
 		
-		btnCrearRequisitos.setBounds(120, 152, 77, 29);
+		btnCrearRequisitos.setBounds(144, 155, 77, 20);
 		contentPane.add(btnCrearRequisitos);
 		
 		JButton button = new JButton("Atrás");
@@ -141,11 +141,11 @@ public class CrearRequisito extends JFrame {
 				}
 			
 		});
-		button.setBounds(22, 206, 77, 29);
+		button.setBounds(10, 203, 77, 20);
 		contentPane.add(button);
 
 		esfuerzoReq = new JTextField();
-		esfuerzoReq.setBounds(22, 155, 86, 20);
+		esfuerzoReq.setBounds(75, 155, 59, 21);
 		
 		esfuerzoReq.setColumns(10);
 		TextPrompt placeholder2 = new TextPrompt("Esfuerzo", esfuerzoReq);
@@ -156,11 +156,11 @@ public class CrearRequisito extends JFrame {
 
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
-		separator.setBounds(233, 16, 50, 200);
+		separator.setBounds(233, 16, 2, 200);
 		contentPane.add(separator);
 		
 		JLabel lblListaDeRequisitos = new JLabel("Lista de Requisitos");
-		lblListaDeRequisitos.setBounds(286, 22, 133, 14);
+		lblListaDeRequisitos.setBounds(290, 22, 133, 14);
 		contentPane.add(lblListaDeRequisitos);
 		modelo = new DefaultListModel<String>();
 		
@@ -232,11 +232,11 @@ public class CrearRequisito extends JFrame {
 		//listRequisitos.setBounds(286, 46, 121, 129);
 		//contentPane.add(listRequisitos);
 		
-		btnAsignar.setBounds(349, 179, 90, 29);
+		btnAsignar.setBounds(334, 182, 85, 20);
 		contentPane.add(btnAsignar);
 		
 		esfuerzoReqV = new JTextField();
-		esfuerzoReqV.setBounds(265, 182, 86, 20);
+		esfuerzoReqV.setBounds(272, 182, 59, 21);
 TextPrompt placeholder3 = new TextPrompt("Esfuerzo", esfuerzoReqV);
 		
 		placeholder3.changeAlpha(0.75f);
