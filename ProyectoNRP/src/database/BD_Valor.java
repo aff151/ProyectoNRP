@@ -94,23 +94,34 @@ public class BD_Valor {
 
 	public boolean modificarMatrizValores(String[] valoresMatriz, List<Requisito> requisitos, String proySeleccionado)
 			throws PersistentException {
-		// Cliente cli = new Cliente();
-		// Requisito req = new Requisito();
-		String nombreCliente = "";
+		// PersistentTransaction t =
+		// database.BasededatosPersistentManager.instance().getSession().beginTransaction();
+		// try {
+		List<Valor> listValorBorrar = new ArrayList<Valor>();
+		String nombreCliente = valoresMatriz[0];
 		String nombreRequisito = "";
-		nombreCliente = valoresMatriz[0];
 		for (int i = 1; i < valoresMatriz.length; i++) {
-			nombreRequisito = requisitos.get(i-1).getNombre();
+			nombreRequisito = requisitos.get(i - 1).getNombre();
 			for (Valor v : ValorDAO.listValorByQuery(null, null)) {
-				if (v.getProyecto().getNombre().equals(proySeleccionado)
-						&& v.getCliente().getNombre().equals(nombreCliente)
-						&& v.getRequisito().getNombre().equals(nombreRequisito)) {
-					v.setValor(Integer.parseInt(valoresMatriz[i]));
-					ValorDAO.save(v);
-				}
+				if (Integer.parseInt(valoresMatriz[i]) == 0) {
+					if (v.getProyecto().getNombre().equals(proySeleccionado)
+							&& v.getCliente().getNombre().equals(nombreCliente)
+							&& v.getRequisito().getNombre().equals(nombreRequisito)) {
+						listValorBorrar.add(v);
+					}
+				} /*
+					 * else { System.out.println("Siguiente iteracion"); break; }
+					 */
 			}
 		}
-
+		for (Valor valor : listValorBorrar) {
+			ValorDAO.delete(valor);
+		}
+		// t.commit();
+		// } catch (PersistentException e) {
+		// TODO Auto-generated catch block
+		// t.rollback();
+		// }
 		return true;
 	}
 }
