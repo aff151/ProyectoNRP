@@ -99,8 +99,8 @@ public class AsignarValoresRequisitos extends JFrame {
 		listRequisitos = new JList();
 		listRequisitos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollLista = new JScrollPane();
-		scrollLista.setBounds(154, 84, 117, 149);
-		scrollLista.setRowHeaderView(listRequisitos);
+		scrollLista.setBounds(154, 83, 117, 149);
+		scrollLista.setViewportView(listRequisitos);
 		contentPane.add(scrollLista);
 
 		modelReq = new DefaultListModel<String>();
@@ -118,7 +118,7 @@ public class AsignarValoresRequisitos extends JFrame {
 		modelCli = new DefaultListModel<String>();
 
 		textValor = new JTextField();
-		textValor.setBounds(61, 244, 72, 26);
+		textValor.setBounds(44, 244, 72, 26);
 		textValor.setColumns(10);
 		TextPrompt placeholder2 = new TextPrompt("Valor", textValor);
 		placeholder2.changeAlpha(0.75f);
@@ -179,16 +179,8 @@ public class AsignarValoresRequisitos extends JFrame {
 
 			}
 		});
-		btnGuardar.setBounds(181, 293, 90, 29);
+		btnGuardar.setBounds(164, 244, 90, 29);
 		contentPane.add(btnGuardar);
-
-		JButton btnCargardatos = new JButton("Cargar");
-		btnCargardatos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnCargardatos.setBounds(154, 243, 90, 29);
-		contentPane.add(btnCargardatos);
 
 		JButton btnAtrs = new JButton("Atrás");
 		btnAtrs.addActionListener(new ActionListener() {
