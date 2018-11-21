@@ -33,6 +33,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JSeparator;
 
 public class AsignarValoresRequisitos extends JFrame {
 
@@ -90,7 +91,7 @@ public class AsignarValoresRequisitos extends JFrame {
 		contentPane.add(lblSeleccionCliente);
 
 		JLabel lblSeleccionarRequisito = new JLabel("Seleccionar Requisito");
-		lblSeleccionarRequisito.setBounds(174, 56, 176, 16);
+		lblSeleccionarRequisito.setBounds(154, 56, 176, 16);
 		contentPane.add(lblSeleccionarRequisito);
 		/*
 		 * LISTA DE REQUISITOS
@@ -98,8 +99,8 @@ public class AsignarValoresRequisitos extends JFrame {
 		listRequisitos = new JList();
 		listRequisitos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollLista = new JScrollPane();
-		scrollLista.setBounds(184, 84, 117, 149);
-		scrollLista.setViewportView(listRequisitos);
+		scrollLista.setBounds(154, 84, 117, 149);
+		scrollLista.setRowHeaderView(listRequisitos);
 		contentPane.add(scrollLista);
 
 		modelReq = new DefaultListModel<String>();
@@ -117,7 +118,7 @@ public class AsignarValoresRequisitos extends JFrame {
 		modelCli = new DefaultListModel<String>();
 
 		textValor = new JTextField();
-		textValor.setBounds(65, 245, 90, 26);
+		textValor.setBounds(61, 244, 72, 26);
 		textValor.setColumns(10);
 		TextPrompt placeholder2 = new TextPrompt("Valor", textValor);
 		placeholder2.changeAlpha(0.75f);
@@ -178,7 +179,7 @@ public class AsignarValoresRequisitos extends JFrame {
 
 			}
 		});
-		btnGuardar.setBounds(218, 279, 90, 29);
+		btnGuardar.setBounds(181, 293, 90, 29);
 		contentPane.add(btnGuardar);
 
 		JButton btnCargardatos = new JButton("Cargar");
@@ -186,7 +187,7 @@ public class AsignarValoresRequisitos extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnCargardatos.setBounds(167, 245, 72, 29);
+		btnCargardatos.setBounds(154, 243, 90, 29);
 		contentPane.add(btnCargardatos);
 
 		JButton btnAtrs = new JButton("Atrás");
@@ -197,8 +198,12 @@ public class AsignarValoresRequisitos extends JFrame {
 				dispose();
 			}
 		});
-		btnAtrs.setBounds(6, 279, 72, 29);
+		btnAtrs.setBounds(16, 293, 72, 29);
 		contentPane.add(btnAtrs);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(16, 281, 255, 2);
+		contentPane.add(separator);
 		cargarClientesProyecto();
 		cargarRequisitosProyecto();
 	}
@@ -225,7 +230,7 @@ public void inicializar() {
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 	setResizable(false);
-	setBounds(100, 100, 336, 334);
+	setBounds(100, 100, 297, 367);
 	setLocationRelativeTo(null);
 	setTitle("Asignar Valor a Requisito");
 	contentPane = new JPanel();
