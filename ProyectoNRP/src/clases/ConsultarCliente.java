@@ -218,6 +218,7 @@ public class ConsultarCliente extends JFrame {
 		}
 
 	}
+	
 	// Creamos las etiquetas que sirven de título a cada una de
 	// las columnas de la tabla
 	public void CreaColumnasReq() {
