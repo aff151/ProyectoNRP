@@ -128,6 +128,9 @@ public class Planificacion extends JFrame {
 		btnPlanificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				planificar();
+				MostrarPlanificacion consProyPlanif = new MostrarPlanificacion();
+				consProyPlanif.setVisible(true);
+				dispose();
 			}
 		});
 		btnPlanificar.setBounds(464, 342, 89, 23);
