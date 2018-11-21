@@ -103,7 +103,7 @@ public class BD_Valor {
 		String nombreRequisito = "";
 		for (int i = 1; i < valoresMatriz.length; i++) {
 			System.out.println("Soy el valor -> " + valoresMatriz[i]);
-			crea = false;
+			crea = true;
 			nombreRequisito = requisitos.get(i - 1).getNombre();
 			for (Valor v : ValorDAO.listValorByQuery(null, null)) {
 				if (Integer.parseInt(valoresMatriz[i]) == 0) {
@@ -113,7 +113,6 @@ public class BD_Valor {
 						System.out.println("BORRO");
 						listValorBorrar.add(v);
 						crea = false;
-						continue;
 					}
 					System.out.println("SOY UN 0 Y NO HAGO NADA");
 					crea = false;
@@ -126,7 +125,6 @@ public class BD_Valor {
 						ValorDAO.save(v);
 						System.out.println("MODIFICAR");
 						crea = false;
-						continue;
 					}else {
 						crea = true;
 
