@@ -18,7 +18,7 @@ import javax.swing.table.TableColumnModel;
 
 import org.orm.PersistentException;
 
-import database.Peso;
+import database.peso;
 import database.ProyReq;
 import database.Requisito;
 import database.Valor;
@@ -39,7 +39,7 @@ public class MostrarPlanificacion extends JFrame {
 	private JScrollPane panelScroll;
 	private String titColumna[];
 	private String datoColumna[][];
-	private List<Peso> listPeso;
+	private List<peso> listPeso;
 	private List<ProyReq> listProyReq;
 	private List<Requisito> listReq;
 	private List<Valor> listValor;
@@ -52,7 +52,7 @@ public class MostrarPlanificacion extends JFrame {
 	private JScrollPane panelScroll2;
 	private String titColumna2[];
 	private String datoColumna2[][];
-	private List<Peso> listPeso2;
+	private List<peso> listPeso2;
 	private List<ProyReq> listProyReq2;
 	private List<Requisito> listReq2;
 	private List<Valor> listValor2;

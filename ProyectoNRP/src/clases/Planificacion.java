@@ -21,7 +21,7 @@ import database.BD_Peso;
 import database.BD_ProyReq;
 import database.BD_Requisitos;
 import database.BD_Valor;
-import database.Peso;
+import database.peso;
 import database.ProyReq;
 import database.Proyecto;
 import database.Requisito;
@@ -46,7 +46,7 @@ public class Planificacion extends JFrame {
 	private JScrollPane panelScroll;
 	private String titColumna[];
 	private String datoColumna[][];
-	private List<Peso> listPeso;
+	private List<peso> listPeso;
 	private List<ProyReq> listProyReq;
 	private List<Requisito> listReq;
 	private List<Valor> listValor;
