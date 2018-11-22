@@ -8,8 +8,8 @@
  */
 
 /**
- * Licensee: Alfonso(University of Almeria)
- * License Type: Academic
+ * Licensee: 
+ * License Type: Evaluation
  */
 package database;
 
@@ -52,17 +52,17 @@ public class Valor implements Serializable {
 	
 	@ManyToOne(targetEntity=database.Cliente.class, fetch=FetchType.LAZY)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumns({ @JoinColumn(name="ClienteID", referencedColumnName="ID", nullable=false) })	
+	@JoinColumns(value={ @JoinColumn(name="ClienteID", referencedColumnName="ID", nullable=false) }, foreignKey=@ForeignKey(name="FKValor422757"))	
 	private database.Cliente cliente;
 	
 	@ManyToOne(targetEntity=database.Proyecto.class, fetch=FetchType.LAZY)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumns({ @JoinColumn(name="ProyectoID", referencedColumnName="ID", nullable=false) })	
+	@JoinColumns(value={ @JoinColumn(name="ProyectoID", referencedColumnName="ID", nullable=false) }, foreignKey=@ForeignKey(name="FKValor615710"))	
 	private database.Proyecto proyecto;
 	
 	@ManyToOne(targetEntity=database.Requisito.class, fetch=FetchType.LAZY)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumns({ @JoinColumn(name="RequisitoID", referencedColumnName="ID", nullable=false) })	
+	@JoinColumns(value={ @JoinColumn(name="RequisitoID", referencedColumnName="ID", nullable=false) }, foreignKey=@ForeignKey(name="FKValor838152"))	
 	private database.Requisito requisito;
 	
 	@Column(name="Valor", nullable=false, length=10)	

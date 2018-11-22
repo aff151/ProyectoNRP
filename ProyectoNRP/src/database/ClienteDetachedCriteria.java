@@ -8,8 +8,8 @@
  */
 
 /**
- * Licensee: Alfonso(University of Almeria)
- * License Type: Academic
+ * Licensee: 
+ * License Type: Evaluation
  */
 package database;
 
@@ -40,8 +40,8 @@ public class ClienteDetachedCriteria extends AbstractORMDetachedCriteria {
 		valors = new CollectionExpression("ORM_valors", this.getDetachedCriteria());
 	}
 	
-	public PesoDetachedCriteria createPesosCriteria() {
-		return new PesoDetachedCriteria(createCriteria("ORM_pesos"));
+	public pesoDetachedCriteria createPesosCriteria() {
+		return new pesoDetachedCriteria(createCriteria("ORM_pesos"));
 	}
 	
 	public ValorDetachedCriteria createValorsCriteria() {

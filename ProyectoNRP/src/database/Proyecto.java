@@ -8,8 +8,8 @@
  */
 
 /**
- * Licensee: Alfonso(University of Almeria)
- * License Type: Academic
+ * Licensee: 
+ * License Type: Evaluation
  */
 package database;
 
@@ -36,10 +36,20 @@ public class Proyecto implements Serializable {
 		return null;
 	}
 	
+	private void this_setOwner(Object owner, int key) {
+		if (key == ORMConstants.KEY_PROYECTO_PROPIETARIO) {
+			this.propietario = (database.Propietario) owner;
+		}
+	}
+	
 	@Transient	
 	org.orm.util.ORMAdapter _ormAdapter = new org.orm.util.AbstractORMAdapter() {
 		public java.util.Set getSet(int key) {
 			return this_getSet(key);
+		}
+		
+		public void setOwner(Object owner, int key) {
+			this_setOwner(owner, key);
 		}
 		
 	};
@@ -50,18 +60,26 @@ public class Proyecto implements Serializable {
 	@org.hibernate.annotations.GenericGenerator(name="DATABASE_PROYECTO_ID_GENERATOR", strategy="native")	
 	private int ID;
 	
+	@ManyToOne(targetEntity=database.Propietario.class, fetch=FetchType.LAZY)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
+	@JoinColumns(value={ @JoinColumn(name="PropietarioID", referencedColumnName="ID", nullable=false) }, foreignKey=@ForeignKey(name="FKProyecto567494"))	
+	private database.Propietario propietario;
+	
 	@Column(name="Nombre", nullable=true, length=255)	
 	private String nombre;
 	
 	@Column(name="Descripcion", nullable=true, length=255)	
 	private String descripcion;
 	
+	@Column(name="NombrePropietario", nullable=true, length=255)	
+	private String nombrePropietario;
+	
 	@OneToMany(mappedBy="proyecto", targetEntity=database.ProyReq.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.Set ORM_proyReqs = new java.util.HashSet();
 	
-	@OneToMany(mappedBy="proyecto", targetEntity=database.Peso.class)	
+	@OneToMany(mappedBy="proyecto", targetEntity=database.peso.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.Set ORM_pesos = new java.util.HashSet();
@@ -97,6 +115,14 @@ public class Proyecto implements Serializable {
 	
 	public String getDescripcion() {
 		return descripcion;
+	}
+	
+	public void setNombrePropietario(String value) {
+		this.nombrePropietario = value;
+	}
+	
+	public String getNombrePropietario() {
+		return nombrePropietario;
 	}
 	
 	public database.Requisito[] getRequisitos() {
@@ -145,13 +171,13 @@ public class Proyecto implements Serializable {
 	public database.Cliente[] getClientes() {
 		java.util.ArrayList lValues = new java.util.ArrayList(5);
 		for(java.util.Iterator lIter = pesos.getIterator();lIter.hasNext();) {
-			lValues.add(((database.Peso)lIter.next()).getCliente());
+			lValues.add(((database.peso)lIter.next()).getCliente());
 		}
 		return (database.Cliente[])lValues.toArray(new database.Cliente[lValues.size()]);
 	}
 	
 	public void removeCliente(database.Cliente aCliente) {
-		database.Peso[] lPesos = pesos.toArray();
+		database.peso[] lPesos = pesos.toArray();
 		for(int i = 0; i < lPesos.length; i++) {
 			if(lPesos[i].getCliente().equals(aCliente)) {
 				pesos.remove(lPesos[i]);
@@ -159,13 +185,13 @@ public class Proyecto implements Serializable {
 		}
 	}
 	
-	public void addCliente(database.Peso aPeso, database.Cliente aCliente) {
+	public void addCliente(database.peso aPeso, database.Cliente aCliente) {
 		aPeso.setCliente(aCliente);
 		pesos.add(aPeso);
 	}
 	
-	public database.Peso getPesoByCliente(database.Cliente aCliente) {
-		database.Peso[] lPesos = pesos.toArray();
+	public database.peso getPesoByCliente(database.Cliente aCliente) {
+		database.peso[] lPesos = pesos.toArray();
 		for(int i = 0; i < lPesos.length; i++) {
 			if(lPesos[i].getCliente().equals(aCliente)) {
 				return lPesos[i];
@@ -183,7 +209,7 @@ public class Proyecto implements Serializable {
 	}
 	
 	@Transient	
-	public final database.PesoSetCollection pesos = new database.PesoSetCollection(this, _ormAdapter, ORMConstants.KEY_PROYECTO_PESOS, ORMConstants.KEY_PESO_PROYECTO, ORMConstants.KEY_MUL_ONE_TO_MANY);
+	public final database.pesoSetCollection pesos = new database.pesoSetCollection(this, _ormAdapter, ORMConstants.KEY_PROYECTO_PESOS, ORMConstants.KEY_PESO_PROYECTO, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
 	private void setORM_Valors(java.util.Set value) {
 		this.ORM_valors = value;
@@ -195,6 +221,30 @@ public class Proyecto implements Serializable {
 	
 	@Transient	
 	public final database.ValorSetCollection valors = new database.ValorSetCollection(this, _ormAdapter, ORMConstants.KEY_PROYECTO_VALORS, ORMConstants.KEY_VALOR_PROYECTO, ORMConstants.KEY_MUL_ONE_TO_MANY);
+	
+	public void setPropietario(database.Propietario value) {
+		if (propietario != null) {
+			propietario.proyectos.remove(this);
+		}
+		if (value != null) {
+			value.proyectos.add(this);
+		}
+	}
+	
+	public database.Propietario getPropietario() {
+		return propietario;
+	}
+	
+	/**
+	 * This method is for internal use only.
+	 */
+	public void setORM_Propietario(database.Propietario value) {
+		this.propietario = value;
+	}
+	
+	private database.Propietario getORM_Propietario() {
+		return propietario;
+	}
 	
 	public String toString() {
 		return String.valueOf(getID());

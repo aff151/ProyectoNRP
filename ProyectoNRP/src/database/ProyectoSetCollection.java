@@ -8,8 +8,8 @@
  */
 
 /**
- * Licensee: Alfonso(University of Almeria)
- * License Type: Academic
+ * Licensee: 
+ * License Type: Evaluation
  */
 package database;
 
@@ -73,6 +73,7 @@ public class ProyectoSetCollection extends org.orm.util.ORMSet {
 	 * <li>ID</li>
 	 * <li>nombre</li>
 	 * <li>descripcion</li>
+	 * <li>nombrePropietario</li>
 	 * </ul>
 	 * @return The persistent objects sorted array
 	 */
@@ -86,6 +87,7 @@ public class ProyectoSetCollection extends org.orm.util.ORMSet {
 	 * <li>ID</li>
 	 * <li>nombre</li>
 	 * <li>descripcion</li>
+	 * <li>nombrePropietario</li>
 	 * </ul>
 	 * @param ascending true for ascending, false for descending
 	 * @return The persistent objects sorted array

@@ -8,8 +8,8 @@
  */
 
 /**
- * Licensee: Alfonso(University of Almeria)
- * License Type: Academic
+ * Licensee: 
+ * License Type: Evaluation
  */
 package database;
 
@@ -323,11 +323,15 @@ public class ProyectoDAO {
 	
 	public static boolean deleteAndDissociate(database.Proyecto proyecto)throws PersistentException {
 		try {
+			if (proyecto.getPropietario() != null) {
+				proyecto.getPropietario().proyectos.remove(proyecto);
+			}
+			
 			database.ProyReq[] lProyReqss = proyecto.proyReqs.toArray();
 			for(int i = 0; i < lProyReqss.length; i++) {
 				lProyReqss[i].setProyecto(null);
 			}
-			database.Peso[] lPesoss = proyecto.pesos.toArray();
+			database.peso[] lPesoss = proyecto.pesos.toArray();
 			for(int i = 0; i < lPesoss.length; i++) {
 				lPesoss[i].setProyecto(null);
 			}
@@ -345,11 +349,15 @@ public class ProyectoDAO {
 	
 	public static boolean deleteAndDissociate(database.Proyecto proyecto, org.orm.PersistentSession session)throws PersistentException {
 		try {
+			if (proyecto.getPropietario() != null) {
+				proyecto.getPropietario().proyectos.remove(proyecto);
+			}
+			
 			database.ProyReq[] lProyReqss = proyecto.proyReqs.toArray();
 			for(int i = 0; i < lProyReqss.length; i++) {
 				lProyReqss[i].setProyecto(null);
 			}
-			database.Peso[] lPesoss = proyecto.pesos.toArray();
+			database.peso[] lPesoss = proyecto.pesos.toArray();
 			for(int i = 0; i < lPesoss.length; i++) {
 				lPesoss[i].setProyecto(null);
 			}

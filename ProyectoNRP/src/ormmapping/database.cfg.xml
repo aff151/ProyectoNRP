@@ -241,6 +241,21 @@
     <ServerName></ServerName>
     <SelectedForm>true</SelectedForm>
   </Setting>
+  <Setting type="1048576">
+    <Driver>MySQL5 (Connector/J Driver)</Driver>
+    <DriverFiles>&lt;&lt;MySQL Connector/J 5.1.33&gt;&gt;</DriverFiles>
+    <Dialect>org.hibernate.dialect.MySQL5InnoDBDialect</Dialect>
+    <DriverClass>com.mysql.jdbc.Driver</DriverClass>
+    <URL>jdbc:mysql://localhost:3306/test</URL>
+    <UserName>root</UserName>
+    <EncryptedPassword>32F3ACE632ECEBAFB24DCAF99A8C6CDC</EncryptedPassword>
+    <HostName>localhost</HostName>
+    <PortNO>3306</PortNO>
+    <DBName>test</DBName>
+    <ServiceName></ServiceName>
+    <ServerName></ServerName>
+    <SelectedForm>true</SelectedForm>
+  </Setting>
   <Setting type="33554432">
     <Driver></Driver>
     <DriverFiles></DriverFiles>

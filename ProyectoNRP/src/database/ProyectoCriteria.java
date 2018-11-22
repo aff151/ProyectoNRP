@@ -8,8 +8,8 @@
  */
 
 /**
- * Licensee: Alfonso(University of Almeria)
- * License Type: Academic
+ * Licensee: 
+ * License Type: Evaluation
  */
 package database;
 
@@ -20,8 +20,11 @@ import org.orm.criteria.*;
 
 public class ProyectoCriteria extends AbstractORMCriteria {
 	public final IntegerExpression ID;
+	public final IntegerExpression propietarioId;
+	public final AssociationExpression propietario;
 	public final StringExpression nombre;
 	public final StringExpression descripcion;
+	public final StringExpression nombrePropietario;
 	public final CollectionExpression proyReqs;
 	public final CollectionExpression pesos;
 	public final CollectionExpression valors;
@@ -29,8 +32,11 @@ public class ProyectoCriteria extends AbstractORMCriteria {
 	public ProyectoCriteria(Criteria criteria) {
 		super(criteria);
 		ID = new IntegerExpression("ID", this);
+		propietarioId = new IntegerExpression("propietario.ID", this);
+		propietario = new AssociationExpression("propietario", this);
 		nombre = new StringExpression("nombre", this);
 		descripcion = new StringExpression("descripcion", this);
+		nombrePropietario = new StringExpression("nombrePropietario", this);
 		proyReqs = new CollectionExpression("ORM_proyReqs", this);
 		pesos = new CollectionExpression("ORM_pesos", this);
 		valors = new CollectionExpression("ORM_valors", this);
@@ -44,12 +50,16 @@ public class ProyectoCriteria extends AbstractORMCriteria {
 		this(BasededatosPersistentManager.instance().getSession());
 	}
 	
+	public PropietarioCriteria createPropietarioCriteria() {
+		return new PropietarioCriteria(createCriteria("propietario"));
+	}
+	
 	public ProyReqCriteria createProyReqsCriteria() {
 		return new ProyReqCriteria(createCriteria("ORM_proyReqs"));
 	}
 	
-	public PesoCriteria createPesosCriteria() {
-		return new PesoCriteria(createCriteria("ORM_pesos"));
+	public pesoCriteria createPesosCriteria() {
+		return new pesoCriteria(createCriteria("ORM_pesos"));
 	}
 	
 	public ValorCriteria createValorsCriteria() {

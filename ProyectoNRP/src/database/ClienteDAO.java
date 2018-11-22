@@ -8,8 +8,8 @@
  */
 
 /**
- * Licensee: Alfonso(University of Almeria)
- * License Type: Academic
+ * Licensee: 
+ * License Type: Evaluation
  */
 package database;
 
@@ -323,7 +323,7 @@ public class ClienteDAO {
 	
 	public static boolean deleteAndDissociate(database.Cliente cliente)throws PersistentException {
 		try {
-			database.Peso[] lPesoss = cliente.pesos.toArray();
+			database.peso[] lPesoss = cliente.pesos.toArray();
 			for(int i = 0; i < lPesoss.length; i++) {
 				lPesoss[i].setCliente(null);
 			}
@@ -341,7 +341,7 @@ public class ClienteDAO {
 	
 	public static boolean deleteAndDissociate(database.Cliente cliente, org.orm.PersistentSession session)throws PersistentException {
 		try {
-			database.Peso[] lPesoss = cliente.pesos.toArray();
+			database.peso[] lPesoss = cliente.pesos.toArray();
 			for(int i = 0; i < lPesoss.length; i++) {
 				lPesoss[i].setCliente(null);
 			}

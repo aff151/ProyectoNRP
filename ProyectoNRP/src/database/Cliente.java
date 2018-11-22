@@ -8,8 +8,8 @@
  */
 
 /**
- * Licensee: Alfonso(University of Almeria)
- * License Type: Academic
+ * Licensee: 
+ * License Type: Evaluation
  */
 package database;
 
@@ -50,7 +50,7 @@ public class Cliente implements Serializable {
 	@Column(name="Nombre", nullable=true, length=255)	
 	private String nombre;
 	
-	@OneToMany(mappedBy="cliente", targetEntity=database.Peso.class)	
+	@OneToMany(mappedBy="cliente", targetEntity=database.peso.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.Set ORM_pesos = new java.util.HashSet();
@@ -83,13 +83,13 @@ public class Cliente implements Serializable {
 	public database.Proyecto[] getProyectos() {
 		java.util.ArrayList lValues = new java.util.ArrayList(5);
 		for(java.util.Iterator lIter = pesos.getIterator();lIter.hasNext();) {
-			lValues.add(((database.Peso)lIter.next()).getProyecto());
+			lValues.add(((database.peso)lIter.next()).getProyecto());
 		}
 		return (database.Proyecto[])lValues.toArray(new database.Proyecto[lValues.size()]);
 	}
 	
 	public void removeProyecto(database.Proyecto aProyecto) {
-		database.Peso[] lPesos = pesos.toArray();
+		database.peso[] lPesos = pesos.toArray();
 		for(int i = 0; i < lPesos.length; i++) {
 			if(lPesos[i].getProyecto().equals(aProyecto)) {
 				pesos.remove(lPesos[i]);
@@ -97,13 +97,13 @@ public class Cliente implements Serializable {
 		}
 	}
 	
-	public void addProyecto(database.Peso aPeso, database.Proyecto aProyecto) {
+	public void addProyecto(database.peso aPeso, database.Proyecto aProyecto) {
 		aPeso.setProyecto(aProyecto);
 		pesos.add(aPeso);
 	}
 	
-	public database.Peso getPesoByProyecto(database.Proyecto aProyecto) {
-		database.Peso[] lPesos = pesos.toArray();
+	public database.peso getPesoByProyecto(database.Proyecto aProyecto) {
+		database.peso[] lPesos = pesos.toArray();
 		for(int i = 0; i < lPesos.length; i++) {
 			if(lPesos[i].getProyecto().equals(aProyecto)) {
 				return lPesos[i];
@@ -121,7 +121,7 @@ public class Cliente implements Serializable {
 	}
 	
 	@Transient	
-	public final database.PesoSetCollection pesos = new database.PesoSetCollection(this, _ormAdapter, ORMConstants.KEY_CLIENTE_PESOS, ORMConstants.KEY_PESO_CLIENTE, ORMConstants.KEY_MUL_ONE_TO_MANY);
+	public final database.pesoSetCollection pesos = new database.pesoSetCollection(this, _ormAdapter, ORMConstants.KEY_CLIENTE_PESOS, ORMConstants.KEY_PESO_CLIENTE, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
 	private void setORM_Valors(java.util.Set value) {
 		this.ORM_valors = value;

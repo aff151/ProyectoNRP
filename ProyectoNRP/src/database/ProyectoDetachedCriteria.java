@@ -8,8 +8,8 @@
  */
 
 /**
- * Licensee: Alfonso(University of Almeria)
- * License Type: Academic
+ * Licensee: 
+ * License Type: Evaluation
  */
 package database;
 
@@ -20,8 +20,11 @@ import org.orm.criteria.*;
 
 public class ProyectoDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression ID;
+	public final IntegerExpression propietarioId;
+	public final AssociationExpression propietario;
 	public final StringExpression nombre;
 	public final StringExpression descripcion;
+	public final StringExpression nombrePropietario;
 	public final CollectionExpression proyReqs;
 	public final CollectionExpression pesos;
 	public final CollectionExpression valors;
@@ -29,8 +32,11 @@ public class ProyectoDetachedCriteria extends AbstractORMDetachedCriteria {
 	public ProyectoDetachedCriteria() {
 		super(database.Proyecto.class, database.ProyectoCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
+		propietarioId = new IntegerExpression("propietario.ID", this.getDetachedCriteria());
+		propietario = new AssociationExpression("propietario", this.getDetachedCriteria());
 		nombre = new StringExpression("nombre", this.getDetachedCriteria());
 		descripcion = new StringExpression("descripcion", this.getDetachedCriteria());
+		nombrePropietario = new StringExpression("nombrePropietario", this.getDetachedCriteria());
 		proyReqs = new CollectionExpression("ORM_proyReqs", this.getDetachedCriteria());
 		pesos = new CollectionExpression("ORM_pesos", this.getDetachedCriteria());
 		valors = new CollectionExpression("ORM_valors", this.getDetachedCriteria());
@@ -39,19 +45,26 @@ public class ProyectoDetachedCriteria extends AbstractORMDetachedCriteria {
 	public ProyectoDetachedCriteria(DetachedCriteria aDetachedCriteria) {
 		super(aDetachedCriteria, database.ProyectoCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
+		propietarioId = new IntegerExpression("propietario.ID", this.getDetachedCriteria());
+		propietario = new AssociationExpression("propietario", this.getDetachedCriteria());
 		nombre = new StringExpression("nombre", this.getDetachedCriteria());
 		descripcion = new StringExpression("descripcion", this.getDetachedCriteria());
+		nombrePropietario = new StringExpression("nombrePropietario", this.getDetachedCriteria());
 		proyReqs = new CollectionExpression("ORM_proyReqs", this.getDetachedCriteria());
 		pesos = new CollectionExpression("ORM_pesos", this.getDetachedCriteria());
 		valors = new CollectionExpression("ORM_valors", this.getDetachedCriteria());
+	}
+	
+	public PropietarioDetachedCriteria createPropietarioCriteria() {
+		return new PropietarioDetachedCriteria(createCriteria("propietario"));
 	}
 	
 	public ProyReqDetachedCriteria createProyReqsCriteria() {
 		return new ProyReqDetachedCriteria(createCriteria("ORM_proyReqs"));
 	}
 	
-	public PesoDetachedCriteria createPesosCriteria() {
-		return new PesoDetachedCriteria(createCriteria("ORM_pesos"));
+	public pesoDetachedCriteria createPesosCriteria() {
+		return new pesoDetachedCriteria(createCriteria("ORM_pesos"));
 	}
 	
 	public ValorDetachedCriteria createValorsCriteria() {

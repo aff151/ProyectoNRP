@@ -8,8 +8,8 @@
  */
 
 /**
- * Licensee: Alfonso(University of Almeria)
- * License Type: Academic
+ * Licensee: 
+ * License Type: Evaluation
  */
 package database;
 
@@ -18,6 +18,7 @@ import org.orm.cfg.JDBCConnectionSetting;
 import org.hibernate.*;
 import java.util.Properties;
 import org.hibernate.cfg.*;
+import org.hibernate.boot.MetadataSources;
 
 public class BasededatosPersistentManager extends PersistentManager {
 	private static final String PROJECT_NAME = "Basededatos";
@@ -34,16 +35,15 @@ public class BasededatosPersistentManager extends PersistentManager {
 	}
 	
 	@Override
-	public Configuration createConfiguration() {
-		Configuration configuration = new Configuration();
-		configuration.addAnnotatedClass(database.Valor.class);
-		configuration.addAnnotatedClass(database.Requisito.class);
-		configuration.addAnnotatedClass(database.Proyecto.class);
-		configuration.addAnnotatedClass(database.Cliente.class);
-		configuration.addAnnotatedClass(database.Peso.class);
-		configuration.addAnnotatedClass(database.ProyReq.class);
-		configuration.buildMappings();
-		return configuration;
+	protected void configureMetadataSources(MetadataSources aMetadataSources) {
+		super.configureMetadataSources(aMetadataSources);
+		aMetadataSources.addAnnotatedClass(database.Valor.class);
+		aMetadataSources.addAnnotatedClass(database.Requisito.class);
+		aMetadataSources.addAnnotatedClass(database.Proyecto.class);
+		aMetadataSources.addAnnotatedClass(database.Cliente.class);
+		aMetadataSources.addAnnotatedClass(database.peso.class);
+		aMetadataSources.addAnnotatedClass(database.ProyReq.class);
+		aMetadataSources.addAnnotatedClass(database.Propietario.class);
 	}
 	
 	public String getProjectName() {
