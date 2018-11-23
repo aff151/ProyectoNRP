@@ -138,6 +138,7 @@ public class Menu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				IniciarSesion iniciarSesion=new IniciarSesion();
 				iniciarSesion.setVisible(true);
+				claseEstatica.setPropietario("");
 				dispose();
 			}
 		});
