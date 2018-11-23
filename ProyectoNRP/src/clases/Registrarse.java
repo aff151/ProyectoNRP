@@ -87,15 +87,18 @@ public class Registrarse extends JFrame {
 				else {
 					BD_Propietarios bd_prop = new BD_Propietarios();
 					try {
-						if (bd_prop.crearPropietario(textField.getText()) == true) // si ya existe..
+						if (bd_prop.comprobarPropietario(textField.getText()) == true) // si ya existe..
 							JOptionPane.showMessageDialog(null,
 									"El nombre de usuario ya existe, por favor, elija otro.", "MENSAJE",
 									JOptionPane.WARNING_MESSAGE);
-						 else
+						 else {
 							JOptionPane.showMessageDialog(null, "El usuario se ha creado con éxito.", "MENSAJE",
 									JOptionPane.WARNING_MESSAGE);
 
-					} catch (PersistentException e1) {
+							bd_prop.crearPropietario(textField.getText());
+							textField.setText("");
+						 }
+						 } catch (PersistentException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
