@@ -124,17 +124,29 @@ public class Planificacion extends JFrame {
 		btnGuardar.setBounds(464, 308, 89, 23);
 		contentPane.add(btnGuardar);
 		
-		JButton btnPlanificar = new JButton("Planificar");
+		JButton btnPlanificar = new JButton("Planificacion automatica");
 		btnPlanificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				planificar();
-				MostrarPlanificacion consProyPlanif = new MostrarPlanificacion();
-				consProyPlanif.setVisible(true);
+				MostrarPlanificacion plautom = new MostrarPlanificacion();
+				plautom.setVisible(true);
 				dispose();
 			}
 		});
-		btnPlanificar.setBounds(464, 342, 89, 23);
+		btnPlanificar.setBounds(367, 342, 186, 23);
 		contentPane.add(btnPlanificar);
+		
+		JButton btnPlanificacinManual = new JButton("Planificación manual");
+		btnPlanificacinManual.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				planificar();
+				PlanificacionManual plmanual = new PlanificacionManual();
+				plmanual.setVisible(true);
+				dispose();
+			}
+		});
+		btnPlanificacinManual.setBounds(196, 342, 161, 23);
+		contentPane.add(btnPlanificacinManual);
 	}
 	
 	
