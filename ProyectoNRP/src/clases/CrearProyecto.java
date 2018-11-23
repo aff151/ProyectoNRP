@@ -153,7 +153,7 @@ public class CrearProyecto extends JFrame {
 				JOptionPane.showMessageDialog(null, "Debe introducir el nombre del proyecto", "MENSAJE",
 						JOptionPane.WARNING_MESSAGE);
 			} else {
-				if(bdProy.crearProyecto(textFNombre.getText(), tAreaDesc.getText())) {
+				if(bdProy.crearProyecto(textFNombre.getText(), tAreaDesc.getText(),claseEstatica.getPropietario())) {
 					textFNombre.setText("");
 					tAreaDesc.setText("");
 					JOptionPane.showMessageDialog(null, "El proyecto se ha creado con éxito", "MENSAJE",

@@ -49,6 +49,7 @@ public class ModificarProyecto extends JFrame {
 	BD_Proyectos bdproy = new BD_Proyectos();
 	BD_Peso bdimp = new BD_Peso();
 	BD_Requisitos bdreq = new BD_Requisitos();
+
 	BD_ProyReq bdproyreq = new BD_ProyReq();
 	ConsultarProyectos cons = new ConsultarProyectos();
 	Proyecto consproy = null;
@@ -152,7 +153,6 @@ public class ModificarProyecto extends JFrame {
 		txtNombreProyecto = new TextField(consproy.getNombre());
 		txtNombreProyecto.setBounds(131, 10, 285, 25);
 		contentPane.add(txtNombreProyecto);
-		
 
 		JLabel lblListaDeClientes = new JLabel("Lista de clientes del proyecto");
 		lblListaDeClientes.setBounds(10, 159, 217, 16);
@@ -172,7 +172,7 @@ public class ModificarProyecto extends JFrame {
 				dispose();
 			}
 		});
-		btnAtrs.setBounds(10, 436, 73, 29);
+		btnAtrs.setBounds(10, 477, 73, 29);
 		contentPane.add(btnAtrs);
 
 		JButton btnAadirMsClientes_1 = new JButton("Añadir más Clientes");
@@ -184,7 +184,7 @@ public class ModificarProyecto extends JFrame {
 				dispose();
 			}
 		});
-		btnAadirMsClientes_1.setBounds(10, 396, 166, 29);
+		btnAadirMsClientes_1.setBounds(10, 432, 166, 29);
 		contentPane.add(btnAadirMsClientes_1);
 
 		JButton btnAadirMsRequisitos_1 = new JButton("Añadir más Requisitos");
@@ -196,7 +196,7 @@ public class ModificarProyecto extends JFrame {
 				dispose();
 			}
 		});
-		btnAadirMsRequisitos_1.setBounds(250, 396, 166, 29);
+		btnAadirMsRequisitos_1.setBounds(250, 432, 166, 29);
 		contentPane.add(btnAadirMsRequisitos_1);
 
 		JLabel lblDescripcin = new JLabel("Descripción");
@@ -222,7 +222,7 @@ public class ModificarProyecto extends JFrame {
 		});
 		btnGuardar.setBounds(10, 115, 89, 23);
 		contentPane.add(btnGuardar);
-		
+
 		JButton btnNewButton = new JButton("Asignar Valores a Requisitos");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -232,8 +232,26 @@ public class ModificarProyecto extends JFrame {
 				dispose();
 			}
 		});
-		btnNewButton.setBounds(104, 439, 312, 23);
+		btnNewButton.setBounds(206, 479, 209, 25);
 		contentPane.add(btnNewButton);
+
+		JButton btnQuitarCliente = new JButton("Quitar Cliente");
+		btnQuitarCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				quitarCliente();
+			}
+		});
+		btnQuitarCliente.setBounds(31, 395, 124, 29);
+		contentPane.add(btnQuitarCliente);
+
+		JButton btnQuitarRequisito = new JButton("Quitar Requisito");
+		btnQuitarRequisito.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				quitarRequisito();
+			}
+		});
+		btnQuitarRequisito.setBounds(272, 395, 131, 29);
+		contentPane.add(btnQuitarRequisito);
 
 	}
 
@@ -242,7 +260,7 @@ public class ModificarProyecto extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 439, 507);
+		setBounds(100, 100, 439, 534);
 		setLocationRelativeTo(null);
 		setTitle("Modificar Proyecto");
 		contentPane = new JPanel();
@@ -255,6 +273,53 @@ public class ModificarProyecto extends JFrame {
 		return bdproy.descargarInformacion(proySeleccionado);
 	}
 
+	
+/////////////////////////////////////////////////////NUEVA FUNCIONALIDAD	
+	
+	
+	public void quitarRequisito() {
+		if (tablaEsf.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(null, "Seleccione un requisito.", "MENSAJE", JOptionPane.WARNING_MESSAGE);
+		} else {
+			boolean booleano = false;
+			try {
+				booleano = bdproy.quitarRequisitoProyecto(listReq.get(tabla.getSelectedRow()), cons.proySeleccionado);
+			} catch (PersistentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (booleano == false) {
+				JOptionPane.showMessageDialog(null, "Ha ocurrido un problema.", "MENSAJE", JOptionPane.WARNING_MESSAGE);
+			} else {
+				CargaDatosEsf();
+			}
+		}
+
+	}
+
+	public void quitarCliente() {
+		if (tabla.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(null, "Seleccione un cliente.", "MENSAJE", JOptionPane.WARNING_MESSAGE);
+		} else {
+			boolean booleano = false;
+			try {
+				booleano = bdproy.quitarClienteProyecto(listCli.get(tablaEsf.getSelectedRow()), cons.proySeleccionado);
+			} catch (PersistentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (booleano == false) {
+				JOptionPane.showMessageDialog(null, "Ha ocurrido un problema.", "MENSAJE", JOptionPane.WARNING_MESSAGE);
+			} else {
+				CargaDatos();
+			}
+		}
+
+	}
+/////////////////////////////////////////////////////////NUEVAFUNCIONALIDAD
+	
+	
+	
 	private void CargaDatosEsf() {
 		try {
 			listReq = bdproyreq.cargarRequisitosProyecto(cons.proySeleccionado);
@@ -307,7 +372,6 @@ public class ModificarProyecto extends JFrame {
 		}
 
 	}
-
 
 	public void modificarProyecto() {
 		try {

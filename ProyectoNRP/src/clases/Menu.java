@@ -48,7 +48,7 @@ public class Menu extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 368, 311);
+		setBounds(100, 100, 368, 381);
 		setLocationRelativeTo(null);
 		setTitle("Programa para gestión de requisitos");
 		contentPane = new JPanel();
@@ -132,5 +132,24 @@ public class Menu extends JFrame {
 		});
 		btnPlanificacin.setBounds(79, 196, 220, 29);
 		contentPane.add(btnPlanificacin);
+		
+		JButton btnCerrarSesin = new JButton("Cerrar sesión");
+		btnCerrarSesin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IniciarSesion iniciarSesion=new IniciarSesion();
+				iniciarSesion.setVisible(true);
+				dispose();
+			}
+		});
+		btnCerrarSesin.setBounds(128, 324, 117, 29);
+		contentPane.add(btnCerrarSesin);
+		
+		JLabel lblSesinIniciadaComo = new JLabel("Sesión iniciada como:");
+		lblSesinIniciadaComo.setBounds(117, 277, 145, 16);
+		contentPane.add(lblSesinIniciadaComo);
+		
+		JLabel lblUsuario = new JLabel(claseEstatica.getPropietario());
+		lblUsuario.setBounds(160, 305, 80, 16);
+		contentPane.add(lblUsuario);
 	}
 }
