@@ -62,7 +62,7 @@ public class PlanificacionManual extends JFrame {
 			obj[i][1] = Planificacion.listReqSat.get(i).getSatisfaccion();
 			obj[i][2] = Planificacion.listReqSat.get(i).getEsfuerzo();
 		}
-		
+		//
 		tablaRes = new JTable();
 		tablaRes.setModel(new DefaultTableModel(obj,
 			new String[] {
