@@ -75,4 +75,14 @@ public class BD_Peso {
 		}
 		return listPesos;
 	}
+
+	public void eliminarProyecto(String proyecto, String cliSeleccionado) throws PersistentException {
+		// TODO Auto-generated method stub
+		List<peso> listPesos = new ArrayList<peso>();
+		for (peso peso : pesoDAO.listPesoByQuery(null, null)) {
+			if (peso.getProyecto().getNombre().equals(proyecto) && peso.getCliente().getNombre().equals(cliSeleccionado)) {
+				pesoDAO.deleteAndDissociate(peso);
+			}
+		}
+	}
 }
