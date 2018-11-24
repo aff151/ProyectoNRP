@@ -28,11 +28,14 @@ import javax.swing.AbstractButton;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import javax.swing.JTextPane;
 
 public class CrearRequisito extends JFrame {
 
@@ -50,6 +53,7 @@ public class CrearRequisito extends JFrame {
 	private DefaultListModel<String> modelo;
 	private JTextField esfuerzoReqV;
 	private JScrollPane scrollLista;
+	private JTextField desctextField;
 	
 
 	/**
@@ -220,6 +224,21 @@ public class CrearRequisito extends JFrame {
 		/////////////////
 		listRequisitos = new JList();
 		listRequisitos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listRequisitos.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        JList list = (JList)evt.getSource();
+		        if (evt.getClickCount() == 1) {
+		        	System.out.println(list.getSelectedValue().toString());
+		        	System.out.println(listaRequisito.get(list.getSelectedIndex()).getDescripcion());
+		        	
+		    		desctextField = new JTextField(listaRequisito.get(list.getSelectedIndex()).getDescripcion());
+		    		desctextField.setBounds(443, 55, 117, 107);
+		    		contentPane.add(desctextField);
+		    		desctextField.setColumns(10);
+		        	
+		        }
+		    }
+		});
 		scrollLista = new JScrollPane();
 		scrollLista.setBounds(286, 46, 121, 129);		
 		scrollLista.setViewportView(listRequisitos);
@@ -244,13 +263,23 @@ TextPrompt placeholder3 = new TextPrompt("Esfuerzo", esfuerzoReqV);
 		contentPane.add(esfuerzoReqV);
 		esfuerzoReqV.setColumns(10);
 		
+		JLabel lblDescripcinDe = new JLabel("Descripción de");
+		lblDescripcinDe.setBounds(433, 22, 106, 14);
+		contentPane.add(lblDescripcinDe);
+		
+		JLabel nombreReqlblNewLabel = new JLabel("New label");
+		nombreReqlblNewLabel.setBounds(514, 22, 46, 14);
+		contentPane.add(nombreReqlblNewLabel);
+		
+		
+		
 	}
 	
 	public void inicializar() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 450, 263);
+		setBounds(100, 100, 590, 263);
 		setLocationRelativeTo(null);
 		setTitle("Crear Requisito");
 		contentPane = new JPanel();
@@ -304,5 +333,4 @@ TextPrompt placeholder3 = new TextPrompt("Esfuerzo", esfuerzoReqV);
 			listRequisitos.setModel(modelo);
 		}
 	}
-
 }
