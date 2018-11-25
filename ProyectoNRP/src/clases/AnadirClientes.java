@@ -13,6 +13,7 @@ import org.orm.PersistentException;
 
 import database.BD_Clientes;
 import database.BD_Peso;
+import database.BD_Proyectos;
 import database.Cliente;
 
 import javax.swing.JLabel;
@@ -35,6 +36,7 @@ public class AnadirClientes extends JFrame {
 	public static String procedencia = "";
 	public static String proySeleccionado = "";
 	ConsultarProyectos cp = new ConsultarProyectos();
+	
 
 	private DefaultListModel<String> modelo;
 	BD_Clientes bdCliente = new BD_Clientes();
@@ -43,6 +45,8 @@ public class AnadirClientes extends JFrame {
 	private JList listClientes;
 	public static String cliSeleccionado = "";
 	private JScrollPane scrollLista;
+	
+	BD_Proyectos bdP = new BD_Proyectos();
 
 
 	/**
@@ -66,7 +70,7 @@ public class AnadirClientes extends JFrame {
 	 */
 	public AnadirClientes() {
 		inicializar();
-
+		
 		JLabel lblSeleccionarProyecto = new JLabel("Seleccionar Cliente");
 		lblSeleccionarProyecto.setBounds(52, 37, 141, 16);
 		contentPane.add(lblSeleccionarProyecto);
@@ -199,7 +203,8 @@ public class AnadirClientes extends JFrame {
 
 	public void cargarClientes() {
 		try {
-			listaClientes = bdCliente.cargarClientes();
+			//Poner clientes que no estan en el proyecto
+			listaClientes =	bdP.cargarClientesFueraProyecto(cp.proySeleccionado);
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

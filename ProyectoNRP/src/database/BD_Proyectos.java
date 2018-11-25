@@ -167,4 +167,33 @@ public class BD_Proyectos {
 
 	}
 //////////////////////////////////// MODIFICAR PROYECTO
+	public List<Cliente> cargarClientesFueraProyecto(String nombreProyecto) throws PersistentException
+	{
+		List<Cliente> clientesProyecto = new ArrayList<Cliente>();
+		List<Cliente> clientesTotales = ClienteDAO.queryCliente(null, null);
+		List<Cliente> listaFinal = new ArrayList<Cliente>();
+		
+		for(Proyecto p : ProyectoDAO.listProyectoByQuery(null, null))
+		{
+			for(Cliente c : p.getClientes())
+			{
+				clientesProyecto.add(c);
+			}
+		}
+		boolean esta = false;
+		for(Cliente c : clientesTotales)
+		{
+			esta = false;
+		/*	for(Cliente c1 : clientesProyecto)
+			{
+				if(!clientesProyecto.contains(c))
+					esta = true;
+			}*/
+			if(!clientesProyecto.contains(c))
+				listaFinal.add(c);
+		}
+		
+		return listaFinal;
+	}
+	
 }

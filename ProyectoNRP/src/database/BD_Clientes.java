@@ -35,6 +35,13 @@ public class BD_Clientes {
 		}
 		return listClientes;
 	}
+/*
+ * 	
+ */
+	public List<Cliente> cargarClientesFueraProyecto()
+	{
+		return null;
+	}
 	
 	public void asignaClienteProyecto(String nombre,String importancia,String proyecto) throws PersistentException 
 	{
