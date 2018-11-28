@@ -158,9 +158,10 @@ public class PlanificacionManual extends JFrame {
 								rs.getSatisfaccion(),
 								rs.getEsfuerzo(),
 						});
+						limite += rs.getEsfuerzo();
+						lbLimite.setText(String.valueOf(limite));
 					}
-					limite += rs.getEsfuerzo();
-					lbLimite.setText(String.valueOf(limite));
+					
 				}
 				modelo1.removeRow(tablaSel.getSelectedRow());
 			}
