@@ -34,8 +34,10 @@ public class ConsultarProyectos extends JFrame {
 	public static String procedencia = "";
 	public static String proySeleccionado = "";
 	private List<Proyecto> listPro;
+	private List<Proyecto> listPro2;
 	private DefaultListModel<String> modelo;
 	private JList listProyectos;
+	private JList listProyectos2;
 	private JScrollPane scrollLista;
 	BD_Proyectos bdProy = new BD_Proyectos();
 
@@ -71,11 +73,11 @@ public class ConsultarProyectos extends JFrame {
 		//if (Menu.proc == "Modificar") {
 		if (Menu.proc == "Consultar") {
 			setTitle("Consultar Proyectos");
-			listProyectos = new JList();
-			listProyectos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			listProyectos2 = new JList();
+			listProyectos2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			scrollLista = new JScrollPane();
 			scrollLista.setBounds(10, 36, 179, 147);
-			scrollLista.setViewportView(listProyectos);
+			scrollLista.setViewportView(listProyectos2);
 			contentPane.add(scrollLista);
 			modelo = new DefaultListModel<String>();
 
@@ -83,11 +85,11 @@ public class ConsultarProyectos extends JFrame {
 			btnConsultarProyecto.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 
-					if (listProyectos.isSelectionEmpty()) {
+					if (listProyectos2.isSelectionEmpty()) {
 						JOptionPane.showMessageDialog(null, "Debe seleccionar un proyecto", "MENSAJE",
 								JOptionPane.WARNING_MESSAGE);
 					} else {
-						proySeleccionado = listProyectos.getSelectedValue().toString();
+						proySeleccionado = listProyectos2.getSelectedValue().toString();
 						ConsultarProyecto consultarproyecto = new ConsultarProyecto();
 						consultarproyecto.setVisible(true);
 						ConsultarProyecto.procedencia = "ConsultarProyectos";
@@ -174,7 +176,7 @@ public class ConsultarProyectos extends JFrame {
 		try {
 			//Meter un carar proyectos propio
 			listPro = bdProy.cargarProyectosPropios(claseEstatica.getPropietario());
-		//	listPro = bdProy.cargarProyectos();
+			listPro2 = bdProy.cargarProyectos();
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -182,6 +184,10 @@ public class ConsultarProyectos extends JFrame {
 		for (Proyecto c : listPro) {
 			modelo.addElement(c.getNombre());
 			listProyectos.setModel(modelo);
+		}
+		for (Proyecto c : listPro2) {
+			modelo.addElement(c.getNombre());
+			listProyectos2.setModel(modelo);
 		}
 	}
 }
