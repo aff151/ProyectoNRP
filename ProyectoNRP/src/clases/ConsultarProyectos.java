@@ -68,6 +68,7 @@ public class ConsultarProyectos extends JFrame {
 
 	private void cargarJlist() {
 		// TODO Auto-generated method stub
+		//if (Menu.proc == "Modificar") {
 		if (Menu.proc == "Consultar") {
 			setTitle("Consultar Proyectos");
 			listProyectos = new JList();
@@ -99,9 +100,16 @@ public class ConsultarProyectos extends JFrame {
 			contentPane.add(btnConsultarProyecto);
 			cargarProyectos();
 		}
-
+		//Menu.proc
 		if (Menu.proc == "Modificar") {
 			setTitle("Modificar Proyectos Propios");
+			listProyectos = new JList();
+			listProyectos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			scrollLista = new JScrollPane();
+			scrollLista.setBounds(10, 36, 179, 147);
+			scrollLista.setViewportView(listProyectos);
+			contentPane.add(scrollLista);
+			modelo = new DefaultListModel<String>();
 			// CARGAR LOS PROYECTOS QUE ESE ADMIN SEA PROPIETARIO (NUEVO METODO)
 			// OJO CON LA VARIABLE ESTÁTICA DE LA CLASE MODIFICAR PROYECTO "PROCEDENCIA" POR
 			// QUE AHORA HE PUESTO NUEVA LA PROCEDENCIA A MODIFICARPROYECTOS
@@ -110,7 +118,7 @@ public class ConsultarProyectos extends JFrame {
 			JButton btnModificarProyecto = new JButton("Modificar");
 			btnModificarProyecto.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					/*if (listProyectos.isSelectionEmpty()) {
+					if (listProyectos.isSelectionEmpty()) {
 						JOptionPane.showMessageDialog(null, "Debe seleccionar un proyecto", "MENSAJE",
 								JOptionPane.WARNING_MESSAGE);
 					} else {
@@ -119,11 +127,12 @@ public class ConsultarProyectos extends JFrame {
 						modificarProyecto.setVisible(true);
 						modificarProyecto.procedencia = "modificarProyectos";
 						dispose();
-					}*/
+					}
 				}
 			});
 			btnModificarProyecto.setBounds(10, 195, 170, 23);
 			contentPane.add(btnModificarProyecto);
+			cargarProyectos();
 		}
 
 	}
@@ -163,7 +172,9 @@ public class ConsultarProyectos extends JFrame {
 
 	public void cargarProyectos() {
 		try {
-			listPro = bdProy.cargarProyectos();
+			//Meter un carar proyectos propio
+			listPro = bdProy.cargarProyectosPropios(claseEstatica.getPropietario());
+		//	listPro = bdProy.cargarProyectos();
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

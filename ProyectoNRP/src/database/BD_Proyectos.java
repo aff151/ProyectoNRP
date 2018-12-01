@@ -196,4 +196,21 @@ public class BD_Proyectos {
 		return listaFinal;
 	}
 	
+	public List<Proyecto> cargarProyectosPropios(String nombreProp) throws PersistentException
+	{
+		List<Proyecto> listaProyectosPropios = new ArrayList<Proyecto>();
+		Propietario p = null;
+		for(Propietario prop : PropietarioDAO.listPropietarioByQuery(null, null))
+		{
+			if(nombreProp.equals(prop.getPropietario()))
+				p = prop;
+		}
+		for(Proyecto pro : ProyectoDAO.listProyectoByQuery(null, null))
+		{
+			if(pro.getNombrePropietario().equals(p.getPropietario()))
+				listaProyectosPropios.add(pro);
+		}
+		return listaProyectosPropios;
+	}
+	
 }
