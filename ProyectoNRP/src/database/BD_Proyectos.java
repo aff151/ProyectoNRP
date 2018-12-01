@@ -167,7 +167,7 @@ public class BD_Proyectos {
 
 	}
 //////////////////////////////////// MODIFICAR PROYECTO
-	public List<Cliente> cargarClientesFueraProyecto(String nombreProyecto) throws PersistentException
+	public List<Cliente> cargarClientesFueraProyecto(String nombreProyecto, String nombreProp) throws PersistentException
 	{
 		List<Cliente> clientesProyecto = new ArrayList<Cliente>();
 		List<Cliente> clientesTotales = ClienteDAO.queryCliente(null, null);
@@ -180,15 +180,10 @@ public class BD_Proyectos {
 				clientesProyecto.add(c);
 			}
 		}
-		boolean esta = false;
+
 		for(Cliente c : clientesTotales)
 		{
-			esta = false;
-		/*	for(Cliente c1 : clientesProyecto)
-			{
-				if(!clientesProyecto.contains(c))
-					esta = true;
-			}*/
+
 			if(!clientesProyecto.contains(c))
 				listaFinal.add(c);
 		}
@@ -210,7 +205,26 @@ public class BD_Proyectos {
 			if(pro.getNombrePropietario().equals(p.getPropietario()))
 				listaProyectosPropios.add(pro);
 		}
+		
 		return listaProyectosPropios;
 	}
-	
+	public void eliminarProyectoUser(String nombreProyecto, String nombrePropietario) throws PersistentException
+	{
+		Proyecto pro = null;
+		Propietario pp = null;
+		for(Propietario propie : PropietarioDAO.listPropietarioByQuery(null, null))
+		{
+			if(nombrePropietario.equals(propie.getPropietario()))
+				pp = propie;
+				
+		}
+		for(Proyecto p : ProyectoDAO.listProyectoByQuery(null, null))
+		{
+			if(p.getNombre().equals(nombreProyecto))
+				pro = p;
+		}
+		pro.setPropietario(null);
+		
+	//	PropietarioDAO.save(pp)
+	}
 }

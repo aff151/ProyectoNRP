@@ -204,7 +204,7 @@ public class AnadirClientes extends JFrame {
 	public void cargarClientes() {
 		try {
 			//Poner clientes que no estan en el proyecto
-			listaClientes =	bdP.cargarClientesFueraProyecto(cp.proySeleccionado);
+			listaClientes =	bdP.cargarClientesFueraProyecto(cp.proySeleccionado, claseEstatica.getPropietario());
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

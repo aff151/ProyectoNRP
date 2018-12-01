@@ -40,6 +40,7 @@ public class ConsultarProyectos extends JFrame {
 	private JList listProyectos2;
 	private JScrollPane scrollLista;
 	BD_Proyectos bdProy = new BD_Proyectos();
+	boolean consultar = false;
 
 	/**
 	 * Launch the application.
@@ -100,6 +101,7 @@ public class ConsultarProyectos extends JFrame {
 			});
 			btnConsultarProyecto.setBounds(10, 195, 170, 23);
 			contentPane.add(btnConsultarProyecto);
+			consultar = true;
 			cargarProyectos();
 		}
 		//Menu.proc
@@ -134,6 +136,19 @@ public class ConsultarProyectos extends JFrame {
 			});
 			btnModificarProyecto.setBounds(10, 195, 170, 23);
 			contentPane.add(btnModificarProyecto);
+			
+			JButton btnEliminar = new JButton("Eliminar");
+			btnEliminar.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					eliminarProyectoUser();
+					
+				}
+			});
+			btnEliminar.setBounds(81, 220, 117, 29);
+			contentPane.add(btnEliminar);
 			cargarProyectos();
 		}
 
@@ -168,26 +183,48 @@ public class ConsultarProyectos extends JFrame {
 				dispose();
 			}
 		});
-		btnAtrs.setBounds(64, 228, 71, 23);
+		btnAtrs.setBounds(6, 223, 71, 23);
 		contentPane.add(btnAtrs);
+		
+		
 	}
 
 	public void cargarProyectos() {
 		try {
 			//Meter un carar proyectos propio
-			listPro = bdProy.cargarProyectosPropios(claseEstatica.getPropietario());
+			if(consultar) {
+			listPro2 = bdProy.cargarProyectos();		
+			}
 			listPro2 = bdProy.cargarProyectos();
+			listPro = bdProy.cargarProyectosPropios(claseEstatica.getPropietario());
+
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if(!consultar) {
 		for (Proyecto c : listPro) {
 			modelo.addElement(c.getNombre());
 			listProyectos.setModel(modelo);
 		}
+		} 
+		else
+		{
 		for (Proyecto c : listPro2) {
 			modelo.addElement(c.getNombre());
 			listProyectos2.setModel(modelo);
+		}
+		}
+	}
+	
+	public void eliminarProyectoUser() 
+	{
+		try {
+			String pro = listProyectos.getSelectedValue().toString();
+			bdProy.eliminarProyectoUser(listProyectos.getSelectedValue().toString(),claseEstatica.getPropietario());
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
