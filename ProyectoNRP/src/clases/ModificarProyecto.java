@@ -328,7 +328,7 @@ public class ModificarProyecto extends JFrame {
 
 		}
 
-	}
+	}//
 
 	public void quitarCliente() {
 
