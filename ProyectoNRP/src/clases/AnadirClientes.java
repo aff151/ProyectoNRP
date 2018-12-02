@@ -45,6 +45,8 @@ public class AnadirClientes extends JFrame {
 	private JList listClientes;
 	public static String cliSeleccionado = "";
 	private JScrollPane scrollLista;
+	public static String cproySeleccionado="";
+	public static String cprocedencia="";
 	
 	BD_Proyectos bdP = new BD_Proyectos();
 
@@ -126,9 +128,9 @@ public class AnadirClientes extends JFrame {
 								} else {
 									bdCliente.asignaClienteProyecto(listClientes.getSelectedValue().toString(),
 											txtImportancia.getText(), cp.proySeleccionado);
-									ModificarProyecto modificarProyecto = new ModificarProyecto();
-									modificarProyecto.setVisible(true);
-									dispose();
+									//ModificarProyecto modificarProyecto = new ModificarProyecto();
+									//modificarProyecto.setVisible(true);
+									//dispose();
 								}
 							}
 						}
@@ -173,9 +175,15 @@ public class AnadirClientes extends JFrame {
 		btnCrearCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				
+				System.out.println("ANADIR: "+cp.proySeleccionado);
+				claseEstatica claseE = new claseEstatica();
+				claseE.setProcedencia("AnadirClientes");
+				claseE.setProySeleccionado(cp.proySeleccionado);
 				CrearCliente crearCliente = new CrearCliente();
-				crearCliente.setVisible(true);
 				crearCliente.procedencia = "AnadirClientes";
+				
+				crearCliente.setVisible(true);
 				//dispose();
 			}
 		});

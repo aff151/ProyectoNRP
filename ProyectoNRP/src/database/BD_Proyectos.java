@@ -19,20 +19,20 @@ public class BD_Proyectos {
 		Proyecto proy = ProyectoDAO.createProyecto();
 		proy.setNombre(nombre);
 		proy.setDescripcion(descripcion);
-		
-		/////////////////////////////////////////////NUEVA FUNCIONALIDAD
+
+		///////////////////////////////////////////// NUEVA FUNCIONALIDAD
 		proy.setNombrePropietario(propietario);
-		Propietario prop=null;
+		Propietario prop = null;
 		for (Propietario propi : PropietarioDAO.listPropietarioByQuery(null, null)) {
-			if(propi.getPropietario().equals(propietario)) {
-				prop=propi;
+			if (propi.getPropietario().equals(propietario)) {
+				prop = propi;
 				break;
 			}
 		}
 		proy.setPropietario(prop);
 		prop.proyectos.add(proy);
-		
-		PropietarioDAO.save(prop);//////////////////////////////NUEVA FUNCIONALIDAD
+
+		PropietarioDAO.save(prop);////////////////////////////// NUEVA FUNCIONALIDAD
 		ProyectoDAO.save(proy);
 		return true;
 	}
@@ -133,98 +133,96 @@ public class BD_Proyectos {
 		}
 		return listaRequisitosProyecto;
 	}
-////////////////////////////////////// MODIFICAR PROYECTO
+
+	////////////////////////////////////// MODIFICAR PROYECTO
 	public boolean quitarRequisitoProyecto(Requisito requisito, String proySeleccionado) throws PersistentException {
 		// TODO Auto-generated method stub
-
-		for (Proyecto p : ProyectoDAO.listProyectoByQuery(null, null)) {
-			if (p.getNombre().equals(proySeleccionado)) {
-				p.removeRequisito(requisito);
-				requisito.removeProyecto(p);
-
-				RequisitoDAO.save(requisito);
-				ProyectoDAO.save(p);
-				return true;
+		Proyecto p = descargarInformacion(proySeleccionado);
+		ProyReq proreq = null;
+		for (ProyReq prore : ProyReqDAO.listProyReqByQuery(null, null)) {
+			if (prore.getRequisito().equals(requisito) && prore.getProyecto().equals(p)) {
+				proreq = prore;
+				break;
 			}
 		}
-		return false;
+
+		proreq.setProyecto(null);
+		proreq.setRequisito(null);
+
+		ProyReqDAO.deleteAndDissociate(proreq);
+		return true;
 	}
 
 	public boolean quitarClienteProyecto(Cliente cliente, String proySeleccionado) throws PersistentException {
 		// TODO Auto-generated method stub
 
-		for (Proyecto p : ProyectoDAO.listProyectoByQuery(null, null)) {
-			if (p.getNombre().equals(proySeleccionado)) {
-				p.removeCliente(cliente);
-				cliente.removeProyecto(p);
+		Proyecto p = descargarInformacion(proySeleccionado);
 
-				ClienteDAO.save(cliente);
-				ProyectoDAO.save(p);
-				return true;
+		peso imp = null;
+
+		for (peso c : pesoDAO.listPesoByQuery(null, null)) {
+			if (c.getCliente().equals(cliente) && c.getProyecto().equals(p)) {
+				imp = c;
 			}
 		}
-		return false;
 
+		imp.setCliente(null);
+		imp.setProyecto(null);
+		pesoDAO.deleteAndDissociate(imp);
+		return true;
 	}
-//////////////////////////////////// MODIFICAR PROYECTO
-	public List<Cliente> cargarClientesFueraProyecto(String nombreProyecto, String nombreProp) throws PersistentException
-	{
+
+	//////////////////////////////////// MODIFICAR PROYECTO
+	public List<Cliente> cargarClientesFueraProyecto(String nombreProyecto, String nombreProp)
+			throws PersistentException {
 		List<Cliente> clientesProyecto = new ArrayList<Cliente>();
 		List<Cliente> clientesTotales = ClienteDAO.queryCliente(null, null);
 		List<Cliente> listaFinal = new ArrayList<Cliente>();
-		
-		for(Proyecto p : ProyectoDAO.listProyectoByQuery(null, null))
-		{
-			for(Cliente c : p.getClientes())
-			{
+
+		for (Proyecto p : ProyectoDAO.listProyectoByQuery(null, null)) {
+			for (Cliente c : p.getClientes()) {
 				clientesProyecto.add(c);
 			}
 		}
 
-		for(Cliente c : clientesTotales)
-		{
+		for (Cliente c : clientesTotales) {
 
-			if(!clientesProyecto.contains(c))
+			if (!clientesProyecto.contains(c))
 				listaFinal.add(c);
 		}
-		
+
 		return listaFinal;
 	}
-	
-	public List<Proyecto> cargarProyectosPropios(String nombreProp) throws PersistentException
-	{
+
+	public List<Proyecto> cargarProyectosPropios(String nombreProp) throws PersistentException {
 		List<Proyecto> listaProyectosPropios = new ArrayList<Proyecto>();
 		Propietario p = null;
-		for(Propietario prop : PropietarioDAO.listPropietarioByQuery(null, null))
-		{
-			if(nombreProp.equals(prop.getPropietario()))
+		for (Propietario prop : PropietarioDAO.listPropietarioByQuery(null, null)) {
+			if (nombreProp.equals(prop.getPropietario()))
 				p = prop;
 		}
-		for(Proyecto pro : ProyectoDAO.listProyectoByQuery(null, null))
-		{
-			if(pro.getNombrePropietario().equals(p.getPropietario()))
+		for (Proyecto pro : ProyectoDAO.listProyectoByQuery(null, null)) {
+			if (pro.getNombrePropietario().equals(p.getPropietario()))
 				listaProyectosPropios.add(pro);
 		}
-		
+
 		return listaProyectosPropios;
 	}
-	public void eliminarProyectoUser(String nombreProyecto, String nombrePropietario) throws PersistentException
-	{
+
+	public void eliminarProyectoUser(String nombreProyecto, String nombrePropietario) throws PersistentException {
 		Proyecto pro = null;
 		Propietario pp = null;
-		for(Propietario propie : PropietarioDAO.listPropietarioByQuery(null, null))
-		{
-			if(nombrePropietario.equals(propie.getPropietario()))
+		for (Propietario propie : PropietarioDAO.listPropietarioByQuery(null, null)) {
+			if (nombrePropietario.equals(propie.getPropietario()))
 				pp = propie;
-				
+
 		}
-		for(Proyecto p : ProyectoDAO.listProyectoByQuery(null, null))
-		{
-			if(p.getNombre().equals(nombreProyecto))
+		for (Proyecto p : ProyectoDAO.listProyectoByQuery(null, null)) {
+			if (p.getNombre().equals(nombreProyecto))
 				pro = p;
 		}
 		pro.setPropietario(null);
-		
-	//	PropietarioDAO.save(pp)
+
+		// PropietarioDAO.save(pp)
 	}
 }

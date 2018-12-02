@@ -273,53 +273,123 @@ public class ModificarProyecto extends JFrame {
 		return bdproy.descargarInformacion(proySeleccionado);
 	}
 
-	
-/////////////////////////////////////////////////////NUEVA FUNCIONALIDAD	
-	
-	
+	///////////////////////////////////////////////////// NUEVA FUNCIONALIDAD
+
 	public void quitarRequisito() {
+
 		if (tablaEsf.getSelectedRow() == -1) {
 			JOptionPane.showMessageDialog(null, "Seleccione un requisito.", "MENSAJE", JOptionPane.WARNING_MESSAGE);
 		} else {
-			boolean booleano = false;
 			try {
-				booleano = bdproy.quitarRequisitoProyecto(listReq.get(tabla.getSelectedRow()), cons.proySeleccionado);
+				 bdproy.quitarRequisitoProyecto(listReq.get(tablaEsf.getSelectedRow()),
+						cons.proySeleccionado);
 			} catch (PersistentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if (booleano == false) {
-				JOptionPane.showMessageDialog(null, "Ha ocurrido un problema.", "MENSAJE", JOptionPane.WARNING_MESSAGE);
-			} else {
-				CargaDatosEsf();
+
+			for (int i = 0; i < listReq.size(); i++) {
+				datoColumnaEsf[i][0] ="";
 			}
+			for (int j = 0; j < listReq.size(); j++) {
+				datoColumnaEsf[j][1] = "";
+			}
+			
+			try {
+				listReq = bdproyreq.cargarRequisitosProyecto(cons.proySeleccionado);
+				listEsfuerzo = bdproyreq.cargarEsfuerzo(cons.proySeleccionado);
+			} catch (PersistentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			for (int i = 0; i < listReq.size(); i++) {
+				datoColumnaEsf[i][0] = listReq.get(i).getNombre();
+			}
+			for (int j = 0; j < listReq.size(); j++) {
+				datoColumnaEsf[j][1] = "" + listEsfuerzo.get(j).getEsfuerzo();
+			}
+			tabla = new JTable(datoColumna, titColumna) {
+				public boolean isCellEditable(int row, int column) {
+					return false;
+				}
+			};
+			
+			///////////////////////////////////////////////////
+			//// TABLA ESFUERZO
+			///////////////////////////////////////////////////
+			
+			tablaEsf = new JTable(datoColumnaEsf, titColumnaEsf);
+			panelScrollEsf = new JScrollPane(tablaEsf);
+			panelScrollEsf.setSize(170, 198);
+			panelScrollEsf.setLocation(250, 187);
+			getContentPane().add(panelScrollEsf, BorderLayout.CENTER);
+			contentPane.add(panelScrollEsf);
+
 		}
 
 	}
 
 	public void quitarCliente() {
+
 		if (tabla.getSelectedRow() == -1) {
 			JOptionPane.showMessageDialog(null, "Seleccione un cliente.", "MENSAJE", JOptionPane.WARNING_MESSAGE);
 		} else {
-			boolean booleano = false;
 			try {
-				booleano = bdproy.quitarClienteProyecto(listCli.get(tablaEsf.getSelectedRow()), cons.proySeleccionado);
+			 bdproy.quitarClienteProyecto(listCli.get(tabla.getSelectedRow()), cons.proySeleccionado);
 			} catch (PersistentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if (booleano == false) {
-				JOptionPane.showMessageDialog(null, "Ha ocurrido un problema.", "MENSAJE", JOptionPane.WARNING_MESSAGE);
-			} else {
-				CargaDatos();
+			
+
+			
+			
+
+			for (int i = 0; i < listCli.size(); i++) {
+				datoColumna[i][0] = "";
 			}
+			for (int j = 0; j < listCli.size(); j++) {
+				datoColumna[j][1] = "";
+			}
+			try {
+				listCli = bdimp.cargarClientesProyecto(consproy.getNombre());
+				listPeso = bdimp.cargarPesosProyecto(consproy.getNombre());
+			} catch (PersistentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			for (int i = 0; i < listCli.size(); i++) {
+				datoColumna[i][0] = listCli.get(i).getNombre();
+			}
+			for (int j = 0; j < listCli.size(); j++) {
+				datoColumna[j][1] = "" + listPeso.get(j).getPeso();
+			}
+			tabla = new JTable(datoColumna, titColumna) {
+				public boolean isCellEditable(int row, int column) {
+					return false;
+				}
+			};
+			// Aquí se configuran algunos de los parámetros que permite
+			// variar la JTable
+			tabla.setRowSelectionAllowed(true);
+			tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			// Incorporamos la tabla a un panel que incorpora ya una barra
+			// de desplazamiento, para que la visibilidad de la tabla sea
+			// automática
+			panelScroll = new JScrollPane(tabla);
+			panelScroll.setSize(170, 198);
+			panelScroll.setLocation(10, 187);
+			getContentPane().add(panelScroll, BorderLayout.CENTER);
+			contentPane.add(panelScroll);
+
+			
+
 		}
 
 	}
-/////////////////////////////////////////////////////////NUEVAFUNCIONALIDAD
-	
-	
-	
+	///////////////////////////////////////////////////////// NUEVAFUNCIONALIDAD
+
 	private void CargaDatosEsf() {
 		try {
 			listReq = bdproyreq.cargarRequisitosProyecto(cons.proySeleccionado);
