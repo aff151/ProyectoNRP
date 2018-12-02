@@ -87,6 +87,7 @@ public class BD_Valor {
 		}
 		if (existe == true) {
 			val.setValor(Integer.parseInt(valor));
+			ValorDAO.save(val);
 		}
 
 		return (existe == true) ? true : false;
