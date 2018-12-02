@@ -7,6 +7,8 @@ import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -17,12 +19,16 @@ import javax.swing.border.EmptyBorder;
 import org.orm.PersistentException;
 
 import database.BD_Clientes;
+import database.BD_Peso;
 import database.BD_ProyReq;
 import database.BD_Proyectos;
 import database.BD_Requisitos;
 import database.BD_Valor;
 import database.Cliente;
+import database.ProyReq;
+import database.Proyecto;
 import database.Requisito;
+import database.peso;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -34,6 +40,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
 
 public class AsignarValoresRequisitos extends JFrame {
 
@@ -42,24 +50,35 @@ public class AsignarValoresRequisitos extends JFrame {
 	private JPanel contentPane;
 	private JTextField textValor;
 	protected String procedencia;
-	// Componentes para listaReq
-	private JList listRequisitos;
-	private List<Requisito> listaRequisito;
-	private DefaultListModel<String> modelReq;
-	private JScrollPane scrollLista;
-	private JScrollPane scrollLista1;
-	BD_Requisitos bd_req = new BD_Requisitos();
-	BD_ProyReq bd_req2 = new BD_ProyReq();
+	private List<Cliente> listCli;
+	private List<Requisito> listReq;
+	private JTextArea desctextField;
+	BD_Proyectos bdproy = new BD_Proyectos();
+	BD_Peso bdimp = new BD_Peso();
+	BD_Requisitos bdreq = new BD_Requisitos();
 
-	// Componentes para listaClientes
-	private JList listClientes;
-	private List<Cliente> listaClientes;
-	private DefaultListModel<String> modelCli;
-	private JScrollPane scrollListaC;
-	BD_Proyectos bdProyecto = new BD_Proyectos();
+	BD_ProyReq bdproyreq = new BD_ProyReq();
 
 	ConsultarProyectos cons = new ConsultarProyectos();
 
+	////////////////////////////////////////
+	// TABLA PROYECTOS
+	///////////////////////////////////////
+	private JTable tabla;
+	private JScrollPane panelScroll;
+	private String titColumna[];
+	private String datoColumna[][];
+	private List<peso> listPeso;
+	private List<Proyecto> listProy;
+	////////////////////////////////////////
+	// TABLA REQUISITOS
+	///////////////////////////////////////
+	private JTable tablaEsf;
+	private JScrollPane panelScrollEsf;
+	private String titColumnaEsf[];
+	private String datoColumnaEsf[][];
+	private List<ProyReq> listEsfuerzo;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -81,63 +100,105 @@ public class AsignarValoresRequisitos extends JFrame {
 	 */
 	public AsignarValoresRequisitos() {
 		inicializar();
-
-		JLabel lblDebeDeAsignar = new JLabel("Asignar un valor al requisto en relación al cliente");
-		lblDebeDeAsignar.setBounds(6, 18, 409, 16);
-		contentPane.add(lblDebeDeAsignar);
-
-		JLabel lblSeleccionCliente = new JLabel("Selecciona Cliente");
-		lblSeleccionCliente.setBounds(16, 56, 128, 16);
-		contentPane.add(lblSeleccionCliente);
-
-		JLabel lblSeleccionarRequisito = new JLabel("Seleccionar Requisito");
-		lblSeleccionarRequisito.setBounds(154, 56, 176, 16);
-		contentPane.add(lblSeleccionarRequisito);
-		/*
-		 * LISTA DE REQUISITOS
-		 */
-		listRequisitos = new JList();
-		listRequisitos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollLista = new JScrollPane();
-		scrollLista.setBounds(154, 83, 117, 149);
-		scrollLista.setViewportView(listRequisitos);
-		contentPane.add(scrollLista);
-
-		modelReq = new DefaultListModel<String>();
-
-		/*
-		 * LISTA DE CLIENTES
-		 */
-		listClientes = new JList();
-		listClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollLista1 = new JScrollPane();
-		scrollLista1.setBounds(16, 84, 117, 149);
-		scrollLista1.setViewportView(listClientes);
-		contentPane.add(scrollLista1);
-
-		modelCli = new DefaultListModel<String>();
-
+		
+		desctextField = new JTextArea("");
+		desctextField.setBounds(415, 83, 117, 107);
+		desctextField.setLineWrap(true);
+		desctextField.setWrapStyleWord(true);
+		desctextField.setEditable(false);
+		desctextField.setBackground(getForeground());
+		contentPane.add(desctextField);
+		
 		textValor = new JTextField();
-		textValor.setBounds(44, 244, 72, 26);
+		textValor.setBounds(225, 295, 72, 26);
 		textValor.setColumns(10);
 		TextPrompt placeholder2 = new TextPrompt("Valor", textValor);
 		placeholder2.changeAlpha(0.75f);
 		placeholder2.changeStyle(Font.ITALIC);
 		contentPane.add(textValor);
 
+		JLabel lblDebeDeAsignar = new JLabel("Asignar un valor al requisto en relación al cliente");
+		lblDebeDeAsignar.setBounds(6, 18, 409, 16);
+		contentPane.add(lblDebeDeAsignar);
+
+		JLabel lblSeleccionCliente = new JLabel("Selecciona Cliente");
+		lblSeleccionCliente.setBounds(34, 56, 116, 16);
+		contentPane.add(lblSeleccionCliente);
+
+		JLabel lblSeleccionarRequisito = new JLabel("Seleccionar Requisito");
+		lblSeleccionarRequisito.setBounds(254, 56, 128, 16);
+		contentPane.add(lblSeleccionarRequisito);
+		
+		///////////////////////////////////////////////////
+		//// TABLA PROYECTOS
+		///////////////////////////////////////////////////
+		// Creamos las columnas y las cargamos con los datos que van a
+		// aparecer en la pantalla
+		CreaColumnas();
+		CargaDatos();
+		// Creamos una instancia del componente Swing
+		tabla = new JTable(datoColumna, titColumna) {
+		public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		// Aquí se configuran algunos de los parámetros que permite
+		// variar la JTable
+		tabla.setRowSelectionAllowed(true);
+		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		// Incorporamos la tabla a un panel que incorpora ya una barra
+		// de desplazamiento, para que la visibilidad de la tabla sea
+		// automática
+		panelScroll = new JScrollPane(tabla);
+		panelScroll.setSize(170, 198);
+		panelScroll.setLocation(10, 83);
+		getContentPane().add(panelScroll, BorderLayout.CENTER);
+		contentPane.add(panelScroll);
+		
+		///////////////////////////////////////////////////
+		//// TABLA ESFUERZO
+		///////////////////////////////////////////////////
+		CreaColumnasEsf();
+		CargaDatosEsf();
+		tablaEsf = new JTable(datoColumnaEsf, titColumnaEsf){
+		public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		tablaEsf.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		    	JTable tab = (JTable)evt.getSource();
+		        if (evt.getClickCount() == 1) {
+		    		desctextField.setText(listEsfuerzo.get(tab.getSelectedRow()).getRequisito().getDescripcion());
+		        }
+		    }
+		});
+		tablaEsf.setRowSelectionAllowed(true);
+		tablaEsf.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		panelScrollEsf = new JScrollPane(tablaEsf);
+		panelScrollEsf.setSize(170, 198);
+		panelScrollEsf.setLocation(226, 83);
+		getContentPane().add(panelScrollEsf, BorderLayout.CENTER);
+		contentPane.add(panelScrollEsf);
+
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					if (listClientes.isSelectionEmpty()) {
+					if (tabla.getSelectedRow() == -1) {
 						JOptionPane.showMessageDialog(null, "Seleccione un cliente.", "MENSAJE",
 								JOptionPane.WARNING_MESSAGE);
-					} else if (listRequisitos.isSelectionEmpty()) {
+					} else if (tablaEsf.getSelectedRow() == -1) {
 						JOptionPane.showMessageDialog(null, "Seleccione un requisito.", "MENSAJE",
 								JOptionPane.WARNING_MESSAGE);
 					} else {
 						boolean isDigit = true;
+						if(textValor.getText().equals("")) {
+							JOptionPane.showMessageDialog(null, "Introduzca un valor", "MENSAJE",
+									JOptionPane.WARNING_MESSAGE);
+							isDigit = false;
+						}
 						for (Character a : textValor.getText().toCharArray()) {
 							if (!Character.isDigit(a)) {
 								isDigit = false;
@@ -152,34 +213,32 @@ public class AsignarValoresRequisitos extends JFrame {
 										JOptionPane.WARNING_MESSAGE);
 							} else {
 								if (bdValor.modificarValor(cons.proySeleccionado,
-										listClientes.getSelectedValue().toString(),
-										listRequisitos.getSelectedValue().toString(), textValor.getText())) {
+										datoColumna[tabla.getSelectedRow()][0],
+										datoColumnaEsf[tablaEsf.getSelectedRow()][0], textValor.getText())) {
 									JOptionPane.showMessageDialog(null, "Se ha modificado el valor correctamente.",
 											"MENSAJE", JOptionPane.WARNING_MESSAGE);
 									
 								} else {
 									bdValor.crearValor(cons.proySeleccionado,
-											listClientes.getSelectedValue().toString(),
-											listRequisitos.getSelectedValue().toString(), textValor.getText());
+											datoColumna[tabla.getSelectedRow()][0],
+											datoColumnaEsf[tablaEsf.getSelectedRow()][0], textValor.getText());
 									JOptionPane.showMessageDialog(null, "Se ha creado el valor correctamente.",
 											"MENSAJE", JOptionPane.WARNING_MESSAGE);
+									ModificarProyecto mp = new ModificarProyecto();
+									mp.setVisible(true);
+									dispose();
 								}
 								
 							}
-							dispose();
 						}
 					}
 				} catch (HeadlessException | PersistentException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				ModificarProyecto mp = new ModificarProyecto();
-				mp.setVisible(true);
-				
-
 			}
 		});
-		btnGuardar.setBounds(164, 244, 90, 29);
+		btnGuardar.setBounds(306, 294, 90, 29);
 		contentPane.add(btnGuardar);
 
 		JButton btnAtrs = new JButton("Atrás");
@@ -192,12 +251,8 @@ public class AsignarValoresRequisitos extends JFrame {
 		});
 		btnAtrs.setBounds(16, 293, 72, 29);
 		contentPane.add(btnAtrs);
-		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(16, 281, 255, 2);
-		contentPane.add(separator);
-		cargarClientesProyecto();
-		cargarRequisitosProyecto();
+		//cargarClientesProyecto();
+		//cargarRequisitosProyecto();
 	}
 
 	// CARGAR CLIENTES DEL PROYECTO
@@ -205,43 +260,68 @@ public class AsignarValoresRequisitos extends JFrame {
 	// CARGAR VALOR
 	// MODIFICAR VALOR
 
-	public void cargarClientesProyecto() {
+	public void inicializar() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
+		setResizable(false);
+		setBounds(100, 100, 549, 367);
+		setLocationRelativeTo(null);
+		setTitle("Asignar Valor a Requisito");
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+	}
+	private void CargaDatosEsf() {
 		try {
-			listaClientes = bdProyecto.cargarClientesProyecto(cons.proySeleccionado);
+			listReq = bdproyreq.cargarRequisitosProyecto(cons.proySeleccionado);
+			listEsfuerzo = bdproyreq.cargarEsfuerzo(cons.proySeleccionado);
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (Cliente c : listaClientes) {
-			modelCli.addElement(c.getNombre());
-			listClientes.setModel(modelCli);
+		datoColumnaEsf = new String[listReq.size()][2];
+
+		for (int i = 0; i < listReq.size(); i++) {
+			datoColumnaEsf[i][0] = listReq.get(i).getNombre();
 		}
+		for (int j = 0; j < listReq.size(); j++) {
+			datoColumnaEsf[j][1] = "" + listEsfuerzo.get(j).getEsfuerzo();
+		}
+	}
+
+	private void CreaColumnasEsf() {
+		titColumnaEsf = new String[2];
+		titColumnaEsf[0] = "Nombre";
+		titColumnaEsf[1] = "Esfuerzo";
+	}
+
+	// Creamos las etiquetas que sirven de título a cada una de
+	// las columnas de la tabla
+	public void CreaColumnas() {
+		titColumna = new String[2];
+		titColumna[0] = "Nombre";
+		titColumna[1] = "Peso";
 
 	}
-public void inicializar() {
-	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
-	setResizable(false);
-	setBounds(100, 100, 297, 367);
-	setLocationRelativeTo(null);
-	setTitle("Asignar Valor a Requisito");
-	contentPane = new JPanel();
-	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-	setContentPane(contentPane);
-	contentPane.setLayout(null);
-}
-	public void cargarRequisitosProyecto() {
+
+	// Creamos los datos para cada uno de los elementos de la tabla
+	public void CargaDatos() {
 		try {
-			
-			listaRequisito = bd_req2.cargarRequisitosProyecto(cons.proySeleccionado);
+			listCli = bdimp.cargarClientesProyecto(ConsultarProyectos.proySeleccionado);
+			listPeso = bdimp.cargarPesosProyecto(ConsultarProyectos.proySeleccionado);
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (Requisito r : listaRequisito) {
-			String nombre = r.getNombre();
-			modelReq.addElement(r.getNombre());
-			listRequisitos.setModel(modelReq);
+		datoColumna = new String[listCli.size()][2];
+
+		for (int i = 0; i < listCli.size(); i++) {
+			datoColumna[i][0] = listCli.get(i).getNombre();
 		}
+		for (int j = 0; j < listCli.size(); j++) {
+			datoColumna[j][1] = "" + listPeso.get(j).getPeso();
+		}
+
 	}
 }
