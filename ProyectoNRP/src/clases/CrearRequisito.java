@@ -53,7 +53,7 @@ public class CrearRequisito extends JFrame {
 	private DefaultListModel<String> modelo;
 	private JTextField esfuerzoReqV;
 	private JScrollPane scrollLista;
-	private JTextField desctextField;
+	private JTextArea desctextField;
 	
 
 	/**
@@ -77,6 +77,14 @@ public class CrearRequisito extends JFrame {
 	 */
 	public CrearRequisito() {
 		inicializar();
+		
+		desctextField = new JTextArea("");
+		desctextField.setBounds(443, 55, 117, 107);
+		desctextField.setLineWrap(true);
+		desctextField.setWrapStyleWord(true);
+		desctextField.setEditable(false);
+		desctextField.setBackground(getForeground());
+		contentPane.add(desctextField);
 		
 		txtNombreDelRequisito = new JTextField();
 		txtNombreDelRequisito.setBounds(22, 16, 199, 26);
@@ -228,13 +236,10 @@ public class CrearRequisito extends JFrame {
 		    public void mouseClicked(MouseEvent evt) {
 		        JList list = (JList)evt.getSource();
 		        if (evt.getClickCount() == 1) {
-		        	System.out.println(list.getSelectedValue().toString());
-		        	System.out.println(listaRequisito.get(list.getSelectedIndex()).getDescripcion());
 		        	
-		    		desctextField = new JTextField(listaRequisito.get(list.getSelectedIndex()).getDescripcion());
-		    		desctextField.setBounds(443, 55, 117, 107);
-		    		contentPane.add(desctextField);
-		    		desctextField.setColumns(10);
+		    		//desctextField = new JTextField(listaRequisito.get(list.getSelectedIndex()).getDescripcion());
+
+		        	desctextField.setText(listaRequisito.get(list.getSelectedIndex()).getDescripcion());
 		        	
 		        }
 		    }
@@ -263,13 +268,9 @@ TextPrompt placeholder3 = new TextPrompt("Esfuerzo", esfuerzoReqV);
 		contentPane.add(esfuerzoReqV);
 		esfuerzoReqV.setColumns(10);
 		
-		JLabel lblDescripcinDe = new JLabel("Descripción de");
+		JLabel lblDescripcinDe = new JLabel("Descripción");
 		lblDescripcinDe.setBounds(433, 22, 106, 14);
 		contentPane.add(lblDescripcinDe);
-		
-		JLabel nombreReqlblNewLabel = new JLabel("New label");
-		nombreReqlblNewLabel.setBounds(514, 22, 46, 14);
-		contentPane.add(nombreReqlblNewLabel);
 		
 		
 		

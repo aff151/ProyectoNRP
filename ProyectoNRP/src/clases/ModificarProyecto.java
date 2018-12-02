@@ -165,10 +165,10 @@ public class ModificarProyecto extends JFrame {
 		JButton btnAtrs = new JButton("Atrás");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (procedencia == "ConsultarProyectos") {
-					ConsultarProyectos consultarProyectos = new ConsultarProyectos();
-					consultarProyectos.setVisible(true);
-				}
+
+				ConsultarProyectos consultarProyectos = new ConsultarProyectos();
+				consultarProyectos.setVisible(true);
+
 				dispose();
 			}
 		});
@@ -281,20 +281,19 @@ public class ModificarProyecto extends JFrame {
 			JOptionPane.showMessageDialog(null, "Seleccione un requisito.", "MENSAJE", JOptionPane.WARNING_MESSAGE);
 		} else {
 			try {
-				 bdproy.quitarRequisitoProyecto(listReq.get(tablaEsf.getSelectedRow()),
-						cons.proySeleccionado);
+				bdproy.quitarRequisitoProyecto(listReq.get(tablaEsf.getSelectedRow()), cons.proySeleccionado);
 			} catch (PersistentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 			for (int i = 0; i < listReq.size(); i++) {
-				datoColumnaEsf[i][0] ="";
+				datoColumnaEsf[i][0] = "";
 			}
 			for (int j = 0; j < listReq.size(); j++) {
 				datoColumnaEsf[j][1] = "";
 			}
-			
+
 			try {
 				listReq = bdproyreq.cargarRequisitosProyecto(cons.proySeleccionado);
 				listEsfuerzo = bdproyreq.cargarEsfuerzo(cons.proySeleccionado);
@@ -314,11 +313,11 @@ public class ModificarProyecto extends JFrame {
 					return false;
 				}
 			};
-			
+
 			///////////////////////////////////////////////////
 			//// TABLA ESFUERZO
 			///////////////////////////////////////////////////
-			
+
 			tablaEsf = new JTable(datoColumnaEsf, titColumnaEsf);
 			panelScrollEsf = new JScrollPane(tablaEsf);
 			panelScrollEsf.setSize(170, 198);
@@ -336,15 +335,12 @@ public class ModificarProyecto extends JFrame {
 			JOptionPane.showMessageDialog(null, "Seleccione un cliente.", "MENSAJE", JOptionPane.WARNING_MESSAGE);
 		} else {
 			try {
-			 bdproy.quitarClienteProyecto(listCli.get(tabla.getSelectedRow()), cons.proySeleccionado);
+				bdproy.quitarClienteProyecto(listCli.get(tabla.getSelectedRow()), cons.proySeleccionado);
 			} catch (PersistentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			//
-
-			
-			
 
 			for (int i = 0; i < listCli.size(); i++) {
 				datoColumna[i][0] = "";
@@ -382,8 +378,6 @@ public class ModificarProyecto extends JFrame {
 			panelScroll.setLocation(10, 187);
 			getContentPane().add(panelScroll, BorderLayout.CENTER);
 			contentPane.add(panelScroll);
-
-			
 
 		}
 
