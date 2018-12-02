@@ -7,6 +7,8 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SingleSelectionModel;
 import javax.swing.border.EmptyBorder;
@@ -25,6 +27,8 @@ import javax.swing.ButtonModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
@@ -37,6 +41,8 @@ public class ConsultarProyectosPlanificacion extends JFrame {
 	private DefaultListModel<String> modelo;
 	private JList listProyectos;
 	private JScrollPane scrollLista;
+	//private JTextField desctextField;
+	private JTextArea desctextField;
 	BD_Proyectos bdProy = new BD_Proyectos();
 
 	/**
@@ -66,10 +72,26 @@ public class ConsultarProyectosPlanificacion extends JFrame {
 		lblNewLabel.setBounds(33, 10, 150, 14);
 		contentPane.add(lblNewLabel);
 
+		desctextField = new JTextArea("");
+		desctextField.setBounds(220, 36, 117, 107);
+		desctextField.setLineWrap(true);
+		desctextField.setWrapStyleWord(true);
+		desctextField.setEditable(false);
+		desctextField.setBackground(getForeground());
+		contentPane.add(desctextField);
+		
 		modelo = new DefaultListModel<String>();
 
 		listProyectos = new JList();
 		listProyectos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listProyectos.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        JList list = (JList)evt.getSource();
+		        if (evt.getClickCount() == 1) {
+		    		desctextField.setText(listPro.get(list.getSelectedIndex()).getDescripcion());
+		        }
+		    }
+		});
 		scrollLista = new JScrollPane();
 		scrollLista.setBounds(10, 36, 179, 147);
 	    scrollLista.setViewportView(listProyectos);
@@ -112,7 +134,7 @@ public class ConsultarProyectosPlanificacion extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 204, 288);
+		setBounds(100, 100, 367, 288);
 		setLocationRelativeTo(null);
 		//setTitle("Consultar Proyectos");
 		contentPane = new JPanel();
@@ -123,7 +145,7 @@ public class ConsultarProyectosPlanificacion extends JFrame {
 
 	public void cargarProyectos() {
 		try {
-			listPro = bdProy.cargarProyectos();
+			listPro = bdProy.cargarProyectosPropios(claseEstatica.getPropietario());
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
