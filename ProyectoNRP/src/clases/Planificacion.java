@@ -54,6 +54,10 @@ public class Planificacion extends JFrame {
 	private String datosTabla[][];
 	//lista de requisitos ordenados por satisfaccion
 	public static List<RequisitoSat> listReqSat;
+	//Array para los esfuerzos en guardar
+	public String datosEsf[];
+	//Array para los pesos en guardar
+	public String datosPeso[];
 	/**
 	 * Launch the application.
 	 */
@@ -119,6 +123,8 @@ public class Planificacion extends JFrame {
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				guardar();
+				guardarEsfuerzo();
+				guardarPeso();
 			}
 		});
 		btnGuardar.setBounds(464, 308, 89, 23);
@@ -272,5 +278,20 @@ public class Planificacion extends JFrame {
 				e.printStackTrace();
 			}
 		}
+	}
+	public void guardarEsfuerzo() {
+		/*datosEsf tienes el array con los valores de la fila esfuerzo
+		 * Ejemplo: datosEsf[0] y el nombre de su requisito sera listReq.get(0).getNombre()
+		 * datosEsf[1] y el nombre de su requisito sera listReq.get(1).getNombre())*/
+		datosEsf = new String[listReq.size()];
+		for(int i = 0; i < datosEsf.length; i++)
+			datosEsf[i] = datoColumna[listPeso.size()][i+1];
+	}
+	public void guardarPeso() {
+		/*datosPeso tienes el array con la columna de valores de pesos
+		 *datosPeso[0] tienes el piso del primer cliente en el proyecto etc. */
+		datosPeso = new String[listPeso.size()];
+		for(int i = 0; i < datosPeso.length; i++)
+			datosPeso[i] = datoColumna[i][listReq.size()+1];
 	}
 }
