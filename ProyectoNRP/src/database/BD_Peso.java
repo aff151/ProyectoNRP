@@ -119,4 +119,54 @@ public class BD_Peso {
 		return true;
 	}
 
+	//////////////////////////////////// MODIFICAR PROYECTO
+	public List<Cliente> cargarClientesFueraProyecto(String nombreProyecto, String nombreProp)
+			throws PersistentException {
+
+		List<Cliente> clientes = new ArrayList<Cliente>();
+		Proyecto auxPro = null;
+		List<Cliente> clientesTotales = ClienteDAO.queryCliente(null, null);
+		List<Cliente> listaFinal = new ArrayList<Cliente>();
+
+		for (Cliente cli : ClienteDAO.listClienteByQuery(null, null)) {
+			clientes.add(cli);
+		}
+		for (Proyecto p : ProyectoDAO.listProyectoByQuery(null, null)) {
+			if (p.getNombre().equals(nombreProyecto))
+				auxPro = p;
+		}
+
+		for (Cliente cli : auxPro.getClientes()) {
+			if (clientes.contains(cli))
+				clientes.remove(cli);
+		}
+
+		return clientes;
+	}
+
+	public void asignaClienteProyecto(String nombre, String importancia, String proyecto) throws PersistentException {
+		BD_Clientes bdcli = new BD_Clientes();
+		Cliente clien = null;
+		Proyecto proy = null;
+		
+		bdcli.crearCliente(nombre);
+		peso imp = pesoDAO.createPeso();
+
+		for (Cliente c : ClienteDAO.listClienteByQuery(null, null)) {
+			if (nombre.equals(c.getNombre()))
+				clien = c;
+		}
+		for (Proyecto p : ProyectoDAO.listProyectoByQuery(null, null)) {
+			if (proyecto.equals(p.getNombre()))
+				proy = p;
+		}
+
+		imp.setCliente(clien);
+		imp.setProyecto(proy);
+		imp.setPeso(Integer.parseInt(importancia));
+
+		pesoDAO.save(imp);
+
+	}
+
 }

@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import org.orm.PersistentException;
 
 import database.BD_Clientes;
+import database.BD_Peso;
 import database.BD_Proyectos;
 import database.Cliente;
 import database.Proyecto;
@@ -42,6 +43,7 @@ public class CrearCliente extends JFrame {
 	private JTextField nombreTexttField;
 	private JTextField pesoTextField;
 	private BD_Clientes bd_Clientes = new BD_Clientes();
+	private BD_Peso bdimp = new BD_Peso();
 	private BD_Proyectos bd_Proyectos = new BD_Proyectos();
 	private DefaultListModel modelo;
 	private List<Proyecto> listaProyecto;
@@ -94,8 +96,7 @@ claseEstatica claseEs=new claseEstatica();
 			public void actionPerformed(ActionEvent e) {
 
 				if (claseEs.getProcedencia() == "AnadirClientes") {
-					AnadirClientes anadir = new AnadirClientes();
-					anadir.setVisible(true);
+					//-.-
 				} else {
 
 					Menu m = new Menu();
@@ -152,7 +153,7 @@ claseEstatica claseEs=new claseEstatica();
 						JOptionPane.WARNING_MESSAGE);
 			}
 			if (pesoTextField.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "El peso no puede quedar vacío", "MENSAJE",
+				JOptionPane.showMessageDialog(null, "El peso no puede quedar vacï¿½o", "MENSAJE",
 						JOptionPane.WARNING_MESSAGE);
 			}
 			boolean isDigt = true;
@@ -161,18 +162,18 @@ claseEstatica claseEs=new claseEstatica();
 					isDigt = false;
 			}
 			if (isDigt == false) {
-				JOptionPane.showMessageDialog(null, "El peso debe ser un número entre 0 y 5", "MENSAJE",
+				JOptionPane.showMessageDialog(null, "El peso debe ser un nï¿½mero entre 0 y 5", "MENSAJE",
 						JOptionPane.WARNING_MESSAGE);
 			} else {
 				int peso = Integer.parseInt(pesoTextField.getText());
 				if (peso < 0 || peso > 5) {
-					JOptionPane.showMessageDialog(null, "El peso debe ser un número entre 0 y 5", "MENSAJE",
+					JOptionPane.showMessageDialog(null, "El peso debe ser un nï¿½mero entre 0 y 5", "MENSAJE",
 							JOptionPane.WARNING_MESSAGE);
 				} else {
 					try {
 						System.out.println(nombreTexttField.getText()+" peso: "+ pesoTextField.getText()+" proyecto: "+
 								claseEs.getProySeleccionado());
-						bd_Clientes.asignaClienteProyecto(nombreTexttField.getText(), pesoTextField.getText(),
+						bdimp.asignaClienteProyecto(nombreTexttField.getText(), pesoTextField.getText(),
 								claseEs.getProySeleccionado());
 					} catch (PersistentException e) {
 						// TODO Auto-generated catch block
@@ -181,6 +182,9 @@ claseEstatica claseEs=new claseEstatica();
 				}
 
 			}
+			ModificarProyecto mod = new ModificarProyecto();
+			mod.setVisible(true);
+			dispose();
 
 		} else {
 			try {

@@ -126,7 +126,7 @@ public class AnadirClientes extends JFrame {
 											"El peso debe ser un número entre 0 y 5", "MENSAJE",
 											JOptionPane.WARNING_MESSAGE);
 								} else {
-									bdCliente.asignaClienteProyecto(listClientes.getSelectedValue().toString(),
+									bdimp.asignaClienteProyecto(listClientes.getSelectedValue().toString(),
 											txtImportancia.getText(), cp.proySeleccionado);
 									//ModificarProyecto modificarProyecto = new ModificarProyecto();
 									//modificarProyecto.setVisible(true);
@@ -184,7 +184,7 @@ public class AnadirClientes extends JFrame {
 				crearCliente.procedencia = "AnadirClientes";
 				
 				crearCliente.setVisible(true);
-				//dispose();
+				dispose();
 			}
 		});
 		btnCrearCliente.setBounds(106, 354, 117, 29);
@@ -212,7 +212,7 @@ public class AnadirClientes extends JFrame {
 	public void cargarClientes() {
 		try {
 			//Poner clientes que no estan en el proyecto
-			listaClientes =	bdP.cargarClientesFueraProyecto(cp.proySeleccionado, claseEstatica.getPropietario());
+			listaClientes =	bdimp.cargarClientesFueraProyecto(cp.proySeleccionado, claseEstatica.getPropietario());
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
