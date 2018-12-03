@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumnModel;
@@ -55,6 +56,9 @@ public class ConsultarCliente extends JFrame {
 	private List<Requisito> listReq;
 	private DefaultListModel modelo1;
 	private JList listRequisitos;
+	private JTextArea desctextField;
+
+	private JButton btnEliminarProyecto;
 	////////////////////////////////////////
 	// TABLA PROYECTOS
 	///////////////////////////////////////
@@ -96,6 +100,15 @@ public class ConsultarCliente extends JFrame {
 
 		inicializar();
 
+		desctextField = new JTextArea("");
+		desctextField.setBounds(10, 305, 200, 50);
+		desctextField.setLineWrap(true);
+		desctextField.setWrapStyleWord(true);
+		desctextField.setEditable(false);
+		desctextField.setBackground(getForeground());
+		desctextField.setVisible(false);
+		contentPane.add(desctextField);
+		
 		botonAtras();
 
 		tablaProyectos();
@@ -106,7 +119,7 @@ public class ConsultarCliente extends JFrame {
 
 	private void eliminarProyecto() {
 		// TODO Auto-generated method stub
-		JButton btnEliminarProyecto = new JButton("Eliminar Proyecto");
+		btnEliminarProyecto = new JButton("Eliminar Proyecto");
 		btnEliminarProyecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				quitarDeTablaYRelaciones(datoColumna[tabla.getSelectedRow()][0]);
@@ -199,6 +212,9 @@ public class ConsultarCliente extends JFrame {
 				JTable list = (JTable) evt.getSource();
 				if (evt.getClickCount() == 1) {
 					tablaRequisitos();
+					btnEliminarProyecto.setBounds(200, 355, 147, 29);
+					desctextField.setText("DESCRIPCIÓN: " + listProy.get(tabla.getSelectedRow()).getDescripcion());
+					desctextField.setVisible(true);
 				}
 			}
 		});
