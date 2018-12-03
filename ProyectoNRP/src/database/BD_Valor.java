@@ -152,4 +152,20 @@ public class BD_Valor {
 		}
 		return -1;
 	}
+
+	public void eliminarRequisitoCR(String nombreReq, String admin) throws PersistentException {
+		
+		for(Valor v : ValorDAO.listValorByQuery(null, null)) {
+			if(v.getRequisito().getNombre().equals(nombreReq) && v.getProyecto().getPropietario().getPropietario().equals(admin)){
+				ValorDAO.deleteAndDissociate(v);
+			}
+		}
+		
+		for(ProyReq p : ProyReqDAO.listProyReqByQuery(null, null)) {
+			if(p.getProyecto().getPropietario().getPropietario().equals(admin) && p.getRequisito().getNombre().equals(nombreReq)) {
+				ProyReqDAO.deleteAndDissociate(p);
+			}
+		}
+		
+	}
 }

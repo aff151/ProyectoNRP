@@ -15,6 +15,7 @@ import org.orm.PersistentException;
 
 import database.BD_ProyReq;
 import database.BD_Requisitos;
+import database.BD_Valor;
 import database.ProyReq;
 import database.Requisito;
 import database.Valor;
@@ -41,6 +42,7 @@ public class ConsultarRequisito extends JFrame {
 	private JScrollPane scrollLista;
 	BD_Requisitos bdReq = new BD_Requisitos();
 	BD_ProyReq bdpr = new BD_ProyReq();
+	BD_Valor bdvalor = new BD_Valor();
 	private JList listRequisitos;
 	private String reqselec = "";
 	private JLabel lblNewLabel;
@@ -134,15 +136,43 @@ public class ConsultarRequisito extends JFrame {
 				dispose();
 			}
 		});
-		btnAtrs.setBounds(32, 360, 83, 23);
+		btnAtrs.setBounds(249, 359, 83, 23);
 		contentPane.add(btnAtrs);
 
 		lblNewLabel = new JLabel();
 		lblNewLabel.setBounds(213, 63, 177, 14);
 		contentPane.add(lblNewLabel);
+		
+		JButton btnEliminarrequisito = new JButton("EliminarRequisito");
+		btnEliminarrequisito.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				eliminarRequisito();
+			}
+
+			
+		});
+		btnEliminarrequisito.setBounds(31, 359, 156, 23);
+		contentPane.add(btnEliminarrequisito);
 
 	}
 
+	private void eliminarRequisito() {
+		// TODO Auto-generated method stub
+		if(listRequisitos_1.isSelectionEmpty()) {
+			JOptionPane.showMessageDialog(null, "Debe seleccionar un requisito", "MENSAJE",
+					JOptionPane.WARNING_MESSAGE);
+		}
+		try {
+			bdvalor.eliminarRequisitoCR(listRequisitos_1.getSelectedValue().toString(), claseEstatica.getPropietario());
+			ConsultarRequisito con = new ConsultarRequisito();
+			con.setVisible(true);
+			dispose();
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void inicializar() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));

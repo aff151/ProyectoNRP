@@ -33,15 +33,16 @@ public class BD_Requisitos {
 	public List<Requisito> cargarRequisitos(String propietario) throws PersistentException {
 		List<Requisito> listaRequisitos = new ArrayList<Requisito>();
 		List<Proyecto> listaProyectosPropietario = new ArrayList<Proyecto>();
-		
+
 		for (Proyecto proyecto : ProyectoDAO.listProyectoByQuery(null, null)) {
-			if(proyecto.getPropietario().getPropietario().equals(propietario))
+			if (proyecto.getPropietario().getPropietario().equals(propietario))
 				listaProyectosPropietario.add(proyecto);
 		}
-		
+
 		for (Proyecto proy : listaProyectosPropietario) {
-			for(Requisito req : proy.getRequisitos()) {
-				listaRequisitos.add(req);
+			for (Requisito req : proy.getRequisitos()) {
+				if (!listaRequisitos.contains(req))
+					listaRequisitos.add(req);
 			}
 		}
 		return listaRequisitos;
@@ -54,37 +55,34 @@ public class BD_Requisitos {
 		boolean borrar = false;
 		List<Requisito> listRequisitosEliminar = new ArrayList<Requisito>();
 		List<Requisito> listaFinal = new ArrayList<Requisito>();
-/*
-		for (Requisito req : listTodosRequisitos) {
-			System.out.println("Requisito: " + req.getNombre()+" proyecto length: "+req.getProyectos().length);
-			
-			if (req.getProyectos().length != 0) {
-				if (!req.getProyectos().toString().contains(nombreProyecto)) {
-					System.out.println("INTENTA METER");
-					listaFinal.add(req);
-					System.out.println("METE");
-				}
-			}
+		/*
+		 * for (Requisito req : listTodosRequisitos) { System.out.println("Requisito: "
+		 * + req.getNombre()+" proyecto length: "+req.getProyectos().length);
+		 * 
+		 * if (req.getProyectos().length != 0) { if
+		 * (!req.getProyectos().toString().contains(nombreProyecto)) {
+		 * System.out.println("INTENTA METER"); listaFinal.add(req);
+		 * System.out.println("METE"); } }
+		 * 
+		 * } System.out.println("FINALIZA el bucle");
+		 */
 
-		}
-		System.out.println("FINALIZA el bucle");*/
-		
-		  for(ProyReq pr : ProyReqDAO.listProyReqByQuery(null, null)) {
-		  if(nombreProyecto.equals(pr.getProyecto().getNombre().toString())) {
-		  listRequisitosEliminar.add(pr.getRequisito()); } } //HASTA AQUI TODO PERFECTO
-		  
-		//YA TENEMOS LOS REQUISITOS QUE DEBEMOS DE EVITAR
-			for(Requisito r1 : listTodosRequisitos)
-			{
-				borrar = false;
-				for(Requisito r2 : listRequisitosEliminar)
-				{
-					if(r1.getNombre().equals(r2.getNombre()))
-						borrar = true;
-				}
-				if(!borrar)
-					listaFinal.add(r1);
+		for (ProyReq pr : ProyReqDAO.listProyReqByQuery(null, null)) {
+			if (nombreProyecto.equals(pr.getProyecto().getNombre().toString())) {
+				listRequisitosEliminar.add(pr.getRequisito());
 			}
+		} // HASTA AQUI TODO PERFECTO
+
+		// YA TENEMOS LOS REQUISITOS QUE DEBEMOS DE EVITAR
+		for (Requisito r1 : listTodosRequisitos) {
+			borrar = false;
+			for (Requisito r2 : listRequisitosEliminar) {
+				if (r1.getNombre().equals(r2.getNombre()))
+					borrar = true;
+			}
+			if (!borrar)
+				listaFinal.add(r1);
+		}
 
 		return listaFinal;
 	}
