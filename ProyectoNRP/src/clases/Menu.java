@@ -64,6 +64,7 @@ public class Menu extends JFrame {
 		crearCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CrearCliente crearcliente = new CrearCliente();
+				claseEstatica.setProcedencia("Menu");
 				crearcliente.setVisible(true);
 				dispose();
 			}

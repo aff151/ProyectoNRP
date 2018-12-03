@@ -97,11 +97,11 @@ claseEstatica claseEs=new claseEstatica();
 
 				if (claseEs.getProcedencia() == "AnadirClientes") {
 					//-.-
+					AnadirClientes anadir = new AnadirClientes();
+					anadir.setVisible(true);
 				} else {
-
 					Menu m = new Menu();
 					m.setVisible(true);
-
 				}
 				dispose();
 			}
