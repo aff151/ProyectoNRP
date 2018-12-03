@@ -36,7 +36,6 @@ public class AnadirClientes extends JFrame {
 	public static String procedencia = "";
 	public static String proySeleccionado = "";
 	ConsultarProyectos cp = new ConsultarProyectos();
-	
 
 	private DefaultListModel<String> modelo;
 	BD_Clientes bdCliente = new BD_Clientes();
@@ -45,11 +44,10 @@ public class AnadirClientes extends JFrame {
 	private JList listClientes;
 	public static String cliSeleccionado = "";
 	private JScrollPane scrollLista;
-	public static String cproySeleccionado="";
-	public static String cprocedencia="";
-	
-	BD_Proyectos bdP = new BD_Proyectos();
+	public static String cproySeleccionado = "";
+	public static String cprocedencia = "";
 
+	BD_Proyectos bdP = new BD_Proyectos();
 
 	/**
 	 * Launch the application.
@@ -72,7 +70,7 @@ public class AnadirClientes extends JFrame {
 	 */
 	public AnadirClientes() {
 		inicializar();
-		
+
 		JLabel lblSeleccionarProyecto = new JLabel("Seleccionar Cliente");
 		lblSeleccionarProyecto.setBounds(52, 37, 141, 16);
 		contentPane.add(lblSeleccionarProyecto);
@@ -86,7 +84,7 @@ public class AnadirClientes extends JFrame {
 		listClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollLista = new JScrollPane();
 		scrollLista.setBounds(52, 65, 141, 226);
-	    scrollLista.setViewportView(listClientes);
+		scrollLista.setViewportView(listClientes);
 
 		contentPane.add(scrollLista);
 		/////////////////////////////////////////////////////////////
@@ -101,7 +99,8 @@ public class AnadirClientes extends JFrame {
 				} else {
 					try {
 
-						if (bdimp.comprobarCliente(listClientes.getSelectedValue().toString(), ConsultarProyectos.proySeleccionado) == true) {
+						if (bdimp.comprobarCliente(listClientes.getSelectedValue().toString(),
+								ConsultarProyectos.proySeleccionado) == true) {
 							JOptionPane.showMessageDialog(null, "El Cliente ya está en el proyecto", "MENSAJE",
 									JOptionPane.WARNING_MESSAGE);
 						} else {
@@ -116,26 +115,28 @@ public class AnadirClientes extends JFrame {
 							}
 
 							if (isDigit == false) {
-								JOptionPane.showMessageDialog(null,
-										"El peso debe ser un número entre 0 y 5", "MENSAJE",
+								JOptionPane.showMessageDialog(null, "El peso debe ser un número entre 0 y 5", "MENSAJE",
 										JOptionPane.WARNING_MESSAGE);
 							} else {
 								int importancia = Integer.parseInt(txtImportancia.getText());
-								if (importancia < 0||importancia>5) {
-									JOptionPane.showMessageDialog(null,
-											"El peso debe ser un número entre 0 y 5", "MENSAJE",
-											JOptionPane.WARNING_MESSAGE);
+								if (importancia < 0 || importancia > 5) {
+									JOptionPane.showMessageDialog(null, "El peso debe ser un número entre 0 y 5",
+											"MENSAJE", JOptionPane.WARNING_MESSAGE);
 								} else {
 									bdimp.asignaClienteProyecto(listClientes.getSelectedValue().toString(),
 											txtImportancia.getText(), cp.proySeleccionado);
-									//ModificarProyecto modificarProyecto = new ModificarProyecto();
-									//modificarProyecto.setVisible(true);
-									//dispose();
+									JOptionPane.showMessageDialog(null, "GOOD JOB, cliente agregado", "MENSAJE",
+											JOptionPane.WARNING_MESSAGE);
+									AnadirClientes c = new AnadirClientes();
+									c.setVisible(true);
+									dispose();
+									// ModificarProyecto modificarProyecto = new ModificarProyecto();
+									// modificarProyecto.setVisible(true);
+									// dispose();
 								}
 							}
 						}
 
-						
 					} catch (PersistentException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -167,29 +168,28 @@ public class AnadirClientes extends JFrame {
 		txtImportancia.setBounds(33, 303, 69, 26);
 		contentPane.add(txtImportancia);
 		txtImportancia.setColumns(10);
-		
+
 		TextPrompt placeholder = new TextPrompt("Peso", txtImportancia);
 		placeholder.changeAlpha(0.75f);
-		
+
 		JButton btnCrearCliente = new JButton("Crear Cliente");
 		btnCrearCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				System.out.println("ANADIR: "+cp.proySeleccionado);
+
+				System.out.println("ANADIR: " + cp.proySeleccionado);
 				claseEstatica claseE = new claseEstatica();
 				claseE.setProcedencia("AnadirClientes");
 				claseE.setProySeleccionado(cp.proySeleccionado);
 				CrearCliente crearCliente = new CrearCliente();
 				crearCliente.procedencia = "AnadirClientes";
-				
+
 				crearCliente.setVisible(true);
 				dispose();
 			}
 		});
 		btnCrearCliente.setBounds(106, 354, 117, 29);
 		contentPane.add(btnCrearCliente);
-		
+
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 340, 231, 2);
 		contentPane.add(separator);
@@ -211,8 +211,8 @@ public class AnadirClientes extends JFrame {
 
 	public void cargarClientes() {
 		try {
-			//Poner clientes que no estan en el proyecto
-			listaClientes =	bdimp.cargarClientesFueraProyecto(cp.proySeleccionado, claseEstatica.getPropietario());
+			// Poner clientes que no estan en el proyecto
+			listaClientes = bdimp.cargarClientesFueraProyecto(cp.proySeleccionado, claseEstatica.getPropietario());
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
