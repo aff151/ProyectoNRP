@@ -49,8 +49,8 @@ public class CrearCliente extends JFrame {
 	private List<Proyecto> listaProyecto;
 	public static String procedencia = "";
 	public static String proySeleccionado = "";
-	AnadirClientes an = new AnadirClientes();
-claseEstatica claseEs=new claseEstatica();
+	claseEstatica claseEs = new claseEstatica();
+
 	/**
 	 * Launch the application.
 	 */
@@ -96,7 +96,7 @@ claseEstatica claseEs=new claseEstatica();
 			public void actionPerformed(ActionEvent e) {
 
 				if (claseEs.getProcedencia() == "AnadirClientes") {
-					//-.-
+					// -.-
 					AnadirClientes anadir = new AnadirClientes();
 					anadir.setVisible(true);
 				} else {
@@ -168,8 +168,8 @@ claseEstatica claseEs=new claseEstatica();
 							JOptionPane.WARNING_MESSAGE);
 				} else {
 					try {
-						System.out.println(nombreTexttField.getText()+" peso: "+ pesoTextField.getText()+" proyecto: "+
-								claseEs.getProySeleccionado());
+						System.out.println(nombreTexttField.getText() + " peso: " + pesoTextField.getText()
+								+ " proyecto: " + claseEs.getProySeleccionado());
 						bdimp.asignaClienteProyecto(nombreTexttField.getText(), pesoTextField.getText(),
 								claseEs.getProySeleccionado());
 					} catch (PersistentException e) {
