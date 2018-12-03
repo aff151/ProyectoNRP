@@ -282,7 +282,7 @@ public class Planificacion extends JFrame {
 	public void guardarEsfuerzo() {
 		/*datosEsf tienes el array con los valores de la fila esfuerzo
 		 * Ejemplo: datosEsf[0] y el nombre de su requisito sera listReq.get(0).getNombre()
-		 * datosEsf[1] y el nombre de su requisito sera listReq.get(1).getNombre())*/
+		 * datosEsf[1] y el nombre de su requisito sera listReq.get(1).getNombre()) */
 		datosEsf = new String[listReq.size()];
 		for(int i = 0; i < datosEsf.length; i++)
 			datosEsf[i] = datoColumna[listPeso.size()][i+1];
