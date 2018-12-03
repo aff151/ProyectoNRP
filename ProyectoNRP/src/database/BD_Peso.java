@@ -9,6 +9,7 @@ import org.orm.PersistentTransaction;
 
 public class BD_Peso {
 	public BD_Principal _c_bd_import;
+	BD_Valor bdValor = new BD_Valor();
 
 	public List<Cliente> cargarClientesProyecto(String proyecto) throws PersistentException {
 		List<Cliente> listClientes = new ArrayList<Cliente>();
@@ -65,7 +66,7 @@ public class BD_Peso {
 		}
 		return listPesos;
 	}
-	
+
 	public List<peso> cargarPesosClienteProyecto(String proyecto) throws PersistentException {
 		List<peso> listPesos = new ArrayList<peso>();
 		for (peso peso : pesoDAO.listPesoByQuery(null, null)) {
@@ -80,9 +81,42 @@ public class BD_Peso {
 		// TODO Auto-generated method stub
 		List<peso> listPesos = new ArrayList<peso>();
 		for (peso peso : pesoDAO.listPesoByQuery(null, null)) {
-			if (peso.getProyecto().getNombre().equals(proyecto) && peso.getCliente().getNombre().equals(cliSeleccionado)) {
+			if (peso.getProyecto().getNombre().equals(proyecto)
+					&& peso.getCliente().getNombre().equals(cliSeleccionado)) {
 				pesoDAO.deleteAndDissociate(peso);
 			}
 		}
 	}
+
+	public boolean quitarClienteProyecto(Cliente cliente, String proySeleccionado) throws PersistentException {
+		// TODO Auto-generated method stub
+
+		peso imp = null;
+
+		for (peso c : pesoDAO.listPesoByQuery(null, null)) {
+			if (c.getCliente().equals(cliente) && c.getProyecto().getNombre().equals(proySeleccionado)) {
+				imp = c;
+			}
+		}
+
+		bdValor.eliminarValoresClienteProyecto(cliente, proySeleccionado);
+
+		pesoDAO.deleteAndDissociate(imp);
+		return true;
+	}
+
+	////////////////////////////////////// MODIFICAR PROYECTO
+	public boolean quitarRequisitoProyecto(Requisito requisito, String proySeleccionado) throws PersistentException {
+		// TODO Auto-generated method stub
+		ProyReq proreq = null;
+		for (ProyReq prore : ProyReqDAO.listProyReqByQuery(null, null)) {
+			if (prore.getRequisito().equals(requisito) && prore.getProyecto().getNombre().equals(proySeleccionado)) {
+				proreq = prore;
+				break;
+			}
+		}
+		ProyReqDAO.deleteAndDissociate(proreq);
+		return true;
+	}
+
 }

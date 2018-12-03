@@ -281,49 +281,16 @@ public class ModificarProyecto extends JFrame {
 			JOptionPane.showMessageDialog(null, "Seleccione un requisito.", "MENSAJE", JOptionPane.WARNING_MESSAGE);
 		} else {
 			try {
-				bdproy.quitarRequisitoProyecto(listReq.get(tablaEsf.getSelectedRow()), cons.proySeleccionado);
+				bdimp.quitarRequisitoProyecto(listReq.get(tablaEsf.getSelectedRow()), cons.proySeleccionado);
 			} catch (PersistentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-			for (int i = 0; i < listReq.size(); i++) {
-				datoColumnaEsf[i][0] = "";
-			}
-			for (int j = 0; j < listReq.size(); j++) {
-				datoColumnaEsf[j][1] = "";
-			}
+			ModificarProyecto mod = new ModificarProyecto();
+			mod.setVisible(true);
+			dispose();
 
-			try {
-				listReq = bdproyreq.cargarRequisitosProyecto(cons.proySeleccionado);
-				listEsfuerzo = bdproyreq.cargarEsfuerzo(cons.proySeleccionado);
-			} catch (PersistentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			for (int i = 0; i < listReq.size(); i++) {
-				datoColumnaEsf[i][0] = listReq.get(i).getNombre();
-			}
-			for (int j = 0; j < listReq.size(); j++) {
-				datoColumnaEsf[j][1] = "" + listEsfuerzo.get(j).getEsfuerzo();
-			}
-			tabla = new JTable(datoColumna, titColumna) {
-				public boolean isCellEditable(int row, int column) {
-					return false;
-				}
-			};
-
-			///////////////////////////////////////////////////
-			//// TABLA ESFUERZO
-			///////////////////////////////////////////////////
-
-			tablaEsf = new JTable(datoColumnaEsf, titColumnaEsf);
-			panelScrollEsf = new JScrollPane(tablaEsf);
-			panelScrollEsf.setSize(170, 198);
-			panelScrollEsf.setLocation(250, 187);
-			getContentPane().add(panelScrollEsf, BorderLayout.CENTER);
-			contentPane.add(panelScrollEsf);
 
 		}
 
@@ -335,50 +302,15 @@ public class ModificarProyecto extends JFrame {
 			JOptionPane.showMessageDialog(null, "Seleccione un cliente.", "MENSAJE", JOptionPane.WARNING_MESSAGE);
 		} else {
 			try {
-				bdproy.quitarClienteProyecto(listCli.get(tabla.getSelectedRow()), cons.proySeleccionado);
+				bdimp.quitarClienteProyecto(listCli.get(tabla.getSelectedRow()), cons.proySeleccionado);
 			} catch (PersistentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			//
-
-			for (int i = 0; i < listCli.size(); i++) {
-				datoColumna[i][0] = "";
-			}
-			for (int j = 0; j < listCli.size(); j++) {
-				datoColumna[j][1] = "";
-			}
-			try {
-				listCli = bdimp.cargarClientesProyecto(consproy.getNombre());
-				listPeso = bdimp.cargarPesosProyecto(consproy.getNombre());
-			} catch (PersistentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			for (int i = 0; i < listCli.size(); i++) {
-				datoColumna[i][0] = listCli.get(i).getNombre();
-			}
-			for (int j = 0; j < listCli.size(); j++) {
-				datoColumna[j][1] = "" + listPeso.get(j).getPeso();
-			}
-			tabla = new JTable(datoColumna, titColumna) {
-				public boolean isCellEditable(int row, int column) {
-					return false;
-				}
-			};
-			// Aquí se configuran algunos de los parámetros que permite
-			// variar la JTable
-			tabla.setRowSelectionAllowed(true);
-			tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			// Incorporamos la tabla a un panel que incorpora ya una barra
-			// de desplazamiento, para que la visibilidad de la tabla sea
-			// automática
-			panelScroll = new JScrollPane(tabla);
-			panelScroll.setSize(170, 198);
-			panelScroll.setLocation(10, 187);
-			getContentPane().add(panelScroll, BorderLayout.CENTER);
-			contentPane.add(panelScroll);
-
+			
+			ModificarProyecto mod = new ModificarProyecto();
+			mod.setVisible(true);
+			dispose();
 		}
 
 	}

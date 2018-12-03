@@ -132,4 +132,13 @@ public class BD_Valor {
 		
 		return true;
 	}
+
+	public void eliminarValoresClienteProyecto(Cliente cliente, String proySeleccionado) throws PersistentException {
+		
+		for (Valor v : ValorDAO.listValorByQuery(null, null)) {
+			if(v.getCliente().equals(cliente) && v.getProyecto().getNombre().equals(proySeleccionado)) {
+				ValorDAO.deleteAndDissociate(v);
+			}
+		}
+	}
 }

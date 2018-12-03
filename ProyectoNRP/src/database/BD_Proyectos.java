@@ -134,43 +134,8 @@ public class BD_Proyectos {
 		return listaRequisitosProyecto;
 	}
 
-	////////////////////////////////////// MODIFICAR PROYECTO
-	public boolean quitarRequisitoProyecto(Requisito requisito, String proySeleccionado) throws PersistentException {
-		// TODO Auto-generated method stub
-		Proyecto p = descargarInformacion(proySeleccionado);
-		ProyReq proreq = null;
-		for (ProyReq prore : ProyReqDAO.listProyReqByQuery(null, null)) {
-			if (prore.getRequisito().equals(requisito) && prore.getProyecto().equals(p)) {
-				proreq = prore;
-				break;
-			}
-		}
-
-		proreq.setProyecto(null);
-		proreq.setRequisito(null);
-
-		ProyReqDAO.deleteAndDissociate(proreq);
-		return true;
-	}
-
-	public boolean quitarClienteProyecto(Cliente cliente, String proySeleccionado) throws PersistentException {
-		// TODO Auto-generated method stub
-
-		Proyecto p = descargarInformacion(proySeleccionado);
-
-		peso imp = null;
-
-		for (peso c : pesoDAO.listPesoByQuery(null, null)) {
-			if (c.getCliente().equals(cliente) && c.getProyecto().equals(p)) {
-				imp = c;
-			}
-		}
-
-		imp.setCliente(null);
-		imp.setProyecto(null);
-		pesoDAO.deleteAndDissociate(imp);
-		return true;
-	}
+	
+	
 
 	//////////////////////////////////// MODIFICAR PROYECTO
 	public List<Cliente> cargarClientesFueraProyecto(String nombreProyecto, String nombreProp)
