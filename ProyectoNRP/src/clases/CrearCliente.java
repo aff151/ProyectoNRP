@@ -134,9 +134,6 @@ claseEstatica claseEs=new claseEstatica();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		// if(an.cprocedencia=="AnadirClientes")
-		// setBounds(100, 140, 227, 117);
-		// else
 		setBounds(100, 100, 227, 117);
 		setLocationRelativeTo(null);
 		setTitle("Crear Cliente");
