@@ -53,6 +53,7 @@ public class AsignarValoresRequisitos extends JFrame {
 	private List<Cliente> listCli;
 	private List<Requisito> listReq;
 	private JTextArea desctextField;
+	private TextPrompt placeholder2;
 	BD_Proyectos bdproy = new BD_Proyectos();
 	BD_Peso bdimp = new BD_Peso();
 	BD_Requisitos bdreq = new BD_Requisitos();
@@ -110,14 +111,14 @@ public class AsignarValoresRequisitos extends JFrame {
 		contentPane.add(desctextField);
 		
 		textValor = new JTextField();
-		textValor.setBounds(225, 295, 72, 26);
+		textValor.setBounds(225, 294, 72, 30);
 		textValor.setColumns(10);
-		TextPrompt placeholder2 = new TextPrompt("Valor", textValor);
+		placeholder2 = new TextPrompt("Valor", textValor);
 		placeholder2.changeAlpha(0.75f);
 		placeholder2.changeStyle(Font.ITALIC);
 		contentPane.add(textValor);
 
-		JLabel lblDebeDeAsignar = new JLabel("Asignar un valor al requisto en relación al cliente");
+		JLabel lblDebeDeAsignar = new JLabel("Selecciona un cliente y un requisito, y añada un valor");
 		lblDebeDeAsignar.setBounds(6, 18, 409, 16);
 		contentPane.add(lblDebeDeAsignar);
 
@@ -142,6 +143,14 @@ public class AsignarValoresRequisitos extends JFrame {
 				return false;
 			}
 		};
+		tabla.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		    	JTable tab = (JTable)evt.getSource();
+		        if (evt.getClickCount() == 1) {
+		    		cargarValor();
+		        }
+		    }
+		});
 		// Aquí se configuran algunos de los parámetros que permite
 		// variar la JTable
 		tabla.setRowSelectionAllowed(true);
@@ -170,6 +179,7 @@ public class AsignarValoresRequisitos extends JFrame {
 		    	JTable tab = (JTable)evt.getSource();
 		        if (evt.getClickCount() == 1) {
 		    		desctextField.setText(listEsfuerzo.get(tab.getSelectedRow()).getRequisito().getDescripcion());
+		    		cargarValor();
 		        }
 		    }
 		});
@@ -180,7 +190,7 @@ public class AsignarValoresRequisitos extends JFrame {
 		panelScrollEsf.setLocation(226, 83);
 		getContentPane().add(panelScrollEsf, BorderLayout.CENTER);
 		contentPane.add(panelScrollEsf);
-
+		
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -323,5 +333,27 @@ public class AsignarValoresRequisitos extends JFrame {
 			datoColumna[j][1] = "" + listPeso.get(j).getPeso();
 		}
 
+	}
+
+	public void cargarValor() {
+		if(tabla.getSelectedRowCount() == 1 &&
+				tablaEsf.getSelectedRowCount() == 1) {
+			int v = -1;
+			try {
+				v = bdValor.cargarValor(ConsultarProyectos.proySeleccionado,
+						datoColumna[tabla.getSelectedRow()][0], datoColumnaEsf[tablaEsf.getSelectedRow()][0]);
+				if(v == -1) {
+					System.out.println("if");
+					placeholder2.setText("Valor");
+				}
+				else {
+					System.out.println("no");
+					placeholder2.setText(String.valueOf(v));
+				}
+			} catch (PersistentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }

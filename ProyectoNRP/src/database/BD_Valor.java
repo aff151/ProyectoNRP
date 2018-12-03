@@ -141,4 +141,15 @@ public class BD_Valor {
 			}
 		}
 	}
+	public int cargarValor(String proySeleccionado, String cliente, String requisito) throws PersistentException {
+		for (Valor v : ValorDAO.listValorByQuery(null, null)) {
+			if (proySeleccionado.equals(v.getProyecto().getNombre()) && cliente.equals(v.getCliente().getNombre())
+					&& requisito.equals(v.getRequisito().getNombre())) {
+				System.out.println(v.getValor());
+				return v.getValor();
+			}
+
+		}
+		return -1;
+	}
 }
