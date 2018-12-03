@@ -99,7 +99,7 @@ public class ConsultarRequisito extends JFrame {
 		getContentPane().add(panelScrollPro, BorderLayout.CENTER);
 		contentPane.add(panelScrollPro);
 
-		JLabel lblListaDeRequisitos = new JLabel("Lista de TODOS los requisitos");
+		JLabel lblListaDeRequisitos = new JLabel("Lista de Requisitos de tus proyectos");
 		lblListaDeRequisitos.setBounds(21, 50, 196, 14);
 		contentPane.add(lblListaDeRequisitos);
 
@@ -197,7 +197,7 @@ public class ConsultarRequisito extends JFrame {
 	
 	public void cargarRequisitos() {
 		try {
-			listReq = bdReq.cargarRequisitos();
+			listReq = bdReq.cargarRequisitos(claseEstatica.getPropietario());
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -30,10 +30,20 @@ public class BD_Requisitos {
 		return listRequisitos;
 	}
 
-	public List<Requisito> cargarRequisitos() throws PersistentException {
+	public List<Requisito> cargarRequisitos(String propietario) throws PersistentException {
 		List<Requisito> listaRequisitos = new ArrayList<Requisito>();
-		listaRequisitos = RequisitoDAO.queryRequisito(null, null);
-
+		List<Proyecto> listaProyectosPropietario = new ArrayList<Proyecto>();
+		
+		for (Proyecto proyecto : ProyectoDAO.listProyectoByQuery(null, null)) {
+			if(proyecto.getPropietario().getPropietario().equals(propietario))
+				listaProyectosPropietario.add(proyecto);
+		}
+		
+		for (Proyecto proy : listaProyectosPropietario) {
+			for(Requisito req : proy.getRequisitos()) {
+				listaRequisitos.add(req);
+			}
+		}
 		return listaRequisitos;
 	}
 
