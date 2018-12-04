@@ -231,7 +231,13 @@ public class ConsultarCliente extends JFrame {
 					ConsultarRequisito consultarRequisito = new ConsultarRequisito();
 					consultarRequisito.setVisible(true);
 				} else if (procedencia == "ConsultarClientes") {
-					ConsultarClientes consultarClientes = new ConsultarClientes();
+					ConsultarClientes consultarClientes=null;
+					try {
+						consultarClientes = new ConsultarClientes();
+					} catch (PersistentException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					consultarClientes.setVisible(true);
 				}
 

@@ -61,7 +61,7 @@ public class ConsultarClientes extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ConsultarClientes() {
+	public ConsultarClientes() throws PersistentException {
 
 		inicializar();
 
@@ -125,16 +125,18 @@ public class ConsultarClientes extends JFrame {
 
 	}
 
-	public void cargarClientes() {
-		try {
-			listCli = bd_Cli.cargarClientes();
-		} catch (PersistentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void cargarClientes()  {
+			//listCli = bd_Cli.cargarClientes();
+			try {
+				listCli = bd_Cli.cargarClientesPropios(claseEstatica.getPropietario());
+			} catch (PersistentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		for (Cliente c : listCli) {
 			modelo.addElement(c.getNombre());
 			listClientes.setModel(modelo);
 		}
 	}
+
 }

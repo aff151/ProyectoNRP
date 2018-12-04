@@ -38,10 +38,26 @@ public class BD_Clientes {
 /*
  * 	
  */
-	public List<Cliente> cargarClientesFueraProyecto()
+
+	public List<Cliente> cargarClientesPropios(String nombreUser) throws PersistentException
 	{
-		return null;
+		ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
+		ArrayList<Proyecto> listaProyectos = new ArrayList<Proyecto>();
+		
+		for(Proyecto p : ProyectoDAO.listProyectoByQuery(null, null))
+		{
+			if(nombreUser.equals(p.getNombrePropietario()))
+				listaProyectos.add(p);
+		}
+		for(Proyecto p : listaProyectos)
+		{
+			for(Cliente c : p.getClientes())
+			{
+				listaClientes.add(c);
+			}
+		}
+		
+		return listaClientes;
 	}
-	
 	
 }

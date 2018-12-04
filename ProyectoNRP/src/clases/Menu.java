@@ -7,6 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.orm.PersistentException;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -75,7 +78,14 @@ public class Menu extends JFrame {
 		JButton consultarClientes = new JButton("Consultar Clientes");
 		consultarClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ConsultarClientes consultarclientes = new ConsultarClientes();
+				/////////////////////////////////////////// CAMBIADO NO ENTIENDO POEUQE ME PEDIA 
+				ConsultarClientes consultarclientes = null;
+				try {
+					consultarclientes = new ConsultarClientes();
+				} catch (PersistentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				consultarclientes.setVisible(true);
 				dispose();
 			}
