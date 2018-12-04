@@ -96,5 +96,25 @@ public class BD_Clientes {
 			}
 		}
 	}
+
+	public List<Cliente> cargarClientesProyectosRequisito(String reqselec, String pSelect) throws PersistentException {
+		List<Cliente> listCliente = new ArrayList<Cliente>();
+		for(Valor req: ValorDAO.listValorByQuery(null, null)) {
+			if(req.getRequisito().getNombre().equals(reqselec) && req.getProyecto().getNombre().equals(pSelect)) {
+				listCliente.add(req.getCliente());
+			}
+		}
+		return listCliente;
+	}
+
+	public List<Valor> cargarValorClienteProyectoRequisito(String reqselec, String pSelect) throws PersistentException {
+		List<Valor> listValor = new ArrayList<Valor>();
+		for(Valor req: ValorDAO.listValorByQuery(null, null)) {
+			if(req.getRequisito().getNombre().equals(reqselec) && req.getProyecto().getNombre().equals(pSelect)) {
+				listValor.add(req);
+			}
+		}
+		return listValor;
+	}
 	
 }

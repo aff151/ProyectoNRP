@@ -9,13 +9,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 import org.orm.PersistentException;
 
+import database.BD_Clientes;
 import database.BD_ProyReq;
 import database.BD_Requisitos;
 import database.BD_Valor;
+import database.Cliente;
 import database.ProyReq;
 import database.Requisito;
 import database.Valor;
@@ -43,10 +48,11 @@ public class ConsultarRequisito extends JFrame {
 	BD_Requisitos bdReq = new BD_Requisitos();
 	BD_ProyReq bdpr = new BD_ProyReq();
 	BD_Valor bdvalor = new BD_Valor();
+	BD_Clientes bdcli = new BD_Clientes();
 	private JList listRequisitos;
 	private String reqselec = "";
 	private JLabel lblNewLabel;
-
+	String PSelect = "";
 	////////////////////////////////////////
 	// TABLA PROYECTOS
 	///////////////////////////////////////
@@ -56,6 +62,15 @@ public class ConsultarRequisito extends JFrame {
 	private String datoColumnaPro[][];
 	private List<ProyReq> listProy;
 	private List<ProyReq> listEsf;
+	////////////////////////////////////////
+	// TABLA REQUISITOS
+	///////////////////////////////////////
+	private JTable tablaReq;
+	private JScrollPane panelScrollReq;
+	private String titColumnaReq[];
+	private String datoColumnaReq[][];
+	private List<Valor> listValor;
+	private List<Cliente> listCliente;
 
 	/**
 	 * Launch the application.
@@ -109,22 +124,30 @@ public class ConsultarRequisito extends JFrame {
 		///////////////////////////////////////////////////
 		//// TABLA REQUISITOS
 		///////////////////////////////////////////////////
-		CreaColumnasPro();
 		datoColumnaPro = new String[0][0];
-		tablaPro = new JTable(datoColumnaPro, titColumnaPro);
+		CreaColumnasPro();
+
+		tablaPro = new JTable(datoColumnaPro, titColumnaPro) {
+			public boolean isCellEditable(int row, int column) {
+				return true;
+			}
+		};
+		
 		panelScrollPro = new JScrollPane(tablaPro);
 		panelScrollPro.setSize(156, 248);
 		panelScrollPro.setLocation(213, 84);
+		//////////////////COMENTAR ESTAS DOS LINEAS//////////////
+		//////////////////////////7
+		/////////////////////////
+		////////////////////
 		getContentPane().add(panelScrollPro, BorderLayout.CENTER);
 		contentPane.add(panelScrollPro);
+		
+		
 
 		JLabel lblListaDeRequisitos = new JLabel("Selecciona uno de tus Proyectos");
 		lblListaDeRequisitos.setBounds(21, 50, 196, 14);
 		contentPane.add(lblListaDeRequisitos);
-
-		JLabel lblListaDeProyectos = new JLabel("Lista de Proyectos que lo contienen");
-		lblListaDeProyectos.setBounds(212, 38, 231, 14);
-		contentPane.add(lblListaDeProyectos);
 
 		JButton btnAtrs = new JButton("Atrás");
 		btnAtrs.addActionListener(new ActionListener() {
@@ -142,23 +165,71 @@ public class ConsultarRequisito extends JFrame {
 		lblNewLabel = new JLabel();
 		lblNewLabel.setBounds(213, 63, 177, 14);
 		contentPane.add(lblNewLabel);
-		
+
 		JButton btnEliminarrequisito = new JButton("EliminarRequisito");
 		btnEliminarrequisito.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				eliminarRequisito();
 			}
 
-			
 		});
 		btnEliminarrequisito.setBounds(31, 359, 156, 23);
 		contentPane.add(btnEliminarrequisito);
 
 	}
+	
+	void tablaRequisitos() {
+		//setBounds(100, 100, 430, 424);
+		//setLocationRelativeTo(null);
 
+		CreaColumnasReq();
+		CargaDatosReq();
+		//datoColumnaReq = new String[0][0];
+		tablaReq = new JTable(datoColumnaReq, titColumnaReq);
+		panelScrollReq = new JScrollPane(tablaReq);
+		TableColumnModel columnModel2 = tablaReq.getColumnModel();
+		DefaultTableCellRenderer tcr2 = new DefaultTableCellRenderer();
+		tcr2.setHorizontalAlignment(SwingConstants.CENTER);
+		columnModel2.getColumn(1).setPreferredWidth(0);
+		columnModel2.getColumn(1).setCellRenderer(tcr2);
+		panelScrollReq.setSize(180, 250);
+		panelScrollReq.setLocation(400, 82);
+		getContentPane().add(panelScrollReq, BorderLayout.CENTER);
+		contentPane.add(panelScrollReq);
+
+		JLabel lblListaDeRequisitos = new JLabel("Lista de requisitos del proyecto");
+		lblListaDeRequisitos.setBounds(227, 60, 217, 16);
+		contentPane.add(lblListaDeRequisitos);
+	}
+	
+	public void CreaColumnasReq() {
+		titColumnaReq = new String[2];
+		titColumnaReq[0] = "Cliente";
+		titColumnaReq[1] = "Valor";
+	}
+
+	public void CargaDatosReq() {
+		//Cargar clientes que tengan un valor en ese proyecto para ese requisito y su valor.
+		try {
+			listCliente = bdcli.cargarClientesProyectosRequisito(reqselec, PSelect);
+			listValor = bdcli.cargarValorClienteProyectoRequisito(reqselec, PSelect);
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		datoColumnaReq = new String[listCliente.size()][2];
+
+		for (int i = 0; i < listCliente.size(); i++) {
+			datoColumnaReq[i][0] = listCliente.get(i).getNombre();
+		}
+		for (int j = 0; j < listCliente.size(); j++) {
+			datoColumnaReq[j][1] = "" + listValor.get(j).getValor();
+		}
+	}
+	
 	private void eliminarRequisito() {
 		// TODO Auto-generated method stub
-		if(listRequisitos_1.isSelectionEmpty()) {
+		if (listRequisitos_1.isSelectionEmpty()) {
 			JOptionPane.showMessageDialog(null, "Debe seleccionar un requisito", "MENSAJE",
 					JOptionPane.WARNING_MESSAGE);
 		}
@@ -172,7 +243,7 @@ public class ConsultarRequisito extends JFrame {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void inicializar() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
@@ -217,13 +288,30 @@ public class ConsultarRequisito extends JFrame {
 		//// TABLA REQUISITOS
 		///////////////////////////////////////////////////
 		CargaDatosPro();
+		JLabel lblListaDeProyectos = new JLabel("Lista de Proyectos que lo contienen");
+		lblListaDeProyectos.setBounds(212, 38, 231, 14);
+		contentPane.add(lblListaDeProyectos);
 		lblNewLabel.setText(reqselec);
-		tablaPro = new JTable(datoColumnaPro, titColumnaPro);
+		tablaPro = new JTable(datoColumnaPro, titColumnaPro) {
+			public boolean isCellEditable(int row, int column) {
+				return true;
+			}
+		};
 		panelScrollPro = new JScrollPane(tablaPro);
 		panelScrollPro.setSize(156, 248);
 		panelScrollPro.setLocation(213, 84);
 		getContentPane().add(panelScrollPro, BorderLayout.CENTER);
 		contentPane.add(panelScrollPro);
+		tablaPro.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+				JTable list = (JTable) evt.getSource();
+				if (evt.getClickCount() == 1) {
+					PSelect = tablaPro.getValueAt(tablaPro.getSelectedRow(), 0).toString();
+					System.out.println(PSelect);
+					tablaRequisitos();
+				}
+			}
+		});
 	}
 
 	public void cargarRequisitos() {
