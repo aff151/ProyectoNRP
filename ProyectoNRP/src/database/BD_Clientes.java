@@ -63,10 +63,10 @@ public class BD_Clientes {
 		{
 			for(Cliente c1 : listaClientes)
 			{
-				if(!c1.getNombre().equals(c.getNombre()))
+				if(c1.getNombre().equals(c.getNombre()))
 					esta = true;
 			}
-			if(!esta) {
+			if(esta) {
 				if(!listaFinal.contains(c))
 					listaFinal.add(c);
 			}
