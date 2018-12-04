@@ -43,6 +43,8 @@ public class BD_Clientes {
 	{
 		ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
 		ArrayList<Proyecto> listaProyectos = new ArrayList<Proyecto>();
+		ArrayList<Cliente> listaFinal = new ArrayList<Cliente>();
+	
 		
 		for(Proyecto p : ProyectoDAO.listProyectoByQuery(null, null))
 		{
@@ -56,8 +58,20 @@ public class BD_Clientes {
 				listaClientes.add(c);
 			}
 		}
+		boolean esta = false;
+		for(Cliente c : ClienteDAO.listClienteByQuery(null, null))
+		{
+			for(Cliente c1 : listaClientes)
+			{
+				if(c1.getNombre().equals(c.getNombre()))
+					esta = true;
+			}
+			if(!esta)
+				listaFinal.add(c);
+			esta = false;
+		}
 		
-		return listaClientes;
+		return listaFinal;
 	}
 	
 }
