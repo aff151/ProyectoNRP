@@ -72,8 +72,29 @@ public class BD_Clientes {
 			}
 			esta = false;
 		}
-		
 		return listaFinal;
+	}
+	
+	public void eliminarCliente(String nombrePropietario,String nombreCliente) throws PersistentException
+	{
+		ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
+		ArrayList<Proyecto> listaProyectos = new ArrayList<Proyecto>();
+		ArrayList<Cliente> listaFinal = new ArrayList<Cliente>();
+	
+		
+		for(Proyecto p : ProyectoDAO.listProyectoByQuery(null, null))
+		{
+			if(nombrePropietario.equals(p.getNombrePropietario()))
+				listaProyectos.add(p);
+		}
+		for(Proyecto p : listaProyectos)
+		{
+			for(Cliente c : p.getClientes())
+			{
+				if(nombreCliente.equals(c.getNombre()))
+						p.removeCliente(c);
+			}
+		}
 	}
 	
 }
