@@ -150,20 +150,31 @@ public class BD_Proyectos {
 		return listaProyectosPropios;
 	}
 
-	public void eliminarProyectoUser(String nombreProyecto, String nombrePropietario) throws PersistentException {
-		Proyecto pro = null;
-		Propietario pp = null;
-		for (Propietario propie : PropietarioDAO.listPropietarioByQuery(null, null)) {
-			if (nombrePropietario.equals(propie.getPropietario()))
-				pp = propie;
-
+	public void eliminarProyectoUser(String nombreProyecto, String nombrePropietario) throws PersistentException  {
+		PersistentTransaction t = database.BasededatosPersistentManager.instance().getSession().beginTransaction();
+		try {
+			Proyecto proyecto = null;
+			Propietario propietario = null;
+			
+			for(Propietario prope : PropietarioDAO.listPropietarioByQuery(null, null))
+			{
+				if(nombrePropietario.equals(prope.getPropietario()))
+					propietario = prope;
+			}
+			for(Proyecto p : ProyectoDAO.listProyectoByQuery(null, null))
+			{
+				if(p.getNombrePropietario().equals(nombrePropietario) && p.getNombre().equals(nombreProyecto))
+					proyecto = p;
+			}
+			ProyectoDAO.deleteAndDissociate(proyecto);
+		//	propietario.proyectos.remove(proyecto);
+			
+			t.commit();
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			t.rollback();
 		}
-		for (Proyecto p : ProyectoDAO.listProyectoByQuery(null, null)) {
-			if (p.getNombre().equals(nombreProyecto))
-				pro = p;
-		}
-		pro.setPropietario(null);
-
-		// PropietarioDAO.save(pp)
+		
+		
 	}
 }
