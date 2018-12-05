@@ -199,6 +199,7 @@ public class ConsultarRequisito extends JFrame {
 		}
 		datoColumnaPro = new String[listValora.size()][4];
 		
+		
 		for(int i = 0; i < listValora.size(); i++) {
 			datoColumnaPro[i][0] = listValora.get(i).getProyecto().getNombre();
 			datoColumnaPro[i][2] = listValora.get(i).getCliente().getNombre();
