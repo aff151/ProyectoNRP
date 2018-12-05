@@ -115,12 +115,12 @@ public class AnadirClientes extends JFrame {
 							}
 
 							if (isDigit == false) {
-								JOptionPane.showMessageDialog(null, "El peso debe ser un número entre 0 y 5", "MENSAJE",
+								JOptionPane.showMessageDialog(null, "El peso debe ser un número entre 1 y 5", "MENSAJE",
 										JOptionPane.WARNING_MESSAGE);
 							} else {
 								int importancia = Integer.parseInt(txtImportancia.getText());
-								if (importancia < 0 || importancia > 5) {
-									JOptionPane.showMessageDialog(null, "El peso debe ser un número entre 0 y 5",
+								if (importancia < 1 || importancia > 5) {
+									JOptionPane.showMessageDialog(null, "El peso debe ser un número entre 1 y 5",
 											"MENSAJE", JOptionPane.WARNING_MESSAGE);
 								} else {
 									bdimp.asignaClienteProyecto(listClientes.getSelectedValue().toString(),
