@@ -59,7 +59,6 @@ public class ConsultarRequisito extends JFrame {
 	///////////////////////////////////////
 	private JTable tablaReq;
 	private JScrollPane panelScrollReq;
-	private String titColumnaReq[];
 	private String datoColumnaReq[][];
 	private List<Valor> listValor;
 	private List<Cliente> listCliente;
@@ -155,33 +154,34 @@ public class ConsultarRequisito extends JFrame {
 	}
 	
 	void tablaRequisitos() {
-		//setBounds(100, 100, 430, 424);
-		//setLocationRelativeTo(null);
 
-		CreaColumnasReq();
-		CargaDatosReq();
-		//datoColumnaReq = new String[0][0];
-		tablaReq = new JTable(datoColumnaReq, titColumnaReq);
-		panelScrollReq = new JScrollPane(tablaReq);
-		TableColumnModel columnModel2 = tablaReq.getColumnModel();
-		DefaultTableCellRenderer tcr2 = new DefaultTableCellRenderer();
-		tcr2.setHorizontalAlignment(SwingConstants.CENTER);
-		columnModel2.getColumn(1).setPreferredWidth(0);
-		columnModel2.getColumn(1).setCellRenderer(tcr2);
-		panelScrollReq.setSize(180, 250);
-		panelScrollReq.setLocation(400, 82);
-		getContentPane().add(panelScrollReq, BorderLayout.CENTER);
+		tablaReq = new JTable();
+		tablaReq.setModel(new DefaultTableModel(datoColumnaReq,
+			new String[] {
+				"Cliente", "Valor"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, String.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+			boolean[] columnEditables = new boolean[] {
+					false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		panelScrollReq = new JScrollPane();
+		panelScrollReq.setBounds(400, 82, 180, 250);
 		contentPane.add(panelScrollReq);
-
-		JLabel lblListaDeRequisitos = new JLabel("Lista de requisitos del proyecto");
-		lblListaDeRequisitos.setBounds(227, 60, 217, 16);
-		contentPane.add(lblListaDeRequisitos);
-	}
+		tablaReq.getColumnModel().getColumn(0).setPreferredWidth(90);
+		tablaReq.getColumnModel().getColumn(1).setPreferredWidth(70);
+		panelScrollReq.setViewportView(tablaReq);
+		
 	
-	public void CreaColumnasReq() {
-		titColumnaReq = new String[2];
-		titColumnaReq[0] = "Cliente";
-		titColumnaReq[1] = "Valor";
 	}
 
 	public void CargaDatosReq() {
@@ -276,9 +276,23 @@ public class ConsultarRequisito extends JFrame {
 		panelScrollPro = new JScrollPane();
 		panelScrollPro.setBounds(213, 84, 156, 248);
 		contentPane.add(panelScrollPro);
+		//tablaPro.setRowSelectionAllowed(true);
+		//tablaPro.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tablaPro.getColumnModel().getColumn(0).setPreferredWidth(90);
 		tablaPro.getColumnModel().getColumn(1).setPreferredWidth(70);
 		panelScrollPro.setViewportView(tablaPro);
+		tablaPro.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+				JTable list = (JTable) evt.getSource();
+				if (evt.getClickCount() == 1) {
+					
+						CargaDatosReq();
+						tablaRequisitos();
+					
+
+				}
+			}
+		});
 	}
 
 	public void cargarRequisitos() {
