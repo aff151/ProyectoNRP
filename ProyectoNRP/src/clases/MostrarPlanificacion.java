@@ -14,6 +14,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 import org.orm.PersistentException;
@@ -56,7 +57,12 @@ public class MostrarPlanificacion extends JFrame {
 	private List<ProyReq> listProyReq2;
 	private List<Requisito> listReq2;
 	private List<Valor> listValor2;
-
+	//Array con todas las productividades
+	private double [] arrayProd;
+	//Tabla con todas las productividades
+	private JTable tablaProd;
+	private Object [][] arrayTabProd;
+	private JScrollPane scrollPane_2;
 	/**
 	 * Launch the application.
 	 */
@@ -142,6 +148,9 @@ public class MostrarPlanificacion extends JFrame {
 				panelScroll2.setLocation(364, 57);
 				getContentPane().add(panelScroll2, BorderLayout.CENTER);
 				contentPane.add(panelScroll2);
+				
+				calcularProductividad();
+				crearTablaProductividad();
 			}
 
 		});
@@ -163,6 +172,18 @@ public class MostrarPlanificacion extends JFrame {
 		limitetextField.setBounds(250, 161, 86, 20);
 		contentPane.add(limitetextField);
 		limitetextField.setColumns(10);
+		
+		JLabel lblTablaRes = new JLabel("Tabla de satisfaccion de requisitos");
+		lblTablaRes.setBounds(25, 35, 202, 14);
+		contentPane.add(lblTablaRes);
+		
+		JLabel lblTablaSel = new JLabel("Tabla de requisitos seleccionados");
+		lblTablaSel.setBounds(370, 35, 200, 14);
+		contentPane.add(lblTablaSel);
+		
+		JLabel lblTablaProd = new JLabel("Productividad de los requisitos");
+		lblTablaProd.setBounds(680, 35, 200, 14);
+		contentPane.add(lblTablaProd);
 
 	}
 
@@ -190,9 +211,8 @@ public class MostrarPlanificacion extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblProyecto = new JLabel(
-				"Planificación del proyecto" + ConsultarProyectosPlanificacion.proySeleccionado);
-		lblProyecto.setBounds(20, 11, 332, 14);
+		JLabel lblProyecto = new JLabel(ConsultarProyectosPlanificacion.proySeleccionado);
+		lblProyecto.setBounds(320, 11, 332, 14);
 		contentPane.add(lblProyecto);
 
 	}
@@ -231,5 +251,54 @@ public class MostrarPlanificacion extends JFrame {
 			}
 
 		}
+	}
+	
+	public void calcularProductividad() {
+		int satisfaccionTotal = 0, esfuerzoTotal = 0;
+		arrayProd = new double[listReqLimite.size()];
+		arrayTabProd = new Object[arrayProd.length+1][2];
+		for(int i = 0; i < arrayProd.length; i++) {
+			//Productividad(de cada requisito) = satisfaccion/esfuerzo
+			arrayProd[i] = ((double)listReqLimite.get(i).getSatisfaccion()/
+					(double)listReqLimite.get(i).getEsfuerzo()); 
+			arrayTabProd[i][0] = listReqLimite.get(i).getNombre(); 
+			arrayTabProd[i][1] = arrayProd[i];
+			satisfaccionTotal += listReqLimite.get(i).getSatisfaccion();
+			esfuerzoTotal += listReqLimite.get(i).getEsfuerzo();
+		}
+		arrayTabProd[arrayProd.length][0] = "pro(S) = sat(S)/eff(S)";
+		arrayTabProd[arrayProd.length][1] = (double)satisfaccionTotal/esfuerzoTotal;
+	}
+	
+	public void crearTablaProductividad() {
+		//lblTablaProd.setVisible(true);
+		tablaProd = new JTable();
+		tablaProd.setModel(new DefaultTableModel(arrayTabProd,
+			new String[] {
+				"Requisito", "Productividad"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, Double.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+			boolean[] columnEditables = new boolean[] {
+					false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(670, 57, 217, 240);
+		contentPane.add(scrollPane_2);
+		tablaProd.getColumnModel().getColumn(0).setPreferredWidth(110);
+		tablaProd.getColumnModel().getColumn(1).setPreferredWidth(77);
+		scrollPane_2.setViewportView(tablaProd);
+		
+		setBounds(100, 100, 932, 395);
+		setLocationRelativeTo(null);
 	}
 }
