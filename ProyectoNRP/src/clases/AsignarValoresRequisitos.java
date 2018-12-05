@@ -235,7 +235,9 @@ public class AsignarValoresRequisitos extends JFrame {
 									JOptionPane.showMessageDialog(null, "Se ha creado el valor correctamente.",
 											"MENSAJE", JOptionPane.WARNING_MESSAGE);
 								}
-								
+								AsignarValoresRequisitos as = new AsignarValoresRequisitos();
+								as.setVisible(true);
+								dispose();
 							}
 						}
 					}
