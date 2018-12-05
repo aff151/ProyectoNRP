@@ -34,6 +34,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
@@ -53,6 +54,7 @@ public class ConsultarRequisito extends JFrame {
 	private JList listRequisitos;
 	private String reqselec = "";
 	String PSelect = "";
+	private ArrayList<Valor> listValora;
 	////////////////////////////////////////
 	// TABLA REQUISITOS
 	///////////////////////////////////////
@@ -134,7 +136,6 @@ public class ConsultarRequisito extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				
 				if (listRequisitos_1.isSelectionEmpty()) {
 					JOptionPane.showMessageDialog(null, "Debe seleccionar un requisito", "MENSAJE",
 							JOptionPane.WARNING_MESSAGE);
@@ -150,51 +151,6 @@ public class ConsultarRequisito extends JFrame {
 		button.setBounds(165, 194, 41, 23);
 		contentPane.add(button);
 
-	}
-
-	void tablaRequisitos() {
-
-		tablaReq = new JTable();
-		tablaReq.setModel(new DefaultTableModel(datoColumnaReq, new String[] { "Cliente", "Valor" }) {
-			Class[] columnTypes = new Class[] { String.class, String.class };
-
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-
-			boolean[] columnEditables = new boolean[] { false, false };
-
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-		panelScrollReq = new JScrollPane();
-		panelScrollReq.setBounds(400, 82, 180, 250);
-		contentPane.add(panelScrollReq);
-		tablaReq.getColumnModel().getColumn(0).setPreferredWidth(90);
-		tablaReq.getColumnModel().getColumn(1).setPreferredWidth(70);
-		panelScrollReq.setViewportView(tablaReq);
-
-	}
-
-	public void CargaDatosReq() {
-		// Cargar clientes que tengan un valor en ese proyecto para ese requisito y su
-		// valor.
-		try {
-			listCliente = bdcli.cargarClientesProyectosRequisito(reqselec, PSelect);
-			listValor = bdcli.cargarValorClienteProyectoRequisito(reqselec, PSelect);
-		} catch (PersistentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		datoColumnaReq = new String[listCliente.size()][2];
-
-		for (int i = 0; i < listCliente.size(); i++) {
-			datoColumnaReq[i][0] = listCliente.get(i).getNombre();
-		}
-		for (int j = 0; j < listCliente.size(); j++) {
-			datoColumnaReq[j][1] = "" + listValor.get(j).getValor();
-		}
 	}
 
 	private void eliminarRequisito() {
@@ -231,58 +187,55 @@ public class ConsultarRequisito extends JFrame {
 
 	public void CargaDatosPro() {
 		try {
-			listProy = bdpr.cargarProyectosRequisito(reqselec);
+			listValora = new ArrayList<Valor>();
+			listValora = bdvalor.cargarDatosTabla(reqselec);
+			//listProy = bdpr.cargarProyectosRequisito(reqselec);
 			listEsf = bdpr.cargarEsfuerzoRequisito(reqselec);
+			//listCliente = bdcli.cargarClientesProyectosRequisito(reqselec, PSelect);
+			//listValor = bdcli.cargarValorClienteProyectoRequisito(reqselec, PSelect);
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		datoColumnaPro = new String[listProy.size()][2];
-
-		for (int i = 0; i < listProy.size(); i++) {
-			datoColumnaPro[i][0] = listProy.get(i).getProyecto().getNombre();
-		}
-		for (int j = 0; j < listProy.size(); j++) {
-			datoColumnaPro[j][1] = String.valueOf(listEsf.get(j).getEsfuerzo());
+		datoColumnaPro = new String[listValora.size()][4];
+		
+		for(int i = 0; i < listValora.size(); i++) {
+			datoColumnaPro[i][0] = listValora.get(i).getProyecto().getNombre();
+			datoColumnaPro[i][2] = listValora.get(i).getCliente().getNombre();
+			datoColumnaPro[i][3] = "" + listValora.get(i).getValor();
+			for(int j = 0; j < listEsf.size(); j++) {
+				if(listEsf.get(j).getProyecto().equals(listValora.get(i).getProyecto())) {
+					datoColumnaPro[i][1] = "" + listEsf.get(j).getEsfuerzo();
+				}
+			}
 		}
 
 	}
 
 	public void creaTablaPro() {
 		tablaPro = new JTable();
-		tablaPro.setModel(new DefaultTableModel(datoColumnaPro, new String[] { "Proyecto", "Esfuerzo" }) {
-			Class[] columnTypes = new Class[] { String.class, String.class };
+		tablaPro.setModel(
+				new DefaultTableModel(datoColumnaPro, new String[] { "Proyecto", "Esfuerzo", "Cliente", "Valor" }) {
+					Class[] columnTypes = new Class[] { String.class, String.class, String.class, String.class };
 
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
+					public Class getColumnClass(int columnIndex) {
+						return columnTypes[columnIndex];
+					}
 
-			boolean[] columnEditables = new boolean[] { false, false };
+					boolean[] columnEditables = new boolean[] { false, false, false, false };
 
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+					public boolean isCellEditable(int row, int column) {
+						return columnEditables[column];
+					}
+				});
 		panelScrollPro = new JScrollPane();
-		panelScrollPro.setBounds(213, 84, 156, 248);
+		panelScrollPro.setBounds(213, 84, 350, 248);
 		contentPane.add(panelScrollPro);
 		tablaPro.setRowSelectionAllowed(true);
 		tablaPro.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tablaPro.getColumnModel().getColumn(0).setPreferredWidth(90);
 		tablaPro.getColumnModel().getColumn(1).setPreferredWidth(70);
 		panelScrollPro.setViewportView(tablaPro);
-		tablaPro.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent evt) {
-				JTable list = (JTable) evt.getSource();
-				if (evt.getClickCount() == 1) {
-
-					PSelect = tablaPro.getValueAt(tablaPro.getSelectedRow(), 0).toString();
-					CargaDatosReq();
-					tablaRequisitos();
-
-				}
-			}
-		});
 	}
 
 	public void cargarRequisitos() {

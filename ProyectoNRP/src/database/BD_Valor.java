@@ -184,4 +184,16 @@ public void eliminarRequisitoProyecto(String nombreReq, String proyecto) throws 
 		}
 		
 	}
+
+public ArrayList<Valor> cargarDatosTabla(String reqselec) throws PersistentException {
+	// TODO Auto-generated method stub
+	ArrayList<Valor> listaReturn = new ArrayList<Valor>();
+	for (Valor valor : ValorDAO.listValorByQuery(null, null)) {
+		if(valor.getRequisito().getNombre().equals(reqselec)) {
+			listaReturn.add(valor);
+		}
+	}
+	System.out.println("Lista" + listaReturn.toString());
+	return listaReturn;
+}
 }
