@@ -134,6 +134,7 @@ public class ConsultarRequisito extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				
 				if (listRequisitos_1.isSelectionEmpty()) {
 					JOptionPane.showMessageDialog(null, "Debe seleccionar un requisito", "MENSAJE",
 							JOptionPane.WARNING_MESSAGE);
