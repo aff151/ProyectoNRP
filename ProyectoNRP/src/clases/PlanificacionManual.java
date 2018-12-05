@@ -30,6 +30,16 @@ public class PlanificacionManual extends JFrame {
 	private JButton btnReiniciar;
 	private JLabel lblEsfuerzo;
 	private JLabel lbLimite;
+	private JButton calcularM;
+	private JLabel lblTablaRes;
+	private JLabel lblTablaSel;
+	private JLabel lblTablaProd;
+	//Array con todas las productividades
+	private double [] arrayProd;
+	//Tabla con todas las productividades
+	private JTable tablaProd;
+	private Object [][] arrayTabProd;
+	private JScrollPane scrollPane_2;
 	/**
 	 * Launch the application.
 	 */
@@ -120,27 +130,35 @@ public class PlanificacionManual extends JFrame {
 		btnDer = new JButton(">");
 		btnDer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DefaultTableModel modelo = (DefaultTableModel)tablaRes.getModel();
-				DefaultTableModel modelo1 = (DefaultTableModel)tablaSel.getModel();
-				String nombre = (String) modelo.getValueAt(tablaRes.getSelectedRow(), 0);
-				for (RequisitoSat rs : Planificacion.listReqSat) {
-					if(rs.getNombre().equals(nombre)) {
-						if(limite - rs.getEsfuerzo() < 0) {
-							JOptionPane.showMessageDialog(null, "Ha superado el límite de esfuerzo", "MENSAJE",
-									JOptionPane.WARNING_MESSAGE);
-						} else {
-							modelo1.addRow(new Object[] {
-									rs.getNombre(),
-									rs.getSatisfaccion(),
-									rs.getEsfuerzo(),
-							});
-							limite -= rs.getEsfuerzo();
-							lbLimite.setText(String.valueOf(limite));
+				if(tablaRes.getSelectedRow() == -1) {
+					JOptionPane.showMessageDialog(null, "Debe seleccionar un "
+							+ "requisito de la tabla de satisfaccion de requisitos", "MENSAJE",
+							JOptionPane.WARNING_MESSAGE);
+				} else {
+					DefaultTableModel modelo = (DefaultTableModel)tablaRes.getModel();
+					DefaultTableModel modelo1 = (DefaultTableModel)tablaSel.getModel();
+					String nombre = (String) modelo.getValueAt(tablaRes.getSelectedRow(), 0);
+					for (RequisitoSat rs : Planificacion.listReqSat) {
+						if(rs.getNombre().equals(nombre)) {
+							if(limite - rs.getEsfuerzo() < 0) {
+								JOptionPane.showMessageDialog(null, "Ha superado el límite de esfuerzo", "MENSAJE",
+										JOptionPane.WARNING_MESSAGE);
+							} else {
+								modelo1.addRow(new Object[] {
+										rs.getNombre(),
+										rs.getSatisfaccion(),
+										rs.getEsfuerzo(),
+								});
+								limite -= rs.getEsfuerzo();
+								lbLimite.setText(String.valueOf(limite));
+								modelo.removeRow(tablaRes.getSelectedRow());
+							}
 						}
 					}
+					
 				}
-				modelo.removeRow(tablaRes.getSelectedRow());
-			}
+				}
+
 		});
 		btnDer.setBounds(263, 215, 89, 23);
 		contentPane.add(btnDer);
@@ -148,22 +166,28 @@ public class PlanificacionManual extends JFrame {
 		btnIzq = new JButton("<");
 		btnIzq.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DefaultTableModel modelo = (DefaultTableModel)tablaRes.getModel();
-				DefaultTableModel modelo1 = (DefaultTableModel)tablaSel.getModel();
-				String nombre = (String) modelo1.getValueAt(tablaSel.getSelectedRow(), 0);
-				for (RequisitoSat rs : Planificacion.listReqSat) {
-					if(rs.getNombre().equals(nombre)) {
-						modelo.addRow(new Object[] {
-								rs.getNombre(),
-								rs.getSatisfaccion(),
-								rs.getEsfuerzo(),
-						});
-						limite += rs.getEsfuerzo();
-						lbLimite.setText(String.valueOf(limite));
+				if(tablaSel.getSelectedRow() == -1) {
+					JOptionPane.showMessageDialog(null, "Debe seleccionar un "
+							+ "requisito de la tabla de requisitos seleccionados", "MENSAJE",
+							JOptionPane.WARNING_MESSAGE);
+				} else {
+					DefaultTableModel modelo = (DefaultTableModel)tablaRes.getModel();
+					DefaultTableModel modelo1 = (DefaultTableModel)tablaSel.getModel();
+					String nombre = (String) modelo1.getValueAt(tablaSel.getSelectedRow(), 0);
+					for (RequisitoSat rs : Planificacion.listReqSat) {
+						if(rs.getNombre().equals(nombre)) {
+							modelo.addRow(new Object[] {
+									rs.getNombre(),
+									rs.getSatisfaccion(),
+									rs.getEsfuerzo(),
+							});
+							limite += rs.getEsfuerzo();
+							lbLimite.setText(String.valueOf(limite));
+						}
+						
 					}
-					
+					modelo1.removeRow(tablaSel.getSelectedRow());
 				}
-				modelo1.removeRow(tablaSel.getSelectedRow());
 			}
 		});
 		btnIzq.setBounds(263, 269, 89, 23);
@@ -203,9 +227,12 @@ public class PlanificacionManual extends JFrame {
 				lbLimite.setVisible(true);
 				btnIzq.setVisible(true);
 				btnDer.setVisible(true);
+				calcularM.setVisible(true);
 				btnReiniciar.setVisible(true);
 				btnIntroLimite.setVisible(false);
 				textlimite.setVisible(false);
+				lblTablaRes.setVisible(true);
+				lblTablaSel.setVisible(true);
 			}
 		});
 		btnIntroLimite.setBounds(80, 20, 140, 19);
@@ -230,6 +257,28 @@ public class PlanificacionManual extends JFrame {
 		lbLimite.setBounds(314, 42, 46, 14);
 		contentPane.add(lbLimite);
 		
+		calcularM = new JButton("Calcular métricas");
+		calcularM.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				calcularProductividad();
+				crearTablaProductividad();
+			}
+		});
+		calcularM.setBounds(465, 439, 140, 23);
+		contentPane.add(calcularM);
+		
+		lblTablaRes = new JLabel("Tabla de satisfaccion de requisitos");
+		lblTablaRes.setBounds(26, 60, 200, 14);
+		contentPane.add(lblTablaRes);
+		
+		lblTablaSel = new JLabel("Tabla de requisitos seleccionados");
+		lblTablaSel.setBounds(393, 60, 200, 14);
+		contentPane.add(lblTablaSel);
+		
+		lblTablaProd = new JLabel("Productividad de los requisitos");
+		lblTablaProd.setBounds(675, 60, 200, 14);
+		contentPane.add(lblTablaProd);
+		
 		labelproy.setVisible(false);
 		scrollPane.setVisible(false);
 		scrollPane_1.setVisible(false);
@@ -237,7 +286,11 @@ public class PlanificacionManual extends JFrame {
 		lbLimite.setVisible(false);
 		btnIzq.setVisible(false);
 		btnDer.setVisible(false);
+		calcularM.setVisible(false);
 		btnReiniciar.setVisible(false);
+		lblTablaRes.setVisible(false);
+		lblTablaSel.setVisible(false);
+		lblTablaProd.setVisible(false);
 	}
 	public void inicializar() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -250,5 +303,58 @@ public class PlanificacionManual extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+	}
+	public void calcularProductividad() {
+		DefaultTableModel modelo = (DefaultTableModel)tablaSel.getModel();
+		int satisfaccionTotal = 0, esfuerzoTotal = 0;
+		arrayProd = new double[modelo.getRowCount()];
+		arrayTabProd = new Object[modelo.getRowCount()+1][2];
+		for(int i = 0; i < modelo.getRowCount(); i++) {
+			for(int j = 0; j < Planificacion.listReqSat.size(); j++) {
+				if(Planificacion.listReqSat.get(j).getNombre().equals
+						((String)modelo.getValueAt(i, 0))){
+					//Productividad(de cada requisito) = satisfaccion/esfuerzo
+					arrayProd[i] = ((double)Planificacion.listReqSat.get(j).getSatisfaccion()/
+							(double)Planificacion.listReqSat.get(j).getEsfuerzo()); 
+					arrayTabProd[i][0] = (String)modelo.getValueAt(i, 0);
+					arrayTabProd[i][1] = arrayProd[i];
+					satisfaccionTotal += Planificacion.listReqSat.get(j).getSatisfaccion();
+					esfuerzoTotal += Planificacion.listReqSat.get(j).getEsfuerzo();
+				}
+			}
+		}
+		arrayTabProd[modelo.getRowCount()][0] = "pro(S) = sat(S)/eff(S)";
+		arrayTabProd[modelo.getRowCount()][1] = (double)satisfaccionTotal/esfuerzoTotal;
+	}
+	public void crearTablaProductividad() {
+		lblTablaProd.setVisible(true);
+		tablaProd = new JTable();
+		tablaProd.setModel(new DefaultTableModel(arrayTabProd,
+			new String[] {
+				"Requisito", "Productividad"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, Double.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+			boolean[] columnEditables = new boolean[] {
+					false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(670, 78, 205, 317);
+		contentPane.add(scrollPane_2);
+		tablaProd.getColumnModel().getColumn(0).setPreferredWidth(110);
+		tablaProd.getColumnModel().getColumn(1).setPreferredWidth(77);
+		scrollPane_2.setViewportView(tablaProd);
+		
+		setBounds(100, 100, 900, 502);
+		setLocationRelativeTo(null);
 	}
 }
