@@ -41,7 +41,6 @@ public class ConsultarClientes extends JFrame {
 	BD_Clientes bd_Cli = new BD_Clientes();
 	private JScrollPane scrollLista;
 
-
 	/**
 	 * Launch the application.
 	 */
@@ -69,17 +68,15 @@ public class ConsultarClientes extends JFrame {
 		seleccionarClientes.setBounds(33, 30, 127, 16);
 		contentPane.add(seleccionarClientes);
 
-
 		listClientes = new JList();
 		listClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		modelo = new DefaultListModel<String>();
 		scrollLista = new JScrollPane();
 		scrollLista.setBounds(10, 60, 165, 146);
-	    scrollLista.setViewportView(listClientes);
+		scrollLista.setViewportView(listClientes);
 		contentPane.add(scrollLista);
 		cargarClientes();
 
-		
 		JButton btnConsultar = new JButton("Consultar");
 		btnConsultar.setBackground(new Color(30, 144, 255));
 		btnConsultar.addActionListener(new ActionListener() {
@@ -109,12 +106,12 @@ public class ConsultarClientes extends JFrame {
 		});
 		btnAtrs.setBounds(10, 256, 65, 29);
 		contentPane.add(btnAtrs);
-		
+
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					eliminarCliente();
-					
+				eliminarCliente();
+
 			}
 		});
 		btnEliminar.setBounds(33, 217, 117, 29);
@@ -127,7 +124,7 @@ public class ConsultarClientes extends JFrame {
 		setResizable(false);
 		setBounds(100, 100, 203, 331);
 		setLocationRelativeTo(null);
-		//setTitle("Consultar Clientes");
+		// setTitle("Consultar Clientes");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -135,33 +132,33 @@ public class ConsultarClientes extends JFrame {
 
 	}
 
-	public void cargarClientes()  {
-			//listCli = bd_Cli.cargarClientes();
-			try {
-				listCli = bd_Cli.cargarClientesPropios(claseEstatica.getPropietario());
-			} catch (PersistentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	public void cargarClientes() {
+		// listCli = bd_Cli.cargarClientes();
+		try {
+			listCli = bd_Cli.cargarClientesPropios(claseEstatica.getPropietario());
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		for (Cliente c : listCli) {
 			modelo.addElement(c.getNombre());
 			listClientes.setModel(modelo);
 		}
 	}
-	public void eliminarCliente()
-	{
+
+	public void eliminarCliente() {
 		if (listClientes.isSelectionEmpty()) {
-			JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente", "MENSAJE",
-					JOptionPane.WARNING_MESSAGE);
-		}
-		try {
-			bd_Cli.eliminarCliente(claseEstatica.getPropietario(), listClientes.getSelectedValue().toString());
-			ConsultarClientes cli = new ConsultarClientes();
-			cli.setVisible(true);
-			dispose();
-		} catch (PersistentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente", "MENSAJE", JOptionPane.WARNING_MESSAGE);
+		} else {
+			try {
+				bd_Cli.eliminarCliente(claseEstatica.getPropietario(), listClientes.getSelectedValue().toString());
+				ConsultarClientes cli = new ConsultarClientes();
+				cli.setVisible(true);
+				dispose();
+			} catch (PersistentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }

@@ -71,7 +71,7 @@ public class ConsultarProyectos extends JFrame {
 
 	private void cargarJlist() {
 		// TODO Auto-generated method stub
-		//if (Menu.proc == "Modificar") {
+		// if (Menu.proc == "Modificar") {
 		if (Menu.proc == "Consultar") {
 			setTitle("Consultar Proyectos");
 			listProyectos2 = new JList();
@@ -104,7 +104,7 @@ public class ConsultarProyectos extends JFrame {
 			consultar = true;
 			cargarProyectos();
 		}
-		//Menu.proc
+		// Menu.proc
 		if (Menu.proc == "Modificar") {
 			setTitle("Modificar Proyectos Propios");
 			listProyectos = new JList();
@@ -136,15 +136,15 @@ public class ConsultarProyectos extends JFrame {
 			});
 			btnModificarProyecto.setBounds(10, 195, 170, 23);
 			contentPane.add(btnModificarProyecto);
-			
+
 			JButton btnEliminar = new JButton("Eliminar");
 			btnEliminar.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					eliminarProyectoUser();
-					
+
 				}
 			});
 			btnEliminar.setBounds(81, 220, 117, 29);
@@ -185,15 +185,14 @@ public class ConsultarProyectos extends JFrame {
 		});
 		btnAtrs.setBounds(6, 223, 71, 23);
 		contentPane.add(btnAtrs);
-		
-		
+
 	}
 
 	public void cargarProyectos() {
 		try {
-			//Meter un carar proyectos propio
-			if(consultar) {
-			listPro2 = bdProy.cargarProyectos();		
+			// Meter un carar proyectos propio
+			if (consultar) {
+				listPro2 = bdProy.cargarProyectos();
 			}
 			listPro2 = bdProy.cargarProyectos();
 			listPro = bdProy.cargarProyectosPropios(claseEstatica.getPropietario());
@@ -202,29 +201,35 @@ public class ConsultarProyectos extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(!consultar) {
-		for (Proyecto c : listPro) {
-			modelo.addElement(c.getNombre());
-			listProyectos.setModel(modelo);
-		}
-		} 
-		else
-		{
-		for (Proyecto c : listPro2) {
-			modelo.addElement(c.getNombre());
-			listProyectos2.setModel(modelo);
-		}
+		if (!consultar) {
+			for (Proyecto c : listPro) {
+				modelo.addElement(c.getNombre());
+				listProyectos.setModel(modelo);
+			}
+		} else {
+			for (Proyecto c : listPro2) {
+				modelo.addElement(c.getNombre());
+				listProyectos2.setModel(modelo);
+			}
 		}
 	}
-	
-	public void eliminarProyectoUser() 
-	{
-		try {
-			String pro = listProyectos.getSelectedValue().toString();
-			bdProy.eliminarProyectoUser(listProyectos.getSelectedValue().toString(),claseEstatica.getPropietario());
-		} catch (PersistentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+	public void eliminarProyectoUser() {
+		if (listProyectos.isSelectionEmpty()) {
+			JOptionPane.showMessageDialog(null, "Debe seleccionar un requisito", "MENSAJE",
+					JOptionPane.WARNING_MESSAGE);
+		} else {
+			try {
+				String pro = listProyectos.getSelectedValue().toString();
+				bdProy.eliminarProyectoUser(listProyectos.getSelectedValue().toString(),
+						claseEstatica.getPropietario());
+				ConsultarProyectos co = new ConsultarProyectos();
+				co.setVisible(true);
+				dispose();
+			} catch (PersistentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }

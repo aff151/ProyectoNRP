@@ -166,6 +166,28 @@ public class BD_Proyectos {
 				if(p.getNombrePropietario().equals(nombrePropietario) && p.getNombre().equals(nombreProyecto))
 					proyecto = p;
 			}
+			
+			//PESO
+			for (peso p : pesoDAO.listPesoByQuery(null, null)) {
+				if(p.getProyecto().getNombre().equals(nombreProyecto) && p.getProyecto().getNombrePropietario().equals(nombrePropietario)) {
+					pesoDAO.deleteAndDissociate(p);
+				}
+			}
+			
+			//VALOR
+			for (Valor p : ValorDAO.listValorByQuery(null, null)) {
+				if(p.getProyecto().getNombre().equals(nombreProyecto) && p.getProyecto().getNombrePropietario().equals(nombrePropietario)) {
+					ValorDAO.deleteAndDissociate(p);
+				}
+			}
+			
+			//PROYREQ
+			for (ProyReq p : ProyReqDAO.listProyReqByQuery(null, null)) {
+				if(p.getProyecto().getNombre().equals(nombreProyecto) && p.getProyecto().getNombrePropietario().equals(nombrePropietario)) {
+					ProyReqDAO.deleteAndDissociate(p);
+				}
+			}
+			
 			ProyectoDAO.deleteAndDissociate(proyecto);
 		//	propietario.proyectos.remove(proyecto);
 			
