@@ -125,6 +125,9 @@ public class Planificacion extends JFrame {
 				guardar();
 				guardarEsfuerzo();
 				guardarPeso();
+				Planificacion pl = new Planificacion();
+				pl.setVisible(true);
+				dispose();
 			}
 		});
 		btnGuardar.setBounds(464, 308, 89, 23);

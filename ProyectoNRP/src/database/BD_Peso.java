@@ -172,8 +172,8 @@ public class BD_Peso {
 	public void guardarPesos(List<peso> clientes, String[] pesos, String proyecto) throws PersistentException {
 		for (peso pes : pesoDAO.listPesoByQuery(null, null)) {
 			for (int i = 0; i < clientes.size(); i++) {
-				if (pes.getCliente().getNombre().equals(clientes.get(i).getCliente().getNombre())
-						&& pes.getProyecto().getNombre().equals(proyecto)) {
+				if ((pes.getCliente().getNombre().equals(clientes.get(i).getCliente().getNombre()))
+						&& (pes.getProyecto().getNombre().equals(proyecto))) {
 					if (Integer.parseInt(pesos[i]) == 0)
 						quitarClienteProyecto(clientes.get(i).getCliente(),proyecto);
 					else {
