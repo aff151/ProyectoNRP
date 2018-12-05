@@ -38,7 +38,7 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class ConsultarRequisito extends JFrame {
-
+//
 	private JPanel contentPane;
 	public static String procedencia = "";
 	public static String nombrerequisito = "";
