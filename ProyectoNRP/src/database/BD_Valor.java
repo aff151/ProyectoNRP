@@ -168,4 +168,20 @@ public class BD_Valor {
 		}
 		
 	}
+	
+public void eliminarRequisitoProyecto(String nombreReq, String proyecto) throws PersistentException {
+		
+		for(Valor v : ValorDAO.listValorByQuery(null, null)) {
+			if(v.getRequisito().getNombre().equals(nombreReq) && v.getProyecto().getNombre().equals(proyecto)){
+				ValorDAO.deleteAndDissociate(v);
+			}
+		}
+		
+		for(ProyReq p : ProyReqDAO.listProyReqByQuery(null, null)) {
+			if(p.getProyecto().getNombre().equals(proyecto) && p.getRequisito().getNombre().equals(nombreReq)) {
+				ProyReqDAO.deleteAndDissociate(p);
+			}
+		}
+		
+	}
 }

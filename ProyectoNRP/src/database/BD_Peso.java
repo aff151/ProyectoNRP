@@ -148,7 +148,7 @@ public class BD_Peso {
 		BD_Clientes bdcli = new BD_Clientes();
 		Cliente clien = null;
 		Proyecto proy = null;
-		
+
 		bdcli.crearCliente(nombre);
 		peso imp = pesoDAO.createPeso();
 
@@ -167,6 +167,23 @@ public class BD_Peso {
 
 		pesoDAO.save(imp);
 
+	}
+
+	public void guardarPesos(List<peso> clientes, String[] pesos, String proyecto) throws PersistentException {
+		for (peso pes : pesoDAO.listPesoByQuery(null, null)) {
+			for (int i = 0; i < clientes.size(); i++) {
+				if (pes.getCliente().getNombre().equals(clientes.get(i).getCliente().getNombre())
+						&& pes.getProyecto().getNombre().equals(proyecto)) {
+					if (Integer.parseInt(pesos[i]) == 0)
+						quitarClienteProyecto(clientes.get(i).getCliente(),proyecto);
+					else {
+						pes.setPeso(Integer.parseInt(pesos[i]));
+						pesoDAO.save(pes);
+					}
+					break;
+				}
+			}
+		}
 	}
 
 }
