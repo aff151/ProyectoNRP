@@ -249,13 +249,12 @@ public class Planificacion extends JFrame {
 				satisfaccion += Integer.parseInt(datosCalculo[j][i]) * 
 						Integer.parseInt(datosCalculo[j][titColumna.length-2]);
 			}
-			listReqSat.add(new RequisitoSat(listReq.get(i).getNombre(),listProyReq.get(i).getEsfuerzo(), satisfaccion));
+			if(satisfaccion != 0) {
+				listReqSat.add(new RequisitoSat(listReq.get(i).getNombre(),listProyReq.get(i).getEsfuerzo(), satisfaccion));
+			}
 			satisfaccion = 0;
 		}
 		Collections.sort(listReqSat);
-		for(int i = 0; i < listReqSat.size(); i++) {
-			System.out.println(listReqSat.get(i).getNombre());
-		}
 	}
 	public void guardar() {
 		datosTabla = new String[listPeso.size()+1][titColumna.length-1];
