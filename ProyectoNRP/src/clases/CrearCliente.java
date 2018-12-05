@@ -159,12 +159,12 @@ public class CrearCliente extends JFrame {
 					isDigt = false;
 			}
 			if (isDigt == false) {
-				JOptionPane.showMessageDialog(null, "El peso debe ser un n�mero entre 0 y 5", "MENSAJE",
+				JOptionPane.showMessageDialog(null, "El peso debe ser un n�mero entre 1 y 5", "MENSAJE",
 						JOptionPane.WARNING_MESSAGE);
 			} else {
 				int peso = Integer.parseInt(pesoTextField.getText());
-				if (peso < 0 || peso > 5) {
-					JOptionPane.showMessageDialog(null, "El peso debe ser un n�mero entre 0 y 5", "MENSAJE",
+				if (peso < 1 || peso > 5) {
+					JOptionPane.showMessageDialog(null, "El peso debe ser un n�mero entre 1 y 5", "MENSAJE",
 							JOptionPane.WARNING_MESSAGE);
 				} else {
 					try {

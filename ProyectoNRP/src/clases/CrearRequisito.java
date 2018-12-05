@@ -126,8 +126,8 @@ public class CrearRequisito extends JFrame {
 				else 
 				{
 					int esfuerzo=Integer.parseInt(esfuerzoReq.getText());
-					if(esfuerzo<0||esfuerzo>10) {
-						JOptionPane.showMessageDialog(null, "El esfuerzo es un número entre 0 y 10.", "MENSAJE",
+					if(esfuerzo<1||esfuerzo>10) {
+						JOptionPane.showMessageDialog(null, "El esfuerzo es un número entre 1 y 10.", "MENSAJE",
 								JOptionPane.WARNING_MESSAGE);
 					}
 					crearRequisito();
@@ -203,8 +203,8 @@ public class CrearRequisito extends JFrame {
 				{
 				try {
 					int esfuerzo=Integer.parseInt(esfuerzoReqV.getText());
-					if(esfuerzo<0||esfuerzo>10) {
-						JOptionPane.showMessageDialog(null, "El esfuerzo es un número entre 0 y 10.", "MENSAJE",
+					if(esfuerzo<1||esfuerzo>10) {
+						JOptionPane.showMessageDialog(null, "El esfuerzo es un número entre 1 y 10.", "MENSAJE",
 								JOptionPane.WARNING_MESSAGE);
 					}else {
 					bdpr.asignarRequisitoProyecto(listRequisitos.getSelectedValue().toString(), cons.proySeleccionado, esfuerzoReqV.getText());
@@ -219,13 +219,6 @@ public class CrearRequisito extends JFrame {
 				}
 			}
 		});
-		
-		//listProyectos = new JList();
-		//listProyectos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		//scrollLista = new JScrollPane();
-		//scrollLista.setBounds(10, 36, 179, 147);
-	    //scrollLista.setViewportView(listProyectos);
-		//contentPane.add(scrollLista);
 		
 		
 		
