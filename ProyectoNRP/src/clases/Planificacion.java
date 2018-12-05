@@ -285,6 +285,13 @@ public class Planificacion extends JFrame {
 		datosEsf = new String[listReq.size()];
 		for(int i = 0; i < datosEsf.length; i++)
 			datosEsf[i] = datoColumna[listPeso.size()][i+1];
+		BD_ProyReq bdproyreq=new BD_ProyReq();
+		try {
+			bdproyreq.guardarEsfuerzos(listReq,datosEsf,ConsultarProyectosPlanificacion.proySeleccionado);
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void guardarPeso() {
 		/*datosPeso tienes el array con la columna de valores de pesos
@@ -292,5 +299,12 @@ public class Planificacion extends JFrame {
 		datosPeso = new String[listPeso.size()];
 		for(int i = 0; i < datosPeso.length; i++)
 			datosPeso[i] = datoColumna[i][listReq.size()+1];
+		BD_Peso bdpeso=new BD_Peso();
+		try {
+			bdpeso.guardarPesos(listPeso,datosPeso,ConsultarProyectosPlanificacion.proySeleccionado);
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
