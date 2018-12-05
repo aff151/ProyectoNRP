@@ -234,11 +234,10 @@ public class AsignarValoresRequisitos extends JFrame {
 											datoColumnaEsf[tablaEsf.getSelectedRow()][0], textValor.getText());
 									JOptionPane.showMessageDialog(null, "Se ha creado el valor correctamente.",
 											"MENSAJE", JOptionPane.WARNING_MESSAGE);
-									ModificarProyecto mp = new ModificarProyecto();
-									mp.setVisible(true);
-									dispose();
 								}
-								
+								AsignarValoresRequisitos as = new AsignarValoresRequisitos();
+								as.setVisible(true);
+								dispose();
 							}
 						}
 					}
