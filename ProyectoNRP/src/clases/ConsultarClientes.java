@@ -96,7 +96,7 @@ public class ConsultarClientes extends JFrame {
 				}
 			}
 		});
-		btnConsultar.setBounds(108, 246, 89, 29);
+		btnConsultar.setBounds(86, 256, 89, 29);
 		contentPane.add(btnConsultar);
 
 		JButton btnAtrs = new JButton("Atrás");
@@ -107,16 +107,17 @@ public class ConsultarClientes extends JFrame {
 				dispose();
 			}
 		});
-		btnAtrs.setBounds(10, 246, 65, 29);
+		btnAtrs.setBounds(10, 256, 65, 29);
 		contentPane.add(btnAtrs);
 		
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					eliminarCliente();
+					
 			}
 		});
-		btnEliminar.setBounds(10, 218, 117, 29);
+		btnEliminar.setBounds(33, 217, 117, 29);
 		contentPane.add(btnEliminar);
 	}
 
@@ -124,7 +125,7 @@ public class ConsultarClientes extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/imagenes/icono.PNG")));
 		setResizable(false);
-		setBounds(100, 100, 203, 314);
+		setBounds(100, 100, 203, 331);
 		setLocationRelativeTo(null);
 		//setTitle("Consultar Clientes");
 		contentPane = new JPanel();
@@ -149,8 +150,15 @@ public class ConsultarClientes extends JFrame {
 	}
 	public void eliminarCliente()
 	{
+		if (listClientes.isSelectionEmpty()) {
+			JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente", "MENSAJE",
+					JOptionPane.WARNING_MESSAGE);
+		}
 		try {
 			bd_Cli.eliminarCliente(claseEstatica.getPropietario(), listClientes.getSelectedValue().toString());
+			ConsultarClientes cli = new ConsultarClientes();
+			cli.setVisible(true);
+			dispose();
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
